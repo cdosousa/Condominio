@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <ui:composition template="Unidade.xhtml">
+            <ui:define name="adicionar">
+                <h:head>
+                    <title>Adicionar Unidade</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+                    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+                    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+                    <link rel="stylesheet" type="text/css" href="styles/belasartes.css"/>
+                    <script src="js/bayanno.js" type="text/javascript"/>
+                </h:head>
+                <h:body>
+                    <h:form id="formUnidadeAdicionar">
+                        <div class="control-group">
+                            <div class="control-group">
+                                <h:outputLabel class="control-label" value="Condomínio"/>
+                                <div class="controls">
+                                    <p:selectOneMenu id="addSomPracaCondominio" value="#{unidadeController.unidadePK.cdCondominio}">
+                                        <p:ajax listener="#{unidadeController.onCondominoChange()}" update="addSomPraca"/>
+                                        <f:selectItem itemLabel="Selecione um condominio" itemValue="" noSelectionOption="true"/>
+                                        <f:selectItems value="#{unidadeController.listCondominio}" var="c"
+                                                       itemLabel="#{c.nomeCondominio}" itemValue="#{c.cdCondominio}"/>
+                                    </p:selectOneMenu>
+                                </div>
+                                <h:outputLabel class="control-label" value="Praca"/>
+                                <div class="controls">
+                                    <p:selectOneMenu id="addSomPraca" value="#{unidadeController.unidadePK.cdPraca}">
+                                        <p:ajax listener="#{unidadeController.onPracaChange()}" update="addSomTorre"/>
+                                        <f:selectItem itemLabel="Selecione uma praça" itemValue="" noSelectionOption="true"/>
+                                        <f:selectItems value="#{unidadeController.listPraca}" var="p"
+                                                       itemLabel="#{p.nome}" itemValue="#{p.pracaPK.cdPraca}"/>
+                                    </p:selectOneMenu>
+                                </div>
+                                <h:outputLabel class="control-label" value="Torre"/>
+                                <div class="controls">
+                                    <p:selectOneMenu id="addSomTorre" value="#{unidadeController.unidadePK.cdTorre}">
+                                        <f:selectItem itemLabel="Selecione uma torre" itemValue="" noSelectionOption="true"/>
+                                        <f:selectItems value="#{unidadeController.listTorre}" var="t"
+                                                       itemLabel="#{t.nome}" itemValue="#{t.torrePK.cdTorre}"/>
+                                    </p:selectOneMenu>
+                                </div>
+                                <h:outputLabel class="control-label" value="Unidade"/>
+                                <div class="controls">
+                                    <h:inputText id="addCdUnidade" style="width: 50px" value="#{unidadeController.unidadePK.cdUnidade}"/>
+                                </div>
+                                <h:outputLabel class="control-label" value="Andar"/>
+                                <div class="controls">
+                                    <h:inputText id="addNomeUnidade" style="width: 50px" value="#{unidadeController.unidade.andar}"/>
+                                </div>
+                                <h:outputLabel class="control-label" value="Proprietario"/>
+                                <div class="controls">
+                                    <p:selectOneMenu id="addSomProprietario" value="#{unidadeController.cpfCnpjProprietario}">
+                                        <f:selectItem itemLabel="Selecione o proprietário da Unidade" itemValue="" noSelectionOption="true"/>
+                                        <f:selectItems value="#{unidadeController.listProprietario}" var="addProp"
+                                                       itemLabel="#{addProp.nomeRazaoSocial}" itemValue="#{addProp.cpfCnpj}"/>
+                                    </p:selectOneMenu>
+                                </div>
+                                <h:outputLabel class="control-label" value="Situação"/>
+                                <div class="controls">
+                                    <p:selectOneMenu id="addSituacao" value="#{unidadeController.unidade.situacao}">
+                                        <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
+                                        <f:selectItems value="#{unidadeController.enumSituacao}" var="addSituacao"
+                                                       itemLabel="#{addSituacao.descricao}" itemValue="#{addSituacao.cod}"/>
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+                </h:body>
+            </ui:define>
+        </ui:composition>
+    </f:view>
+</html>

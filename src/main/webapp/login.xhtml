@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Login</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+        <link rel="stylesheet" type="text/css" href="styles/font.css"/>
+        <link rel="stylesheet" type="text/css" href="styles/belasartes.css" media="screen"/>
+        <script src="/js/bayanno.js" type="text/javascript"></script>
+    </h:head>
+    <h:body>
+        <div class="navbar navbar-top navbar-inverse">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="brand" href="http://localhost:8080/Condominio/">Condominio Belasartes</a>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="padded" style="margin-top: 100px">
+                <center>
+                    <img src="imagens/Logo.bmp"/>
+                    <div class="login box" style="margin-top: 50px; width: 400px">
+                        <div class="box-header">
+                            <span class="title">Login</span>
+                        </div>
+                        <div class="box-content padded">
+                            <i class="m-icon-swapright m-icon-white"></i>
+                            <h:form class="separate-sections" id="forLogin">
+                                <div class="input-prepend" title="dadosLogin">
+                                    <span class="add-on" href="#">
+                                        <i class="icon-check"></i>
+                                    </span>
+                                    <p:inputText id="txtLogin" placeholder="Login" value="#{usuariosController.usuarios.login}" size="10" required="true"/><br></br>
+                                </div>
+                                <div class="input-prepend">
+                                    <span class="add-on" href="#">
+                                        <i class="icon-key"></i>
+                                    </span>
+                                    <p:password id="pwsSenha" placeholder="Password" value="#{usuariosController.usuarios.senha}"/>
+                                </div>
+                                <div style="margin-top: 15px">
+                                    <p:commandButton id="submit" type="submit" value="Logar" action="#{usuariosController.validaUsuario()}"/>
+                                    #{usuariosController.msg}
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </center>
+            </div>
+        </div>
+    </h:body>
+
+</html>

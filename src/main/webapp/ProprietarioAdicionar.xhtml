@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <ui:composition template="Proprietario.xhtml">
+            <ui:define name="adicionar">
+                <h:body>
+                    <h:form id="formProprietarioAdicionar">
+                        <div class="control-group">
+                            <h:outputLabel class="control-label" value="C.P.F / C.N.P.J"/>
+                            <div class="controls">
+                                <h:inputText id="addCdCpfCnpj" style="width: 200px" value="#{proprietarioController.proprietario.cpfCnpj}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Nome/Razão Social"/>
+                            <div class="controls">
+                                <h:inputText id="addNomeRazaoSocial" style="width: 400px" value="#{proprietarioController.proprietario.nomeRazaoSocial}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Tipo Pessoa"/>
+                            <div class="controls">
+                                <p:selectOneMenu id="addSomTipoPessoa" style="width: 120px" value="#{proprietarioController.proprietario.tipoPessoa}">
+                                    <f:selectItem itemLabel="Escolha uma das opções" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{proprietarioController.enumTipoPessoa}" var="addTp"
+                                                   itemLabel="#{addTp.descricao}" itemValue="#{addTp.cod}"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <h:outputLabel class="control-label" value="Logradouro"/>
+                            <div class="controls control-label">
+                                <h:inputText id="addLogradouro" style="width: 400px" value="#{proprietarioController.proprietario.logradouro}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Numero"/>
+                            <div class="controls control-label">
+                                <h:inputText id="addNumero" style="width: 90px" value="#{proprietarioController.proprietario.numero}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Complemento"/>
+                            <div class="controls control-label">
+                                <h:inputText id="addComplemento" style="width: 300px" value="#{proprietarioController.proprietario.complemento}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Bairro"/>
+                            <div class="controls control-label">
+                                <h:inputText id="addBairro" style="width: 200px" value="#{proprietarioController.proprietario.bairro}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Cidade"/>
+                            <div class="controls control-label">
+                                <h:inputText id="addCidade" style="width: 200px" value="#{proprietarioController.proprietario.municipio}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="UF"/>
+                            <div class="controls control-label">
+                                <h:inputText id="addUf" style="width: 40px" value="#{proprietarioController.proprietario.uf}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Telefone"/>
+                            <div class="controls control-label">
+                                <h:inputText id="addTelefone" style="width: 90px" value="#{proprietarioController.proprietario.telefone}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Celular"/>
+                            <div class="controls control-label">
+                                <h:inputText id="addCelular" style="width: 90px" value="#{proprietarioController.proprietario.celular}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Situacao"/>
+                            <p:selectOneMenu id="addSomSituacao" style="width: 120px" value="#{proprietarioController.proprietario.situacao}">
+                                <f:selectItems value="#{proprietarioController.enumSituacao}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao.cod}"/>
+                            </p:selectOneMenu>
+                        </div>
+                    </h:form>
+                </h:body>
+            </ui:define>
+        </ui:composition>
+    </f:view>
+</html>

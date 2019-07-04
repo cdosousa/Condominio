@@ -1,0 +1,82 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 05/04/2019, 22:22:23
+    Author     : Cristiano de Oliveira Sousa
+*/
+body {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: small;
+    color: #045491;
+    padding: 20px;
+    line-height: 1.5;
+}
+
+h1 {
+    text-align: left;
+    letter-spacing: 1px;
+    font-size: 1.4em;
+    color: #045491;
+    font-weight: normal;
+    width: 1200px;
+}
+
+h3{
+    text-align: left;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: large;
+    font-style: oblique, important;
+}
+
+div{
+    border: groove;
+    margin: 2mm;
+    padding: 1mm;
+    line-height: 2.0;
+    background-color: aliceblue
+}
+
+table {
+    width: 580px;
+    padding: 10px;
+    background-color: #c5e7e0;
+}
+
+th {
+    text-align: left;
+    border-bottom: 1px solid;
+}
+
+td {
+    padding: 10px;
+}
+
+a:link {
+    color: #be7429;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+a:link:hover {
+    color: #be7429;
+    font-weight: normal;
+    text-decoration: underline;
+}
+
+tree{
+    border-color: black;
+    border: groove;
+    width: 100px;
+    margin: 2mm;
+    padding: 1mm;
+    line-height: 2.0
+}
+
+layoutUnit{
+    border-color: black;
+    border: groove;
+    color: #045491;
+}
