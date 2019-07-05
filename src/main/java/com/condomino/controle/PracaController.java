@@ -38,8 +38,10 @@ public class PracaController extends AcessoBancoDAO<Praca, Serializable> impleme
     
     private final String menu = "MenuPrincipal.xhtml";
     private final String atual = "Praca.xhtml";
+    private final String adicionar = "PracaAdicionar.xhtml";
+    private final String editar = "PracaEditar.xhtml";
     private String usuarioConectado;
-    private String nomeCondominio = "";
+    private String nomePraca = "";
     private Integer situacao = 1;
     private Integer activeIndex = 0;
     private List<Condominio> listCondominio;
@@ -152,17 +154,17 @@ public class PracaController extends AcessoBancoDAO<Praca, Serializable> impleme
     }
 
     /**
-     * @return the nomeCondominio
+     * @return the nomePraca
      */
-    public String getNomeCondominio() {
-        return nomeCondominio;
+    public String getNomePraca() {
+        return nomePraca;
     }
 
     /**
-     * @param nomeCondominio the nomeCondominio to set
+     * @param nomePraca the nomePraca to set
      */
-    public void setNomeCondominio(String nomeCondominio) {
-        this.nomeCondominio = nomeCondominio;
+    public void setNomePraca(String nomePraca) {
+        this.nomePraca = nomePraca;
     }
 
     /**
@@ -187,9 +189,10 @@ public class PracaController extends AcessoBancoDAO<Praca, Serializable> impleme
     }
     
     public String adicionaForm(){
+        setActiveIndex(2);
         praca = new Praca();
         pracaPK = new PracaPK();
-        return atual;
+        return adicionar;
     }
     
     public String adicionaRegistro(){
@@ -201,7 +204,6 @@ public class PracaController extends AcessoBancoDAO<Praca, Serializable> impleme
         praca.setHoraCadastro(Time.valueOf(hs.getHora()));
         create(praca);
         setMsg("Registro salvo com sucesso!");
-        adicionaForm();
         return atual;
     }
     
@@ -215,18 +217,17 @@ public class PracaController extends AcessoBancoDAO<Praca, Serializable> impleme
     
     public String editarRegistro(){
         setActiveIndex(1);
-        return "pracaEditar.xhtml";
+        return editar;
     }
     
     public String salvarRegistro(){
         setActiveIndex(0);
         dat.setData("");
-        praca.setNome(getNomeCondominio());
+        praca.setNome(getNomePraca());
         praca.setSituacao(getSituacao());
         praca.setDataModificacao(Date.valueOf(dat.getData()));
         praca.setHoraModificacao(Time.valueOf(hs.getHora()));
         save(praca);
-        adicionaForm();
         return atual;
     }
     
@@ -235,7 +236,7 @@ public class PracaController extends AcessoBancoDAO<Praca, Serializable> impleme
         praca = getById(((Praca) e.getObject()).getPracaPK());
         pracaPK.setCdCondominio(praca.getPracaPK().getCdCondominio());
         pracaPK.setCdPraca(praca.getPracaPK().getCdPraca());
-        setNomeCondominio(praca.getNome());
+        setNomePraca(praca.getNome());
         setSituacao(praca.getSituacao());
         System.out.println("Objeto Praca: " + praca.toString());
     }

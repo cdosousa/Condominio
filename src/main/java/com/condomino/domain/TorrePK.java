@@ -26,11 +26,6 @@ public class TorrePK implements Serializable {
     private String cdCondominio;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 4)
-    @Column(name = "cd_praca", nullable = false, length = 4)
-    private String cdPraca;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "cd_torre", nullable = false, length = 20)
     private String cdTorre;
@@ -38,9 +33,8 @@ public class TorrePK implements Serializable {
     public TorrePK() {
     }
 
-    public TorrePK(String cdCondominio, String cdPraca, String cdTorre) {
+    public TorrePK(String cdCondominio, String cdTorre) {
         this.cdCondominio = cdCondominio;
-        this.cdPraca = cdPraca;
         this.cdTorre = cdTorre;
     }
 
@@ -50,14 +44,6 @@ public class TorrePK implements Serializable {
 
     public void setCdCondominio(String cdCondominio) {
         this.cdCondominio = cdCondominio;
-    }
-
-    public String getCdPraca() {
-        return cdPraca;
-    }
-
-    public void setCdPraca(String cdPraca) {
-        this.cdPraca = cdPraca;
     }
 
     public String getCdTorre() {
@@ -72,7 +58,6 @@ public class TorrePK implements Serializable {
     public int hashCode() {
         int hash = 0;
         hash += (cdCondominio != null ? cdCondominio.hashCode() : 0);
-        hash += (cdPraca != null ? cdPraca.hashCode() : 0);
         hash += (cdTorre != null ? cdTorre.hashCode() : 0);
         return hash;
     }
@@ -87,9 +72,6 @@ public class TorrePK implements Serializable {
         if ((this.cdCondominio == null && other.cdCondominio != null) || (this.cdCondominio != null && !this.cdCondominio.equals(other.cdCondominio))) {
             return false;
         }
-        if ((this.cdPraca == null && other.cdPraca != null) || (this.cdPraca != null && !this.cdPraca.equals(other.cdPraca))) {
-            return false;
-        }
         if ((this.cdTorre == null && other.cdTorre != null) || (this.cdTorre != null && !this.cdTorre.equals(other.cdTorre))) {
             return false;
         }
@@ -98,7 +80,7 @@ public class TorrePK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.condomino.domain.TorrePK[ cdCondominio=" + cdCondominio + ", cdPraca=" + cdPraca + ", cdTorre=" + cdTorre + " ]";
+        return "com.condomino.domain.TorrePK[ cdCondominio=" + cdCondominio + ", cdTorre=" + cdTorre + " ]";
     }
     
 }

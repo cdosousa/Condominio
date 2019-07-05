@@ -29,8 +29,11 @@
                                                          selectionMode="single" selection="#{pracaController.pracaSelecionada}"
                                                          rowKey="#{praca.pracaPK}" rowIndexVar="linha">
                                                 <p:ajax event="rowSelect" listener="#{pracaController.onRowSelect}"/>
-                                                <p:column headerText="#" style="width: 2px">
+                                                <p:column headerText="#" style="width: 1px">
                                                     <h:outputText value="#{linha}"/>
+                                                </p:column>
+                                                <p:column headerText="Condominio" style="width: 200px">
+                                                    <h:outputText value="#{praca.condominio.nomeCondominio}"/>
                                                 </p:column>
                                                 <p:column headerText="Código" style="width: 30px">
                                                     <h:outputText value="#{praca.pracaPK.cdPraca}"/>
@@ -45,6 +48,9 @@
                                                 </p:column>
                                             </p:dataTable>
                                         </div>
+                                        <h:commandButton id="prAdicionarNovo" type="subimit" value="Adicionar Registro" action="#{pracaController.adicionaForm()}"
+                                                         actionListener="#{pracaController.setUsuarioConectado(usuariosController.usuarios.login)}"
+                                                         rendered="true"/>
                                     </p:tab>
                                     <p:tab title="Editar">
                                         <div class="label-dark-red" align="center">
@@ -54,7 +60,7 @@
                                             <div class="tab-pane box active" style="padding: 5px">
                                                 <div class="box-content">
                                                     <div class="padded">
-                                                        <ui:insert name="edit"/>
+                                                        <ui:insert name="editar"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -72,30 +78,7 @@
                                                 <div class="tab-pane box active" style="padding: 5px">
                                                     <div class="box-content">
                                                         <div class="padded">
-                                                            <div class="control-group">
-                                                                <h:outputLabel class="control-label" value="Condominio"/>
-                                                                <div class="controls">
-                                                                    <p:selectOneMenu id="somCondominio" value="#{pracaController.pracaPK.cdCondominio}">
-                                                                        <f:selectItems value="#{pracaController.listCondominio}" var="c"
-                                                                                       itemLabel="#{c.nomeCondominio}" itemValue="#{c.cdCondominio}"/>
-                                                                    </p:selectOneMenu>
-                                                                </div>
-                                                                <h:outputLabel class="control-label" value="Código"/>
-                                                                <div class="controls">
-                                                                    <h:inputText id="cdPraca" style="width: 50px" value="#{pracaController.pracaPK.cdPraca}"/>
-                                                                </div>
-                                                                <h:outputLabel class="control-label" value="Nome"/>
-                                                                <div class="controls">
-                                                                    <h:inputText id="nomePraca" style="width: 400px" value="#{pracaController.praca.nome}"/>
-                                                                </div>
-                                                                <h:outputLabel class="control-label" value="Situacao"/>
-                                                                <div class="controls">
-                                                                    <p:selectOneMenu id="somSituacao" value="#{pracaController.praca.situacao}">
-                                                                        <f:selectItems value="#{pracaController.enumSituacao}" var="situacao"
-                                                                                       itemLabel="#{situacao.descricao}" itemValue="#{situacao.cod}"/>
-                                                                    </p:selectOneMenu>
-                                                                </div>
-                                                            </div>
+                                                            <ui:insert name="adicionar"/>
                                                         </div>
                                                     </div>
                                                 </div>

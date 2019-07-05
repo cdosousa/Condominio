@@ -27,9 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Cristiano de Oliveira Sousa
- * @local OICI Serviços e Desenvolvimento Ltda-EPP
- * @data 03/07/2019
+ * @author cristiano
  */
 @Entity
 @Table(name = "gctorre")
@@ -37,7 +35,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Torre.findAll", query = "SELECT t FROM Torre t")
     , @NamedQuery(name = "Torre.findByCdCondominio", query = "SELECT t FROM Torre t WHERE t.torrePK.cdCondominio = :cdCondominio")
-    , @NamedQuery(name = "Torre.findByCdPraca", query = "SELECT t FROM Torre t WHERE t.torrePK.cdPraca = :cdPraca")
     , @NamedQuery(name = "Torre.findByCdTorre", query = "SELECT t FROM Torre t WHERE t.torrePK.cdTorre = :cdTorre")
     , @NamedQuery(name = "Torre.findByNome", query = "SELECT t FROM Torre t WHERE t.nome = :nome")
     , @NamedQuery(name = "Torre.findByUsuarioCadastro", query = "SELECT t FROM Torre t WHERE t.usuarioCadastro = :usuarioCadastro")
@@ -50,11 +47,17 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Torre implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "torre")
+    private List<Condomino> condominoList;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "torre")
     private List<Unidade> unidadeList;
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected TorrePK torrePK;
+    @Size(max = 4)
+    @Column(name = "cd_praca", length = 60)
+    private String cdPraca;
     @Size(max = 60)
     @Column(name = "nome", length = 60)
     private String nome;
@@ -78,9 +81,12 @@ public class Torre implements Serializable {
     private Date horaModificacao;
     @Column(name = "situacao")
     private Integer situacao;
+    @JoinColumn(name = "cd_condominio", referencedColumnName = "cd_condominio", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Condominio condominio;
     @JoinColumns({
         @JoinColumn(name = "cd_condominio", referencedColumnName = "cd_condominio", nullable = false, insertable = false, updatable = false)
-        , @JoinColumn(name = "cd_praca", referencedColumnName = "cd_praca", nullable = false, insertable = false, updatable = false)})
+        , @JoinColumn(name = "cd_praca", referencedColumnName = "cd_praca",nullable = false, insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Praca praca;
 
@@ -91,8 +97,8 @@ public class Torre implements Serializable {
         this.torrePK = torrePK;
     }
 
-    public Torre(String cdCondominio, String cdPraca, String cdTorre) {
-        this.torrePK = new TorrePK(cdCondominio, cdPraca, cdTorre);
+    public Torre(String cdCondominio, String cdTorre) {
+        this.torrePK = new TorrePK(cdCondominio, cdTorre);
     }
 
     public TorrePK getTorrePK() {
@@ -101,6 +107,14 @@ public class Torre implements Serializable {
 
     public void setTorrePK(TorrePK torrePK) {
         this.torrePK = torrePK;
+    }
+
+    public String getCdPraca() {
+        return cdPraca;
+    }
+
+    public void setCdPraca(String cdPraca) {
+        this.cdPraca = cdPraca;
     }
 
     public String getNome() {
@@ -167,6 +181,14 @@ public class Torre implements Serializable {
         this.situacao = situacao;
     }
 
+    public Condominio getCondominio() {
+        return condominio;
+    }
+
+    public void setCondominio(Condominio condominio) {
+        this.condominio = condominio;
+    }
+
     public Praca getPraca() {
         return praca;
     }
@@ -208,5 +230,13 @@ public class Torre implements Serializable {
     public void setUnidadeList(List<Unidade> unidadeList) {
         this.unidadeList = unidadeList;
     }
-    
+
+    @XmlTransient
+    public List<Condomino> getCondominoList() {
+        return condominoList;
+    }
+
+    public void setCondominoList(List<Condomino> condominoList) {
+        this.condominoList = condominoList;
+    }
 }

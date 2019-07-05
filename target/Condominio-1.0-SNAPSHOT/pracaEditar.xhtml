@@ -7,9 +7,9 @@
       xmlns:p="http://primefaces.org/ui">
     <f:view>
         <ui:composition template="Praca.xhtml">
-            <ui:define name="edit">
+            <ui:define name="editar">
                 <h:head>
-                    <title>pracaEdit</title>
+                    <title>Editar Praça</title>
                     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
                     <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0"/>
@@ -33,7 +33,7 @@
                                 </div>
                                 <h:outputLabel class="control-label" value="Nome"/>
                                 <div class="controls">
-                                    <h:inputText id="edtNomePrca" style="width: 400px" value="#{pracaController.nomeCondominio}"/>
+                                    <h:inputText id="edtNomePrca" style="width: 400px" value="#{pracaController.nomePraca}"/>
                                 </div>
                                 <h:outputLabel class="control-label" value="Situação"/>
                                 <div class="controls">

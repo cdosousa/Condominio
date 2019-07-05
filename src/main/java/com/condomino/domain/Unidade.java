@@ -6,8 +6,8 @@
 package com.condomino.domain;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Unidade.findAll", query = "SELECT u FROM Unidade u")
     , @NamedQuery(name = "Unidade.findByCdCondominio", query = "SELECT u FROM Unidade u WHERE u.unidadePK.cdCondominio = :cdCondominio")
-    , @NamedQuery(name = "Unidade.findByCdPraca", query = "SELECT u FROM Unidade u WHERE u.unidadePK.cdPraca = :cdPraca")
+    , @NamedQuery(name = "Unidade.findByCdPraca", query = "SELECT u FROM Unidade u WHERE u.cdPraca = :cdPraca")
     , @NamedQuery(name = "Unidade.findByCdTorre", query = "SELECT u FROM Unidade u WHERE u.unidadePK.cdTorre = :cdTorre")
     , @NamedQuery(name = "Unidade.findByCdUnidade", query = "SELECT u FROM Unidade u WHERE u.unidadePK.cdUnidade = :cdUnidade")
     , @NamedQuery(name = "Unidade.findByAndar", query = "SELECT u FROM Unidade u WHERE u.andar = :andar")
@@ -49,11 +49,14 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Unidade implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "unidade")
-    private Collection<Condomino> condominoCollection;
+    private List<Condomino> condominoList;
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected UnidadePK unidadePK;
+    @Size(max = 4)
+    @Column(name = "cd_praca", length = 4)
+    private String cdPraca;
     @Size(max = 2)
     @Column(name = "andar", length = 2)
     private String andar;
@@ -77,15 +80,26 @@ public class Unidade implements Serializable {
     private Date horaModificacao;
     @Column(name = "situacao")
     private Integer situacao;
+    
     @JoinColumn(name = "cpf_cnpj_proprietario", referencedColumnName = "cpf_cnpj")
     @ManyToOne
     private Proprietario cpfCnpjProprietario;
+    
     @JoinColumns({
         @JoinColumn(name = "cd_condominio", referencedColumnName = "cd_condominio", nullable = false, insertable = false, updatable = false)
-        , @JoinColumn(name = "cd_praca", referencedColumnName = "cd_praca", nullable = false, insertable = false, updatable = false)
         , @JoinColumn(name = "cd_torre", referencedColumnName = "cd_torre", nullable = false, insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Torre torre;
+    
+    @JoinColumn(name = "cd_condominio", referencedColumnName = "cd_condominio", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Condominio condominio;
+    
+    @JoinColumns({
+        @JoinColumn(name = "cd_condominio", referencedColumnName = "cd_condominio", nullable = false, insertable = false, updatable = false)
+        , @JoinColumn(name = "cd_praca", referencedColumnName = "cd_praca",nullable = false, insertable = false, updatable = false)})
+    @ManyToOne(optional = false)
+    private Praca praca;
 
     public Unidade() {
     }
@@ -94,8 +108,8 @@ public class Unidade implements Serializable {
         this.unidadePK = unidadePK;
     }
 
-    public Unidade(String cdCondominio, String cdPraca, String cdTorre, String cdUnidade) {
-        this.unidadePK = new UnidadePK(cdCondominio, cdPraca, cdTorre, cdUnidade);
+    public Unidade(String cdCondominio, String cdTorre, String cdUnidade) {
+        this.unidadePK = new UnidadePK(cdCondominio, cdTorre, cdUnidade);
     }
 
     public UnidadePK getUnidadePK() {
@@ -104,6 +118,14 @@ public class Unidade implements Serializable {
 
     public void setUnidadePK(UnidadePK unidadePK) {
         this.unidadePK = unidadePK;
+    }
+
+    public String getCdPraca() {
+        return cdPraca;
+    }
+
+    public void setCdPraca(String cdPraca) {
+        this.cdPraca = cdPraca;
     }
 
     public String getAndar() {
@@ -186,6 +208,34 @@ public class Unidade implements Serializable {
         this.torre = torre;
     }
 
+    /**
+     * @return the condominio
+     */
+    public Condominio getCondominio() {
+        return condominio;
+    }
+
+    /**
+     * @param condominio the condominio to set
+     */
+    public void setCondominio(Condominio condominio) {
+        this.condominio = condominio;
+    }
+
+    /**
+     * @return the praca
+     */
+    public Praca getPraca() {
+        return praca;
+    }
+
+    /**
+     * @param praca the praca to set
+     */
+    public void setPraca(Praca praca) {
+        this.praca = praca;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -212,12 +262,11 @@ public class Unidade implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Condomino> getCondominoCollection() {
-        return condominoCollection;
+    public List<Condomino> getCondominoList() {
+        return condominoList;
     }
 
-    public void setCondominoCollection(Collection<Condomino> condominoCollection) {
-        this.condominoCollection = condominoCollection;
+    public void setCondominoList(List<Condomino> condominoList) {
+        this.condominoList = condominoList;
     }
-    
 }

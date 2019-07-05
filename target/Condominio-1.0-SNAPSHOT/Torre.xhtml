@@ -32,11 +32,11 @@
                                                 <p:column headerText="#" style="width: 2px">
                                                     <h:outputText value="#{linha}"/>
                                                 </p:column>
-                                                <p:column headerText="Condomínio" style="width: 30px">
-                                                    <h:outputText value="#{torre.torrePK.cdCondominio}"/>
+                                                <p:column headerText="Condomínio" style="width: 200px">
+                                                    <h:outputText value="#{torre.condominio.nomeCondominio}"/>
                                                 </p:column>
-                                                <p:column headerText="Praca" style="width: 30px">
-                                                    <h:outputText value="#{torre.torrePK.cdPraca}"/>
+                                                <p:column headerText="Praca" style="width: 150px">
+                                                    <h:outputText value="#{torre.praca.nome}"/>
                                                 </p:column>
                                                 <p:column headerText="Código" style="width: 30px">
                                                     <h:outputText value="#{torre.torrePK.cdTorre}"/>
@@ -51,6 +51,9 @@
                                                 </p:column>
                                             </p:dataTable>
                                         </div>
+                                        <h:commandButton id="trAdionaNovo" type="submit" value="Novo Registro" action="#{torreController.adicionarForm()}"
+                                                         actionListener="#{torreController.setUsuarioConectado(usuariosController.usuarios.login)}"
+                                                         rendered="true"/>
                                     </p:tab>
                                     <p:tab title="Editar">
                                         <div class="label-dark-red" align="center">
@@ -60,38 +63,7 @@
                                             <div class="tab-pane box active" style="padding: 5px">
                                                 <div class="box-content">
                                                     <div class="padded">
-                                                        <div class="control-group">
-                                                                <h:outputLabel class="control-label" value="Condomínio"/>
-                                                                <div class="controls">
-                                                                    <p:selectOneMenu id="edtSomPracaCondominio" value="#{torreController.torrePK.cdCondominio}" disabled="true">
-                                                                        <f:selectItems value="#{torreController.listCondominio}" var="c"
-                                                                                       itemLabel="#{c.nomeCondominio}" itemValue="#{c.cdCondominio}"/>
-                                                                    </p:selectOneMenu>
-                                                                </div>
-                                                                <h:outputLabel class="control-label" value="Praca"/>
-                                                                <div class="controls">
-                                                                    <p:selectOneMenu id="edtSomPraca" value="#{torreController.torrePK.cdPraca}" disabled="true">
-                                                                        <f:selectItems value="#{torreController.listPraca}" var="p"
-                                                                                       itemLabel="#{p.nome}" itemValue="#{p.pracaPK.cdPraca}"/>
-                                                                    </p:selectOneMenu>
-                                                                </div>
-                                                                <h:outputLabel class="control-label" value="Código"/>
-                                                                <div class="controls">
-                                                                    <h:outputText id="edtCdTorre" style="width: 50px" value="#{torreController.torrePK.cdTorre}"/>
-                                                                </div>
-                                                                <h:outputLabel class="control-label" value="Nome"/>
-                                                                <div class="controls">
-                                                                    <h:inputText id="edtNomeTorre" style="width: 400px" value="#{torreController.nomeTorre}"/>
-                                                                </div>
-                                                                <h:outputLabel class="control-label" value="Situação"/>
-                                                                <div class="controls">
-                                                                    <p:selectOneMenu id="edtSituacao" value="#{torreController.situacaTorre}">
-                                                                        <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
-                                                                        <f:selectItems value="#{torreController.enumSituacao}" var="edtSituacao"
-                                                                                       itemLabel="#{edtSituacao.descricao}" itemValue="#{edtSituacao.cod}"/>
-                                                                    </p:selectOneMenu>
-                                                                </div>
-                                                            </div>
+                                                        <ui:insert name="editar"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -109,41 +81,7 @@
                                                 <div class="tab-pane box active">
                                                     <div class="box-content">
                                                         <div class="padded">
-                                                            <div class="control-group">
-                                                                <h:outputLabel class="control-label" value="Condomínio"/>
-                                                                <div class="controls">
-                                                                    <p:selectOneMenu id="addSomPracaCondominio" value="#{torreController.torrePK.cdCondominio}">
-                                                                        <p:ajax listener="#{torreController.onCondominoChange()}" update="addSomPraca"/>
-                                                                        <f:selectItem itemLabel="Selecione um condominio" itemValue="" noSelectionOption="true"/>
-                                                                        <f:selectItems value="#{torreController.listCondominio}" var="c"
-                                                                                       itemLabel="#{c.nomeCondominio}" itemValue="#{c.cdCondominio}"/>
-                                                                    </p:selectOneMenu>
-                                                                </div>
-                                                                <h:outputLabel class="control-label" value="Praca"/>
-                                                                <div class="controls">
-                                                                    <p:selectOneMenu id="addSomPraca" value="#{torreController.torrePK.cdPraca}">
-                                                                        <f:selectItem itemLabel="Selecione uma praça" itemValue="" noSelectionOption="true"/>
-                                                                        <f:selectItems value="#{torreController.listPraca}" var="p"
-                                                                                       itemLabel="#{p.nome}" itemValue="#{p.pracaPK.cdPraca}"/>
-                                                                    </p:selectOneMenu>
-                                                                </div>
-                                                                <h:outputLabel class="control-label" value="Código"/>
-                                                                <div class="controls">
-                                                                    <h:inputText id="addCdTorre" style="width: 50px" value="#{torreController.torrePK.cdTorre}"/>
-                                                                </div>
-                                                                <h:outputLabel class="control-label" value="Nome"/>
-                                                                <div class="controls">
-                                                                    <h:inputText id="addNomeTorre" style="width: 400px" value="#{torreController.torre.nome}"/>
-                                                                </div>
-                                                                <h:outputLabel class="control-label" value="Situação"/>
-                                                                <div class="controls">
-                                                                    <p:selectOneMenu id="addSituacao" value="#{torreController.torre.situacao}">
-                                                                        <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
-                                                                        <f:selectItems value="#{torreController.enumSituacao}" var="addSituacao"
-                                                                                       itemLabel="#{addSituacao.descricao}" itemValue="#{addSituacao.cod}"/>
-                                                                    </p:selectOneMenu>
-                                                                </div>
-                                                            </div>
+                                                            <ui:insert name="adicionar"/>
                                                         </div>
                                                     </div>
                                                 </div>

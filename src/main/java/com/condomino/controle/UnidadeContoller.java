@@ -10,6 +10,7 @@ import com.condomino.domain.Condominio;
 import com.condomino.domain.Unidade;
 import com.condomino.domain.UnidadePK;
 import com.condomino.domain.Praca;
+import com.condomino.domain.PracaPK;
 import com.condomino.domain.Proprietario;
 import com.condomino.domain.Torre;
 import com.parametros.modelo.DataSistema;
@@ -51,6 +52,8 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
      * Variáveis para edição do registro
      */
     private String usuarioConectado;
+    private String cdPraca;
+    private Praca praca;
     private String andarUnidade;
     private String cpfCnpjProprietario;
     private Proprietario proprietarioUnidade;
@@ -105,6 +108,34 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
      */
     public void setUsuarioConectado(String usuarioConectado) {
         this.usuarioConectado = usuarioConectado;
+    }
+
+    /**
+     * @return the cdPraca
+     */
+    public String getCdPraca() {
+        return cdPraca;
+    }
+
+    /**
+     * @param cdPraca the cdPraca to set
+     */
+    public void setCdPraca(String cdPraca) {
+        this.cdPraca = cdPraca;
+    }
+
+    /**
+     * @return the praca
+     */
+    public Praca getPraca() {
+        return praca;
+    }
+
+    /**
+     * @param praca the praca to set
+     */
+    public void setPraca(Praca praca) {
+        this.praca = praca;
     }
 
     /**
@@ -202,12 +233,9 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
      */
     public List<Torre> getListTorre() {
         if (unidadePK.getCdCondominio() != null && !unidadePK.getCdCondominio().trim().isEmpty()) {
-            if (unidadePK.getCdPraca() != null && !unidadePK.getCdPraca().trim().isEmpty()) {
                 String hql = "FROM  Torre WHERE torrePK.cdCondominio = '" + unidadePK.getCdCondominio()
-                        + "' AND torrePK.cdPraca = '" + unidadePK.getCdPraca()
                         + "'";
                 listTorre = tc.consultaHQL(hql);
-            }
         }
         return listTorre;
     }
@@ -334,6 +362,8 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
     public String adicionaRegistro() {
         setActiveIndex(0);
         dat.setData("");
+        PracaPK pracaPK = new PracaPK(unidadePK.getCdCondominio(), getCdPraca());
+        unidade.setCdPraca(pc.getById(pracaPK).getPracaPK().getCdPraca());
         unidade.setUnidadePK(unidadePK);
         unidade.setCpfCnpjProprietario(prc.getById(cpfCnpjProprietario));
         unidade.setUsuarioCadastro(getUsuarioConectado());
@@ -375,6 +405,8 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
     public String salvarRegistro() {
         setActiveIndex(0);
         dat.setData("");
+        PracaPK pracaPK = new PracaPK(unidadePK.getCdCondominio(), getCdPraca());
+        unidade.setCdPraca(pc.getById(pracaPK).getPracaPK().getCdPraca());
         unidade.setAndar(andarUnidade);
         unidade.setCpfCnpjProprietario(prc.getById(cpfCnpjProprietario));
         unidade.setSituacao(situacaUnidade);
@@ -394,8 +426,8 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
         System.out.println("Linha Selecionada: " + ((Unidade) e.getObject()).getUnidadePK().toString());
         unidade = getById(((Unidade) e.getObject()).getUnidadePK());
         unidadePK.setCdCondominio(unidade.getUnidadePK().getCdCondominio());
-        unidadePK.setCdPraca(unidade.getUnidadePK().getCdPraca());
         unidadePK.setCdUnidade(unidade.getUnidadePK().getCdUnidade());
+        setCdPraca(unidade.getCdPraca());
         setAndarUnidade(unidade.getAndar());
         setProprietarioUnidade(unidade.getCpfCnpjProprietario());
         setSituacaUnidade(unidade.getSituacao());
@@ -417,7 +449,6 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
      */
     public void onPracaChange() {
         System.out.println("Condominio trocado: " + unidadePK.getCdCondominio());
-        System.out.println("Praça trocada: " + unidadePK.getCdPraca());
         getListTorre();
     }
 }

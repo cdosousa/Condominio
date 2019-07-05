@@ -23,9 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Cristiano de Oliveira Sousa
- * @Local OICI Serviços e Desenvolvimento Ltda-EPP
- * @data 04/07/2019
+ * @author cristiano
  */
 @Entity
 @Table(name = "gccondomino")
@@ -33,10 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Condomino.findAll", query = "SELECT c FROM Condomino c")
     , @NamedQuery(name = "Condomino.findByCdCondominio", query = "SELECT c FROM Condomino c WHERE c.condominoPK.cdCondominio = :cdCondominio")
-    , @NamedQuery(name = "Condomino.findByCdPraca", query = "SELECT c FROM Condomino c WHERE c.condominoPK.cdPraca = :cdPraca")
-    , @NamedQuery(name = "Condomino.findByCdTorre", query = "SELECT c FROM Condomino c WHERE c.condominoPK.cdTorre = :cdTorre")
-    , @NamedQuery(name = "Condomino.findByCdUnidade", query = "SELECT c FROM Condomino c WHERE c.condominoPK.cdUnidade = :cdUnidade")
-    , @NamedQuery(name = "Condomino.findByCpf", query = "SELECT c FROM Condomino c WHERE c.condominoPK.cpf = :cpf")
+    , @NamedQuery(name = "Condomino.findByCdCondomino", query = "SELECT c FROM Condomino c WHERE c.condominoPK.cdCondomino = :cdCondomino")
+    , @NamedQuery(name = "Condomino.findByCpf", query = "SELECT c FROM Condomino c WHERE c.cpf = :cpf")
     , @NamedQuery(name = "Condomino.findByRg", query = "SELECT c FROM Condomino c WHERE c.rg = :rg")
     , @NamedQuery(name = "Condomino.findByDataEmissaoRg", query = "SELECT c FROM Condomino c WHERE c.dataEmissaoRg = :dataEmissaoRg")
     , @NamedQuery(name = "Condomino.findByOrgaoEmissorRg", query = "SELECT c FROM Condomino c WHERE c.orgaoEmissorRg = :orgaoEmissorRg")
@@ -57,6 +53,9 @@ public class Condomino implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected CondominoPK condominoPK;
+    @Size(max = 11)
+    @Column(name = "cpf", length = 11)
+    private String cpf;
     @Size(max = 15)
     @Column(name = "rg", length = 15)
     private String rg;
@@ -99,11 +98,18 @@ public class Condomino implements Serializable {
     private Date horaModificacao;
     @Column(name = "situacao")
     private Integer situacao;
+    @JoinColumn(name = "cd_condominio", referencedColumnName = "cd_condominio", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Condominio condominio;
     @JoinColumns({
         @JoinColumn(name = "cd_condominio", referencedColumnName = "cd_condominio", nullable = false, insertable = false, updatable = false)
-        , @JoinColumn(name = "cd_praca", referencedColumnName = "cd_praca", nullable = false, insertable = false, updatable = false)
-        , @JoinColumn(name = "cd_torre", referencedColumnName = "cd_torre", nullable = false, insertable = false, updatable = false)
-        , @JoinColumn(name = "cd_unidade", referencedColumnName = "cd_unidade", nullable = false, insertable = false, updatable = false)})
+        , @JoinColumn(name = "cd_torre", referencedColumnName = "cd_torre",nullable = false, insertable = false, updatable = false)})
+    @ManyToOne(optional = false)
+    private Torre torre;
+    @JoinColumns({
+        @JoinColumn(name = "cd_condominio", referencedColumnName = "cd_condominio", nullable = false, insertable = false, updatable = false)
+        , @JoinColumn(name = "cd_torre", referencedColumnName = "cd_torre",nullable = false, insertable = false, updatable = false)
+        , @JoinColumn(name = "cd_unidade", referencedColumnName = "cd_unidade",nullable = false, insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Unidade unidade;
 
@@ -114,8 +120,8 @@ public class Condomino implements Serializable {
         this.condominoPK = condominoPK;
     }
 
-    public Condomino(String cdCondominio, String cdPraca, String cdTorre, String cdUnidade, String cpf) {
-        this.condominoPK = new CondominoPK(cdCondominio, cdPraca, cdTorre, cdUnidade, cpf);
+    public Condomino(String cdCondominio, String cdCondomino) {
+        this.condominoPK = new CondominoPK(cdCondominio, cdCondomino);
     }
 
     public CondominoPK getCondominoPK() {
@@ -124,6 +130,14 @@ public class Condomino implements Serializable {
 
     public void setCondominoPK(CondominoPK condominoPK) {
         this.condominoPK = condominoPK;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getRg() {
@@ -244,6 +258,22 @@ public class Condomino implements Serializable {
 
     public void setSituacao(Integer situacao) {
         this.situacao = situacao;
+    }
+
+    public Condominio getCondominio() {
+        return condominio;
+    }
+
+    public void setCondominio(Condominio condominio) {
+        this.condominio = condominio;
+    }
+
+    public Torre getTorre() {
+        return torre;
+    }
+
+    public void setTorre(Torre torre) {
+        this.torre = torre;
     }
 
     public Unidade getUnidade() {

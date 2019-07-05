@@ -13,6 +13,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -77,6 +79,10 @@ public class Praca implements Serializable {
     private Date horaModificacao;
     @Column(name = "situacao")
     private Integer situacao;
+    
+    @JoinColumn(name = "cd_condominio", referencedColumnName = "cd_condominio", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Condominio condominio;
 
     public Praca() {
     }
@@ -161,6 +167,20 @@ public class Praca implements Serializable {
         this.situacao = situacao;
     }
 
+    /**
+     * @return the condominio
+     */
+    public Condominio getCondominio() {
+        return condominio;
+    }
+
+    /**
+     * @param condominio the condominio to set
+     */
+    public void setCondominio(Condominio condominio) {
+        this.condominio = condominio;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -203,5 +223,4 @@ public class Praca implements Serializable {
     public void setTorreList(List<Torre> torreList) {
         this.torreList = torreList;
     }
-    
 }

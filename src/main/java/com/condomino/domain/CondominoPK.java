@@ -26,34 +26,16 @@ public class CondominoPK implements Serializable {
     private String cdCondominio;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 8)
-    @Column(name = "cd_praca", nullable = false, length = 8)
-    private String cdPraca;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "cd_torre", nullable = false, length = 20)
-    private String cdTorre;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 4)
-    @Column(name = "cd_unidade", nullable = false, length = 4)
-    private String cdUnidade;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 11)
-    @Column(name = "cpf", nullable = false, length = 11)
-    private String cpf;
+    @Size(min = 1, max = 6)
+    @Column(name = "cd_condomino", nullable = false, length = 6)
+    private String cdCondomino;
 
     public CondominoPK() {
     }
 
-    public CondominoPK(String cdCondominio, String cdPraca, String cdTorre, String cdUnidade, String cpf) {
+    public CondominoPK(String cdCondominio, String cdCondomino) {
         this.cdCondominio = cdCondominio;
-        this.cdPraca = cdPraca;
-        this.cdTorre = cdTorre;
-        this.cdUnidade = cdUnidade;
-        this.cpf = cpf;
+        this.cdCondomino = cdCondomino;
     }
 
     public String getCdCondominio() {
@@ -64,46 +46,19 @@ public class CondominoPK implements Serializable {
         this.cdCondominio = cdCondominio;
     }
 
-    public String getCdPraca() {
-        return cdPraca;
+    public String getCdCondomino() {
+        return cdCondomino;
     }
 
-    public void setCdPraca(String cdPraca) {
-        this.cdPraca = cdPraca;
-    }
-
-    public String getCdTorre() {
-        return cdTorre;
-    }
-
-    public void setCdTorre(String cdTorre) {
-        this.cdTorre = cdTorre;
-    }
-
-    public String getCdUnidade() {
-        return cdUnidade;
-    }
-
-    public void setCdUnidade(String cdUnidade) {
-        this.cdUnidade = cdUnidade;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setCdCondomino(String cdCondomino) {
+        this.cdCondomino = cdCondomino;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (cdCondominio != null ? cdCondominio.hashCode() : 0);
-        hash += (cdPraca != null ? cdPraca.hashCode() : 0);
-        hash += (cdTorre != null ? cdTorre.hashCode() : 0);
-        hash += (cdUnidade != null ? cdUnidade.hashCode() : 0);
-        hash += (cpf != null ? cpf.hashCode() : 0);
+        hash += (cdCondomino != null ? cdCondomino.hashCode() : 0);
         return hash;
     }
 
@@ -117,16 +72,7 @@ public class CondominoPK implements Serializable {
         if ((this.cdCondominio == null && other.cdCondominio != null) || (this.cdCondominio != null && !this.cdCondominio.equals(other.cdCondominio))) {
             return false;
         }
-        if ((this.cdPraca == null && other.cdPraca != null) || (this.cdPraca != null && !this.cdPraca.equals(other.cdPraca))) {
-            return false;
-        }
-        if ((this.cdTorre == null && other.cdTorre != null) || (this.cdTorre != null && !this.cdTorre.equals(other.cdTorre))) {
-            return false;
-        }
-        if ((this.cdUnidade == null && other.cdUnidade != null) || (this.cdUnidade != null && !this.cdUnidade.equals(other.cdUnidade))) {
-            return false;
-        }
-        if ((this.cpf == null && other.cpf != null) || (this.cpf != null && !this.cpf.equals(other.cpf))) {
+        if ((this.cdCondomino == null && other.cdCondomino != null) || (this.cdCondomino != null && !this.cdCondomino.equals(other.cdCondomino))) {
             return false;
         }
         return true;
@@ -134,7 +80,7 @@ public class CondominoPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.condomino.domain.CondominoPK[ cdCondominio=" + cdCondominio + ", cdPraca=" + cdPraca + ", cdTorre=" + cdTorre + ", cdUnidade=" + cdUnidade + ", cpf=" + cpf + " ]";
+        return "com.condomino.domain.CondominoPK[ cdCondominio=" + cdCondominio + ", cdCondomino=" + cdCondomino + " ]";
     }
     
 }

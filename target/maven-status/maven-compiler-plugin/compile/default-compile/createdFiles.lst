@@ -32,6 +32,7 @@ com\condomino\domain\Torre_.class
 com\condomino\domain\TorrePK.class
 com\condomino\domain\Menus_.class
 com\condomino\controle\EquipamentoContoller.class
+com\condomino\controle\CondominoContoller.class
 com\condomino\controle\ProprietarioContoller.class
 com\condomino\domain\Condomino_.class
 com\condomino\domain\Unidade_.class

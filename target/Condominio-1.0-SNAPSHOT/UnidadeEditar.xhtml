@@ -31,7 +31,7 @@
                                 </div>
                                 <h:outputLabel class="control-label" value="Praca"/>
                                 <div class="controls">
-                                    <p:selectOneMenu id="edtSomPraca" value="#{unidadeController.unidadePK.cdPraca}" disabled="true">
+                                    <p:selectOneMenu id="edtSomPraca" value="#{unidadeController.cdPraca}" disabled="true">
                                         <f:selectItems value="#{unidadeController.listPraca}" var="p"
                                                        itemLabel="#{p.nome}" itemValue="#{p.pracaPK.cdPraca}"/>
                                     </p:selectOneMenu>

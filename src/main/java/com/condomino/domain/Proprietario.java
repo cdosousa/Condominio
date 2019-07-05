@@ -308,5 +308,4 @@ public class Proprietario implements Serializable {
     public void setUnidadeList(List<Unidade> unidadeList) {
         this.unidadeList = unidadeList;
     }
-    
 }

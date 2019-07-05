@@ -33,7 +33,7 @@
                                 </div>
                                 <h:outputLabel class="control-label" value="Praca"/>
                                 <div class="controls">
-                                    <p:selectOneMenu id="addSomPraca" value="#{unidadeController.unidadePK.cdPraca}">
+                                    <p:selectOneMenu id="addSomPraca" value="#{unidadeController.cdPraca}">
                                         <p:ajax listener="#{unidadeController.onPracaChange()}" update="addSomTorre"/>
                                         <f:selectItem itemLabel="Selecione uma praça" itemValue="" noSelectionOption="true"/>
                                         <f:selectItems value="#{unidadeController.listPraca}" var="p"

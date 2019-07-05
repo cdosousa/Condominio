@@ -10,6 +10,7 @@ import com.condomino.domain.Condominio;
 import com.condomino.domain.Torre;
 import com.condomino.domain.TorrePK;
 import com.condomino.domain.Praca;
+import com.condomino.domain.PracaPK;
 import com.parametros.modelo.DataSistema;
 import com.parametros.modelo.HoraSistema;
 import com.parametros.modelo.enums.SituacaoCadastral;
@@ -42,12 +43,15 @@ public class TorreContoller extends AcessoBancoDAO<Torre, Serializable> implemen
      */
     private final String anterior = "MenuPrincipal.xhtml";
     private final String atual = "Torre.xhtml";
+    private final String adicionar = "TorreAdicionar.xhtml";
+    private final String editar = "TorreEditar.xhtml";
 
     /**
      * Variáveis para edição do registro
      */
     private String usuarioConectado;
     private String nomeTorre;
+    private String cdPraca;
     private Integer situacaTorre;
     private Integer activeIndex = 0;
     private List<Condominio> listCondominio;
@@ -107,6 +111,20 @@ public class TorreContoller extends AcessoBancoDAO<Torre, Serializable> implemen
      */
     public void setNomeTorre(String nomeTorre) {
         this.nomeTorre = nomeTorre;
+    }
+
+    /**
+     * @return the cdPraca
+     */
+    public String getCdPraca() {
+        return cdPraca;
+    }
+
+    /**
+     * @param cdPraca the cdPraca to set
+     */
+    public void setCdPraca(String cdPraca) {
+        this.cdPraca = cdPraca;
     }
 
     /**
@@ -256,9 +274,11 @@ public class TorreContoller extends AcessoBancoDAO<Torre, Serializable> implemen
      *
      * @return retorna a página atual que requisitou
      */
-    public void adicionarForm() {
+    public String adicionarForm() {
+        setActiveIndex(2);
         torre = new Torre();
         torrePK = new TorrePK();
+        return adicionar;
     }
 
     /**
@@ -269,13 +289,15 @@ public class TorreContoller extends AcessoBancoDAO<Torre, Serializable> implemen
     public String adicionaRegistro() {
         setActiveIndex(0);
         dat.setData("");
+        PracaPK pracaPK = new PracaPK(torrePK.getCdCondominio(), cdPraca);
         torre.setTorrePK(torrePK);
+        torre.setPraca(pc.getById(pracaPK));
+        torre.setCdPraca(pracaPK.getCdPraca());
         torre.setUsuarioCadastro(getUsuarioConectado());
         torre.setDataCadastro(Date.valueOf(dat.getData()));
         torre.setHoraCadastro(Time.valueOf(hs.getHora()));
         create(torre);
         setMsg("Registro criado com sucesso!");
-        adicionarForm();
         return atual;
     }
 
@@ -289,7 +311,6 @@ public class TorreContoller extends AcessoBancoDAO<Torre, Serializable> implemen
         Torre e = getById(torrePK);
         delete(e);
         setMsg("Registro escluído com sucesso!");
-        adicionarForm();
         return atual;
     }
 
@@ -299,9 +320,9 @@ public class TorreContoller extends AcessoBancoDAO<Torre, Serializable> implemen
      * @return retorna a página atual que requisitou
      */
     public String editarRegistro() {
-        System.out.println("com.condomino.controle.TorreContoller.editarRegistro()");
         setActiveIndex(1);
-        return atual;
+        System.out.println("com.condomino.controle.TorreContoller.editarRegistro()");
+        return editar;
     }
 
     /**
@@ -312,12 +333,14 @@ public class TorreContoller extends AcessoBancoDAO<Torre, Serializable> implemen
     public String salvarRegistro() {
         setActiveIndex(0);
         dat.setData("");
+        PracaPK pracaPK = new PracaPK(torrePK.getCdCondominio(), cdPraca);
         torre.setNome(getNomeTorre());
+        torre.setPraca(pc.getById(pracaPK));
+        torre.setCdPraca(pracaPK.getCdPraca());
         torre.setSituacao(getSituacaTorre());
         torre.setDataModificacao(Date.valueOf(dat.getData()));
         torre.setHoraModificacao(Time.valueOf(hs.getHora()));
         save(torre);
-        adicionarForm();
         return atual;
     }
 
@@ -331,9 +354,9 @@ public class TorreContoller extends AcessoBancoDAO<Torre, Serializable> implemen
         System.out.println("Linha Selecionada: " + ((Torre) e.getObject()).getTorrePK().toString());
         torre = getById(((Torre) e.getObject()).getTorrePK());
         torrePK.setCdCondominio(torre.getTorrePK().getCdCondominio());
-        torrePK.setCdPraca(torre.getTorrePK().getCdPraca());
         torrePK.setCdTorre(torre.getTorrePK().getCdTorre());
         setNomeTorre(torre.getNome());
+        setCdPraca(torre.getPraca().getPracaPK().getCdPraca());
         setSituacaTorre(torre.getSituacao());
         System.out.println("Objeto Torre: " + torre.toString());
     }
