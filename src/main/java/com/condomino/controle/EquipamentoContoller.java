@@ -142,7 +142,7 @@ public class EquipamentoContoller extends AcessoBancoDAO<Equipamento, Serializab
      * @return the listCondominio
      */
     public List<Condominio> getListCondominio() {
-        listCondominio = cc.list();
+        //listCondominio = cc..list();
         return listCondominio;
     }
 

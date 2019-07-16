@@ -21,6 +21,7 @@ com\condomino\domain\Usuarios_.class
 com\condomino\controle\MenusController.class
 com\condomino\controle\UnidadeContoller.class
 com\condomino\domain\PracaPK.class
+com\condomino\controle\MoradorController.class
 com\condomino\domain\CondominoPK_.class
 com\condomino\controle\converter\TipoPessoaConverter.class
 com\condomino\domain\Equipamento_.class
@@ -48,6 +49,7 @@ com\condomino\domain\Visitante.class
 com\condomino\domain\TorrePK_.class
 com\condomino\domain\Prestadorservico.class
 com\condomino\dao\AcessoBancoDAO.class
+com\condomino\repositories\CondominioRepository.class
 com\condomino\domain\PortariaPK.class
 com\condomino\domain\Praca_.class
 com\condomino\controle\PortariaController.class

@@ -69,7 +69,7 @@ public class PortariaController extends AcessoBancoDAO<Portaria, Serializable> i
         cc = new CondominioController();
         enumSituacao = Arrays.asList(SituacaoCadastral.values());
         enumTipo = Arrays.asList(PortariaTipo.values());
-        listCondominio = cc.list();
+        //listCondominio = cc.list();
     }
 
     public Portaria getPortariaSelecionada() {

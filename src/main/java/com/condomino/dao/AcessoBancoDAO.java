@@ -8,6 +8,8 @@ package com.condomino.dao;
 import com.condomino.factory.HibernateUtility;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -30,7 +32,16 @@ public class AcessoBancoDAO<T,ID extends Serializable> implements AcessoBancoInt
     private final Class<T> oClass;
 
     public AcessoBancoDAO() {
-        this.oClass = (Class<T>) ((java.lang.reflect.ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        Class<?> directSubclass = getClass();
+        while(directSubclass.getSuperclass() != AcessoBancoDAO.class){
+            directSubclass = directSubclass.getSuperclass();
+        }
+        Type genericSuper = directSubclass.getGenericSuperclass();
+        if(!(genericSuper instanceof ParameterizedType)) throw new UnsupportedOperationException("A superclasse definida deve conter os tipos genéricos adequados.");
+        Type generic = ((ParameterizedType) genericSuper).getActualTypeArguments()[0];
+        if(!(generic instanceof Class<?>)) throw new UnsupportedOperationException("O tipo genérico do repositório deve ser uma classe que não tenha ela memsma outro tipo genérico.");
+        this.oClass = (Class<T>) generic;
+        //this.oClass = (Class<T>) ((java.lang.reflect.ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
     @Override

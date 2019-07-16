@@ -25,8 +25,13 @@
                                 <div class="box-header">
                                     <p:tab title="Listar">
                                         <div class="tab-pane box">
-                                            <p:dataTable id="condominios" var="cond" value="#{condominioController.listarCondominio}" selectionMode="single"
-                                                         selection="#{condominioController.condominio}" rowKey="#{cond.cdCondominio}">
+                                            <p:dataTable id="condominios" var="cond" value="#{condominioController.listarCondominio}"
+                                                         selectionMode="single" selection="#{condominioController.condominio}"
+                                                         rowKey="#{cond.cdCondominio}" rowIndexVar="linha">
+                                                <p:ajax event="rowSelect" listener="#{condominioController.onRowSelect}"/>
+                                                <p:column headerText="#" style="width: 1px">
+                                                    <h:outputText value="#{linha}"/>
+                                                </p:column>
                                                 <p:column headerText="Código" style="width: 50px">
                                                     <h:outputText value="#{cond.cdCondominio}"/>
                                                 </p:column>
@@ -58,14 +63,23 @@
                                         </div>
                                     </p:tab>
                                     <p:tab title="Editar">
-                                        <div class="box-content padded">
-                                            <div class="control-group">
-                                                <h:outputLabel class="control-label" value="Código"/>
-                                                <div class="controls">
-                                                    <h:inputText id="edtCdCondominio" style="width: 20mm" value="#{condominioController.condominio.cdCondominio}"/>
+                                        <div class="label-dark-red" align="center">
+                                            <span><h3>Editando registro selecionado</h3></span>
+                                        </div>
+                                        <div class="tab-content">
+                                            <div class="tab-pane box active" style="padding: 5px">
+                                                <div class="box-content">
+                                                    <div class="padded">
+                                                        <ui:insert name="editar"/>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <h:commandButton id="brSalvar" type="submit" value="Salvar Registro" action="#{condominioController.salvarRegistro()}"
+                                                         actionListener="#{condominioController.condominio.setUsuarioModificacao(usuariosController.usuarios.login)}"
+                                                         rendered="true"/>
+                                        <h:commandButton id="brExcluir" type="submit" value="Excluir Registro" action="#{condominioController.excluirRegistro()}"
+                                                         rendered="true"/>
                                     </p:tab>
                                     <p:tab title="Adicionar">
                                         <div class="box-content padded">
@@ -73,34 +87,7 @@
                                                 <div class="tab-pane box active" id="editar" style="padding: 5px">
                                                     <div class="box-content">
                                                         <div class="padded">
-                                                            <div class="control-group">
-                                                                <h:outputLabel class="control-label" value="Código"/>
-                                                                <div class="controls">
-                                                                    <h:inputText id="cdCondominio" style="width: 20mm" value="#{condominioController.condominio.cdCondominio}"/>
-                                                                </div>
-                                                                <h:outputLabel class="control-label" value="Nome"/>
-                                                                <div class="controls">
-                                                                    <h:inputText id="nome" style="width: 100mm" value="#{condominioController.condominio.nomeCondominio}"/>
-                                                                </div>
-                                                                <h:outputLabel class="control-label" value="Logradouro"/>
-                                                                <div class="controls control-label">
-                                                                    <h:inputText id="logradouro" style="width: 100mm" value="#{condominioController.condominio.logradouro}"/>
-                                                                    <h:outputLabel class="control-label" value="Numero"/>
-                                                                    <h:inputText id="numero" style="width: 15mm" value="#{condominioController.condominio.numero}"/>
-                                                                    <h:outputLabel class="control-label" value="Complemento"/>
-                                                                    <h:inputText id="complemento" style="width: 70mm" value="#{condominioController.condominio.complemento}"/>
-                                                                    <h:outputLabel class="control-label" value="Bairro"/>
-                                                                    <h:inputText id="bairro" style="width: 70mm" value="#{condominioController.condominio.bairro}"/>
-                                                                    <h:outputLabel class="control-label" value="Cidade"/>
-                                                                    <h:inputText id="cidade" style="width: 60mm" value="#{condominioController.condominio.cidade}"/>
-                                                                    <h:outputLabel class="control-label" value="UF"/>
-                                                                    <h:inputText id="uf" style="width: 10mm" value="#{condominioController.condominio.uf}"/>
-                                                                    <h:outputLabel class="control-label" value="Situacao"/>
-                                                                    <p:selectOneMenu id="txtSituacao" value="#{condominioController.condominio.situacao}">
-                                                                        <f:selectItems value="#{condominioController.enumSituacao}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao.cod}"/>
-                                                                    </p:selectOneMenu>
-                                                                </div>
-                                                            </div>
+                                                            <ui:insert name="adicionar"/>
                                                         </div>
                                                     </div>
                                                 </div>

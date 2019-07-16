@@ -5,8 +5,8 @@
  */
 package com.condomino.controle;
 
-import com.condomino.dao.AcessoBancoDAO;
 import com.condomino.domain.Condominio;
+import com.condomino.repositories.CondominioRepository;
 import com.parametros.modelo.DataSistema;
 import com.parametros.modelo.HoraSistema;
 import com.parametros.modelo.SessaoUsuario;
@@ -19,9 +19,10 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.inject.Inject;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -31,29 +32,27 @@ import javax.faces.model.ListDataModel;
  */
 @ManagedBean(name = "condominioController")
 @SessionScoped
-public class CondominioController extends AcessoBancoDAO<Condominio, Serializable> implements Serializable {
+public class CondominioController implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
-    private final String inserir = "Condominio";
-    private final String listar = "MenuPrincipal";
-    private Integer activIndex;
+
+    @Inject
+    private CondominioRepository cr;
+    private final String menu = "MenuPrincipal";
+    private final String listar = "Condominio.xhtml";
+    private final String adicionar = "CondominioAdicionar.xhtml";
+    private final String editar = "CondominioEditar.xhtml";
+    private Integer activIndex = 0;
 
     private DataSistema dat;
     private HoraSistema hs;
     private Condominio condominio;
     private DataModel<Condominio> listarCondominio;
     private List<SituacaoCadastral> enumSituacao;
-    private static SessaoUsuario su;
-    private String msg;
-    private String columnTemplate = "codigo nome logradouro numero complemento bairro municipio uf";
-
+    
     @PostConstruct
     public void init() {
-        dat = new DataSistema();
-        hs = new HoraSistema();
         condominio = new Condominio();
-        activIndex = 0;
         enumSituacao = Arrays.asList(SituacaoCadastral.values());
     }
 
@@ -61,8 +60,12 @@ public class CondominioController extends AcessoBancoDAO<Condominio, Serializabl
         return condominio;
     }
 
+    public void setCondominio(Condominio condominio) {
+        this.condominio = condominio;
+    }
+
     public DataModel<Condominio> getListarCondominio() {
-        List<Condominio> lista = list();
+        List<Condominio> lista = cr.list();
         listarCondominio = new ListDataModel<Condominio>(lista);
         return listarCondominio;
     }
@@ -75,15 +78,7 @@ public class CondominioController extends AcessoBancoDAO<Condominio, Serializabl
         return enumSituacao;
     }
 
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-    
-    public void setUsuarioCadastro(String usuarioCadastro){
+    public void setUsuarioCadastro(String usuarioCadastro) {
         condominio.setUsuarioCadastro(usuarioCadastro);
     }
 
@@ -101,50 +96,45 @@ public class CondominioController extends AcessoBancoDAO<Condominio, Serializabl
         this.activIndex = activIndex;
     }
 
-    /**
-     * @return the columnTemplate
-     */
-    public String getColumnTemplate() {
-        return columnTemplate;
-    }
-
-    /**
-     * @param columnTemplate the columnTemplate to set
-     */
-    public void setColumnTemplate(String columnTemplate) {
-        this.columnTemplate = columnTemplate;
-    }
-
     public String adicionaForm() {
+        setActivIndex(2);
         condominio = new Condominio();
-        return inserir;
-    }
-
-    public String excluirRegistro() {
-        Condominio c = (Condominio) (listarCondominio.getRowData());
-        delete(c);
-        setMsg("Registro Excluído com sucesso!");
-        return listar;
+        return adicionar;
     }
 
     public String adicionaRegistro() {
-        System.out.println("Vamos salvar o registro!");
-        FacesContext fc = FacesContext.getCurrentInstance();
-        System.out.println("Login: " + fc.getAttributes().get("txtLogin"));
-        System.out.println("Situação: " + fc.getAttributes().get("txtSituacao"));
-        System.out.println("Situação: " + enumSituacao.lastIndexOf(fc));
+        setActivIndex(0);
         dat.setData("");
-        //condominio.setUsuarioCadastro(su.getUsuarioConectado());
         condominio.setDataCadastro(Date.valueOf(dat.getData()));
         condominio.setHoraCadastro(Time.valueOf(hs.getHora()));
-        create(condominio);
-        setActivIndex(0);
-        setMsg("Registro salvo com sucesso!");
-        return "MenuPrincipal";
+        cr.create(condominio);
+        return listar;
     }
     
+    public String excluirRegistro() {
+        setActivIndex(0);
+        Condominio c = cr.getById(condominio.getCdCondominio());
+        cr.delete(c);
+        return listar;
+    }
+
     public String editarRegistro(){
         setActivIndex(1);
-        return "Condominio.xhtml";
+        return editar;
+    }
+    
+    public String salvarRegistro(){
+        dat = new DataSistema();
+        hs =  new HoraSistema();
+        setActivIndex(0);
+        dat.setData("");
+        condominio.setDataModificacao(Date.valueOf(dat.getData()));
+        condominio.setHoraModificacao(Time.valueOf(hs.getHora()));
+        cr.save(condominio);
+        return listar;
+    }
+
+    public void onRowSelect(SelectEvent e){
+        System.out.println("Linha Selecionada: " + ((Condominio) e.getObject()).getCdCondominio().toString());
     }
 }

@@ -53,6 +53,12 @@ public class Condomino implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected CondominoPK condominoPK;
+    @Size(max = 20)
+    @Column(name = "cd_torre", length = 20)
+    private String cdTorre;
+    @Size(max = 4)
+    @Column(name = "cd_unidade", length = 4)
+    private String cdUnidade;
     @Size(max = 11)
     @Column(name = "cpf", length = 11)
     private String cpf;
@@ -130,6 +136,34 @@ public class Condomino implements Serializable {
 
     public void setCondominoPK(CondominoPK condominoPK) {
         this.condominoPK = condominoPK;
+    }
+
+    /**
+     * @return the cdTorre
+     */
+    public String getCdTorre() {
+        return cdTorre;
+    }
+
+    /**
+     * @param cdTorre the cdTorre to set
+     */
+    public void setCdTorre(String cdTorre) {
+        this.cdTorre = cdTorre;
+    }
+
+    /**
+     * @return the cdUnidade
+     */
+    public String getCdUnidade() {
+        return cdUnidade;
+    }
+
+    /**
+     * @param cdUnidade the cdUnidade to set
+     */
+    public void setCdUnidade(String cdUnidade) {
+        this.cdUnidade = cdUnidade;
     }
 
     public String getCpf() {

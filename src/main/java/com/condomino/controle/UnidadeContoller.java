@@ -26,6 +26,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.inject.Inject;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -212,7 +213,7 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
      * @return the listCondominio
      */
     public List<Condominio> getListCondominio() {
-        listCondominio = cc.list();
+        //listCondominio = cc.list();
         return listCondominio;
     }
 

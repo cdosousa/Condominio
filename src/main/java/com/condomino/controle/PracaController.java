@@ -67,7 +67,7 @@ public class PracaController extends AcessoBancoDAO<Praca, Serializable> impleme
         praca = new Praca();
         cc = new CondominioController();
         enumSituacao = Arrays.asList(SituacaoCadastral.values());
-        listCondominio = cc.list();
+        //listCondominio = cc.cr.list();
     }
 
     public Praca getPracaSelecionada() {
