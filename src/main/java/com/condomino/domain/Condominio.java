@@ -51,8 +51,10 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Condominio implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "condominio")
+    private List<Unidade> unidadeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "condominio")
     private List<Torre> torreList;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "condominio")
     private List<Praca> pracaList;
 
@@ -283,7 +285,7 @@ public class Condominio implements Serializable {
     public void setTorreList(List<Torre> torreList) {
         this.torreList = torreList;
     }
-    
+
     @XmlTransient
     public List<Praca> getPracaList() {
         return pracaList;
@@ -291,5 +293,14 @@ public class Condominio implements Serializable {
 
     public void setPracaList(List<Praca> pracaList) {
         this.pracaList = pracaList;
+    }
+
+    @XmlTransient
+    public List<Unidade> getUnidadeList() {
+        return unidadeList;
+    }
+
+    public void setUnidadeList(List<Unidade> unidadeList) {
+        this.unidadeList = unidadeList;
     }
 }

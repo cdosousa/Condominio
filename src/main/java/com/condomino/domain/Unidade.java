@@ -48,9 +48,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Unidade.findBySituacao", query = "SELECT u FROM Unidade u WHERE u.situacao = :situacao")})
 public class Unidade implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "unidade")
-    private List<Condomino> condominoList;
-
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected UnidadePK unidadePK;
@@ -80,24 +77,24 @@ public class Unidade implements Serializable {
     private Date horaModificacao;
     @Column(name = "situacao")
     private Integer situacao;
-    
+
     @JoinColumn(name = "cpf_cnpj_proprietario", referencedColumnName = "cpf_cnpj")
     @ManyToOne
     private Proprietario cpfCnpjProprietario;
-    
+
     @JoinColumns({
         @JoinColumn(name = "cd_condominio", referencedColumnName = "cd_condominio", nullable = false, insertable = false, updatable = false)
         , @JoinColumn(name = "cd_torre", referencedColumnName = "cd_torre", nullable = false, insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Torre torre;
-    
+
     @JoinColumn(name = "cd_condominio", referencedColumnName = "cd_condominio", nullable = false, insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Condominio condominio;
-    
+
     @JoinColumns({
         @JoinColumn(name = "cd_condominio", referencedColumnName = "cd_condominio", nullable = false, insertable = false, updatable = false)
-        , @JoinColumn(name = "cd_praca", referencedColumnName = "cd_praca",nullable = false, insertable = false, updatable = false)})
+        , @JoinColumn(name = "cd_praca", referencedColumnName = "cd_praca", nullable = false, insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Praca praca;
 
@@ -259,14 +256,5 @@ public class Unidade implements Serializable {
     @Override
     public String toString() {
         return "com.condomino.domain.Unidade[ unidadePK=" + unidadePK + " ]";
-    }
-
-    @XmlTransient
-    public List<Condomino> getCondominoList() {
-        return condominoList;
-    }
-
-    public void setCondominoList(List<Condomino> condominoList) {
-        this.condominoList = condominoList;
     }
 }
