@@ -1,15 +1,17 @@
 package com.condomino.domain;
 
+import com.condomino.domain.Condomino;
 import com.condomino.domain.Praca;
 import com.condomino.domain.Torre;
 import com.condomino.domain.Unidade;
 import java.util.Date;
 import javax.annotation.Generated;
+import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-07-16T09:28:05")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-07-16T09:41:47")
 @StaticMetamodel(Condominio.class)
 public class Condominio_ { 
 
@@ -28,6 +30,7 @@ public class Condominio_ {
     public static volatile SingularAttribute<Condominio, String> complemento;
     public static volatile SingularAttribute<Condominio, String> cdCondominio;
     public static volatile SingularAttribute<Condominio, String> logradouro;
+    public static volatile CollectionAttribute<Condominio, Condomino> condominoCollection;
     public static volatile SingularAttribute<Condominio, Date> horaCadastro;
     public static volatile SingularAttribute<Condominio, String> usuarioCadastro;
     public static volatile SingularAttribute<Condominio, Date> dataCadastro;

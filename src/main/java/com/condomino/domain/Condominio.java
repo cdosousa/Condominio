@@ -6,6 +6,7 @@
 package com.condomino.domain;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -49,6 +50,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Condominio.findByHoraModificacao", query = "SELECT c FROM Condominio c WHERE c.horaModificacao = :horaModificacao")
     , @NamedQuery(name = "Condominio.findBySituacao", query = "SELECT c FROM Condominio c WHERE c.situacao = :situacao")})
 public class Condominio implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "condominio")
+    private Collection<Condomino> condominoCollection;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "condominio")
     private List<Unidade> unidadeList;
@@ -302,5 +306,14 @@ public class Condominio implements Serializable {
 
     public void setUnidadeList(List<Unidade> unidadeList) {
         this.unidadeList = unidadeList;
+    }
+
+    @XmlTransient
+    public Collection<Condomino> getCondominoCollection() {
+        return condominoCollection;
+    }
+
+    public void setCondominoCollection(Collection<Condomino> condominoCollection) {
+        this.condominoCollection = condominoCollection;
     }
 }

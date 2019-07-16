@@ -6,6 +6,7 @@
 package com.condomino.domain;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -45,6 +46,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Torre.findByHoraModificacao", query = "SELECT t FROM Torre t WHERE t.horaModificacao = :horaModificacao")
     , @NamedQuery(name = "Torre.findBySituacao", query = "SELECT t FROM Torre t WHERE t.situacao = :situacao")})
 public class Torre implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "torre")
+    private Collection<Condomino> condominoCollection;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "torre")
     private List<Unidade> unidadeList;
@@ -226,5 +230,14 @@ public class Torre implements Serializable {
 
     public void setUnidadeList(List<Unidade> unidadeList) {
         this.unidadeList = unidadeList;
+    }
+
+    @XmlTransient
+    public Collection<Condomino> getCondominoCollection() {
+        return condominoCollection;
+    }
+
+    public void setCondominoCollection(Collection<Condomino> condominoCollection) {
+        this.condominoCollection = condominoCollection;
     }
 }

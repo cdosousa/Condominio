@@ -2,6 +2,7 @@ com\condomino\domain\Veiculo.class
 com\condomino\domain\Visitante_.class
 com\condomino\controle\TorreContoller.class
 com\condomino\controle\CondominioController.class
+com\condomino\controle\converter\GrauParentescoConverter.class
 com\condomino\domain\Menus.class
 com\condomino\domain\UnidadePK.class
 com\condomino\dao\AcessoBancoInterfaceDAO.class
@@ -32,7 +33,6 @@ com\condomino\domain\Torre_.class
 com\condomino\domain\TorrePK.class
 com\condomino\domain\Menus_.class
 com\condomino\controle\EquipamentoContoller.class
-com\condomino\controle\CondominoContoller.class
 com\condomino\controle\ProprietarioContoller.class
 com\condomino\domain\Condomino_.class
 com\condomino\domain\Unidade_.class
