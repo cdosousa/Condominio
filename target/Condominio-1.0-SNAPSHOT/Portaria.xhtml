@@ -25,21 +25,24 @@
                                 <div class="box-header">
                                     <p:tab title="Listar">
                                         <div class="tab-pane box">
-                                            <p:dataTable id="dtabPortaria" var="portaria" value="#{portariaController.listarPortaria}"
+                                            <p:dataTable id="dtabPortaria" var="por" value="#{portariaController.listarPortaria}"
                                                          selectionMode="single" selection="#{portariaController.portariaSelecionada}"
-                                                         rowKey="#{portaria.portariaPK}" rowIndexVar="linha">
+                                                         rowKey="#{por.portariaPK}" rowIndexVar="linha">
                                                 <p:ajax event="rowSelect" listener="#{portariaController.onRowSelect}"/>
                                                 <p:column headerText="#" style="width: 2px">
                                                     <h:outputText value="#{linha}"/>
                                                 </p:column>
-                                                <p:column headerText="Cód.Condominio" style="width: 40px">
-                                                    <h:outputText value="#{portaria.portariaPK.cdCondominio}"/>
-                                                </p:column>
                                                 <p:column headerText="Cód.Portaria" style="width: 30px">
-                                                    <h:outputText value="#{portaria.portariaPK.cdPortaria}"/>
+                                                    <h:outputText value="#{por.portariaPK.cdPortaria}"/>
                                                 </p:column>
-                                                <p:column headerText="Nome" style="width: 400px">
-                                                    <h:outputText value="#{portaria.nome}"/>
+                                                <p:column headerText="Nome" style="width: 100px">
+                                                    <h:outputText value="#{por.nome}"/>
+                                                </p:column>
+                                                <p:column headerText="Tipo" style="width: 100px">
+                                                    <h:outputText value="#{portariaController.getTipoPortaria(por.tipo)}"/>
+                                                </p:column>
+                                                <p:column headerText="Condomínio" style="width: 200px">
+                                                    <h:outputText value="#{por.condominio.nomeCondominio}"/>
                                                 </p:column>
                                                 <p:column headerText="Opções" style="width: 15px">
                                                     <a href="#{portariaController.editarRegistro()}">
@@ -48,6 +51,8 @@
                                                 </p:column>
                                             </p:dataTable>
                                         </div>
+                                        <h:commandButton id="brIncluir" type="submit" value="Adicionar Novo" action="#{portariaController.adicionaForm()}"
+                                                         rendered="true"/>
                                     </p:tab>
                                     <p:tab title="Editar">
                                         <div class="label-dark-red" align="center">
@@ -57,43 +62,15 @@
                                             <div class="tab-pane box active" style="padding: 5px">
                                                 <div class="box-content">
                                                     <div class="padded">
-                                                        <div class="control-group">
-                                                            <h:outputLabel class="control-label" value="Condominio"/>
-                                                            <div class="controls">
-                                                                <p:selectOneMenu id="edtSomCondominio" value="#{portariaController.portariaPK.cdCondominio}" disabled="true">
-                                                                    <f:selectItems value="#{portariaController.listCondominio}" var="c"
-                                                                                   itemLabel="#{c.nomeCondominio}" itemValue="#{c.cdCondominio}"/>
-                                                                </p:selectOneMenu>
-                                                            </div>
-                                                            <h:outputLabel class="control-label" value="Cód.Portaria"/>
-                                                            <div class="controls">
-                                                                <h:outputText id="edtCdPortaria" style="width: 50px" value="#{portariaController.portariaPK.cdPortaria}"/>
-                                                            </div>
-                                                            <h:outputLabel class="control-label" value="Nome"/>
-                                                            <div class="controls">
-                                                                <h:inputText id="edtnomePortaria" style="width: 400px" value="#{portariaController.nomePortaria}"/>
-                                                            </div>
-                                                            <h:outputLabel class="control-label" value="Tipo"/>
-                                                            <div class="controls">
-                                                                <p:selectOneMenu id="edtSomTipo" value="#{portariaController.tipoPortaria}">
-                                                                    <f:selectItems value="#{portariaController.enumTipo}" var="tipo"
-                                                                                   itemLabel="#{tipo.descricao}" itemValue="#{tipo.cod}"/>
-                                                                </p:selectOneMenu>
-                                                            </div>
-                                                            <h:outputLabel class="control-label" value="Situacao"/>
-                                                            <div class="controls">
-                                                                <p:selectOneMenu id="edtSomSituacao" value="#{portariaController.situacaoPortaria}">
-                                                                    <f:selectItems value="#{portariaController.enumSituacao}" var="situacao"
-                                                                                   itemLabel="#{situacao.descricao}" itemValue="#{situacao.cod}"/>
-                                                                </p:selectOneMenu>
-                                                            </div>
-                                                        </div>
+                                                        <ui:insert name="editar"/>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <h:commandButton id="brSalvar" type="submit" value="Salvar" action="#{portariaController.salvarRegistro()}"
-                                                             onclick="#{portariaController.portaria.setUsuarioModificacao(usuariosController.usuarios.login)}"/>
-                                            <h:commandButton id="brExcluir" type="submit" value="Excluir" action="#{portariaController.excluirRegistro()}"/>
+                                            <h:commandButton id="brSalvar" type="submit" value="Salvar Registro" action="#{portariaController.salvarRegistro()}"
+                                                             actionListener="#{portariaController.portaria.setUsuarioModificacao(usuariosController.usuarios.login)}"
+                                                             rendered="true"/>
+                                            <h:commandButton id="brExcluir" type="submit" value="Excluir Registro" action="#{portariaController.excluirRegistro()}"
+                                                             rendered="true"/>
                                         </div>
                                     </p:tab>
                                     <p:tab title="Adicionar">
@@ -105,46 +82,13 @@
                                                 <div class="tab-pane box active" style="padding: 5px">
                                                     <div class="box-content">
                                                         <div class="padded">
-                                                            <div class="control-group">
-                                                                <h:outputLabel class="control-label" value="Condominio"/>
-                                                                <div class="controls">
-                                                                    <p:selectOneMenu id="somCondominio" value="#{portariaController.portariaPK.cdCondominio}">
-                                                                        <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
-                                                                        <f:selectItems value="#{portariaController.listCondominio}" var="c"
-                                                                                       itemLabel="#{c.nomeCondominio}" itemValue="#{c.cdCondominio}"/>
-                                                                    </p:selectOneMenu>
-                                                                </div>
-                                                                <h:outputLabel class="control-label" value="Código"/>
-                                                                <div class="controls">
-                                                                    <h:inputText id="cdPortaria" style="width: 50px" value="#{portariaController.portariaPK.cdPortaria}"/>
-                                                                </div>
-                                                                <h:outputLabel class="control-label" value="Nome"/>
-                                                                <div class="controls">
-                                                                    <h:inputText id="nomePortaria" style="width: 400px" value="#{portariaController.portaria.nome}"/>
-                                                                </div>
-                                                                <h:outputLabel class="control-label" value="Tipo"/>
-                                                                <div class="controls">
-                                                                    <p:selectOneMenu id="somTipo" value="#{portariaController.portaria.tipo}">
-                                                                        <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
-                                                                        <f:selectItems value="#{portariaController.enumTipo}" var="tipo"
-                                                                                       itemLabel="#{tipo.descricao}" itemValue="#{tipo.cod}"/>
-                                                                    </p:selectOneMenu>
-                                                                </div>
-                                                                <h:outputLabel class="control-label" value="Situacao"/>
-                                                                <div class="controls">
-                                                                    <p:selectOneMenu id="somSituacao" value="#{portariaController.portaria.situacao}">
-                                                                        <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
-                                                                        <f:selectItems value="#{portariaController.enumSituacao}" var="situacao"
-                                                                                       itemLabel="#{situacao.descricao}" itemValue="#{situacao.cod}"/>
-                                                                    </p:selectOneMenu>
-                                                                </div>
-                                                            </div>
+                                                            <ui:insert name="adicionar"/>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <h:commandButton id="brIncluir" type="submit" value="Incluir" action="#{portariaController.adicionaRegistro()}"
-                                                             actionListener="#{portariaController.setUsuarioConectado(usuariosController.usuarios.login)}"
+                                            <h:commandButton id="btAdionaNovo" type="submit" value="Incluir Registro" action="#{portariaController.adicionaRegistro()}"
+                                                             actionListener="#{portariaController.portaria.setUsuarioCadastro(usuariosController.usuarios.login)}"
                                                              rendered="true"/>
                                         </div>
                                     </p:tab>

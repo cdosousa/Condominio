@@ -51,10 +51,11 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Condominio implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "condominio")
+    private List<Portaria> portariaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "condominio")
     private List<Unidade> unidadeList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "condominio")
     private List<Torre> torreList;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "condominio")
     private List<Praca> pracaList;
 
@@ -132,7 +133,7 @@ public class Condominio implements Serializable {
     public Condominio(String cdCondominio) {
         this.cdCondominio = cdCondominio;
     }
-*/
+     */
     public String getCdCondominio() {
         return cdCondominio;
     }
@@ -276,6 +277,20 @@ public class Condominio implements Serializable {
     @Override
     public String toString() {
         return "com.condomino.domain.Condominio[ cdCondominio=" + cdCondominio + " ]";
+    }
+
+    /**
+     * @return the portariaList
+     */
+    public List<Portaria> getPortariaList() {
+        return portariaList;
+    }
+
+    /**
+     * @param portariaList the portariaList to set
+     */
+    public void setPortariaList(List<Portaria> portariaList) {
+        this.portariaList = portariaList;
     }
 
     @XmlTransient

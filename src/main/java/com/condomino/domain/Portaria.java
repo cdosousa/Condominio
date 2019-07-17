@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -68,6 +70,10 @@ public class Portaria implements Serializable {
     private Date horaModificacao;
     @Column(name = "situacao")
     private Integer situacao;
+    
+    @JoinColumn(name = "cd_condominio", referencedColumnName = "cd_condominio", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Condominio condominio;
 
     public Portaria() {
     }
@@ -158,6 +164,20 @@ public class Portaria implements Serializable {
 
     public void setSituacao(Integer situacao) {
         this.situacao = situacao;
+    }
+
+    /**
+     * @return the condominio
+     */
+    public Condominio getCondominio() {
+        return condominio;
+    }
+
+    /**
+     * @param condominio the condominio to set
+     */
+    public void setCondominio(Condominio condominio) {
+        this.condominio = condominio;
     }
 
     @Override

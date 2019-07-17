@@ -5,10 +5,11 @@
  */
 package com.condomino.controle;
 
-import com.condomino.dao.AcessoBancoDAO;
 import com.condomino.domain.Condominio;
 import com.condomino.domain.Portaria;
 import com.condomino.domain.PortariaPK;
+import com.condomino.repositories.CondominioRepository;
+import com.condomino.repositories.PortariaRepository;
 import com.parametros.modelo.DataSistema;
 import com.parametros.modelo.HoraSistema;
 import com.parametros.modelo.enums.PortariaTipo;
@@ -23,6 +24,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.inject.Inject;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -33,43 +35,46 @@ import org.primefaces.event.SelectEvent;
  */
 @ManagedBean(name = "portariaController")
 @SessionScoped
-public class PortariaController extends AcessoBancoDAO<Portaria, Serializable> implements Serializable {
+public class PortariaController implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
-    private final String menu = "MenuPrincipal.xhtml";
-    private final String atual = "Portaria.xhtml";
-    private String usuarioConectado;
-    private String nomePortaria = "";
-    private Integer situacaoPortaria = 1;
-    private Integer tipoPortaria = 1;
+
+    /**
+     * Ojetos com injeção de dependência da classe
+     */
+    @Inject
+    private CondominioRepository cr;
+    @Inject
+    private PortariaRepository pr;
+
+    /**
+     * Variáveis de Intância da classe
+     */
+    private final String listar = "Portaria.xhtml";
+    private final String adicionar = "PortariaAdicionar.xhtml";
+    private final String editar = "PortariaEditar.xhtml";
     private Integer activeIndex = 0;
-    private List<Condominio> listCondominio;
-    private CondominioController cc;
-    
+
+    /**
+     * Objetos de instância da classe
+     */
     private DataSistema dat;
     private HoraSistema hs;
-    private Portaria portariaSelecionada;
     private Portaria portaria;
-    private PortariaPK portariaPKSelecionada;
     private PortariaPK portariaPK;
+    private Portaria portariaSelecionada;
+    private PortariaPK portariaPKSelecionada;
     private DataModel<Portaria> listarPortaria;
+    private List<Condominio> listCondominio;
     private List<SituacaoCadastral> enumSituacao;
     private List<PortariaTipo> enumTipo;
-    private String msg;
-    
+
     @PostConstruct
-    public void init(){
-        dat =  new DataSistema();
-        hs = new HoraSistema();
+    public void init() {
         portariaSelecionada = new Portaria();
         portariaPKSelecionada = new PortariaPK();
-        portariaPK = new PortariaPK();
-        portaria = new Portaria();
-        cc = new CondominioController();
         enumSituacao = Arrays.asList(SituacaoCadastral.values());
         enumTipo = Arrays.asList(PortariaTipo.values());
-        //listCondominio = cc.list();
     }
 
     public Portaria getPortariaSelecionada() {
@@ -109,10 +114,9 @@ public class PortariaController extends AcessoBancoDAO<Portaria, Serializable> i
     public void setPortariaPK(PortariaPK portariaPK) {
         this.portariaPK = portariaPK;
     }
-    
-    
+
     public DataModel<Portaria> getListarPortaria() {
-        List<Portaria> lista = list();
+        List<Portaria> lista = pr.list();
         listarPortaria = new ListDataModel<Portaria>(lista);
         return listarPortaria;
     }
@@ -129,14 +133,6 @@ public class PortariaController extends AcessoBancoDAO<Portaria, Serializable> i
         return enumTipo;
     }
 
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
     public Integer getActiveIndex() {
         return activeIndex;
     }
@@ -146,120 +142,63 @@ public class PortariaController extends AcessoBancoDAO<Portaria, Serializable> i
     }
 
     /**
-     * @return the usuarioConectado
-     */
-    public String getUsuarioConectado() {
-        return usuarioConectado;
-    }
-
-    /**
-     * @param usuarioConectado the usuarioConectado to set
-     */
-    public void setUsuarioConectado(String usuarioConectado) {
-        this.usuarioConectado = usuarioConectado;
-    }
-
-    /**
-     * @return the nomePortaria
-     */
-    public String getNomePortaria() {
-        return nomePortaria;
-    }
-
-    /**
-     * @param nomePortaria the nomePortaria to set
-     */
-    public void setNomePortaria(String nomePortaria) {
-        this.nomePortaria = nomePortaria;
-    }
-
-    /**
-     * @return the situacaoPortaria
-     */
-    public Integer getSituacaoPortaria() {
-        return situacaoPortaria;
-    }
-
-    /**
-     * @param situacaoPortaria the situacaoPortaria to set
-     */
-    public void setSituacaoPortaria(Integer situacaoPortaria) {
-        this.situacaoPortaria = situacaoPortaria;
-    }
-
-    /**
-     * @return the tipoPortaria
-     */
-    public Integer getTipoPortaria() {
-        return tipoPortaria;
-    }
-
-    /**
-     * @param tipoPortaria the tipoPortaria to set
-     */
-    public void setTipoPortaria(Integer tipoPortaria) {
-        this.tipoPortaria = tipoPortaria;
-    }
-
-    /**
      * @return the listCondominio
      */
     public List<Condominio> getListCondominio() {
+        listCondominio = cr.list();
         return listCondominio;
     }
     
-    public void adicionaForm(){
+    public String getTipoPortaria(Integer cod){
+        return PortariaTipo.toEnum(cod).getDescricao();
+    }
+
+    public String adicionaForm() {
+        setActiveIndex(2);
         portaria = new Portaria();
         portariaPK = new PortariaPK();
+        return adicionar;
     }
-    
-    public String adicionaRegistro(){
+
+    public String adicionaRegistro() {
         setActiveIndex(0);
+        dat = new DataSistema();
+        hs = new HoraSistema();
         dat.setData("");
         portaria.setPortariaPK(portariaPK);
-        portaria.setUsuarioCadastro(getUsuarioConectado());
         portaria.setDataCadastro(Date.valueOf(dat.getData()));
         portaria.setHoraCadastro(Time.valueOf(hs.getHora()));
-        create(portaria);
-        setMsg("Registro salvo com sucesso!");
-        adicionaForm();
-        return atual;
+        pr.create(portaria);
+        return listar;
     }
-    
-    public String excluirRegistro(){
+
+    public String excluirRegistro() {
         setActiveIndex(0);
-        Portaria p = getById(portariaPK);
-        delete(p);
-        setMsg("Registro excluído com sucesso!");
-        adicionaForm();
-        return atual;
+        Portaria p = pr.getById(portariaPK);
+        pr.delete(p);
+        return listar;
     }
-    
-    public String editarRegistro(){
+
+    public String editarRegistro() {
         setActiveIndex(1);
-        return "Portaria.xhtml";
+        return editar;
     }
-    
-    public String salvarRegistro(){
+
+    public String salvarRegistro() {
         setActiveIndex(0);
+        dat = new DataSistema();
+        hs = new HoraSistema();
         dat.setData("");
-        portaria.setNome(getNomePortaria());
-        portaria.setSituacao(getSituacaoPortaria());
-        portaria.setTipo(getTipoPortaria());
         portaria.setDataModificacao(Date.valueOf(dat.getData()));
         portaria.setHoraModificacao(Time.valueOf(hs.getHora()));
-        save(portaria);
-        adicionaForm();
-        return atual;
+        pr.save(portaria);
+        return listar;
     }
-    
-    public void onRowSelect(SelectEvent e){
+
+    public void onRowSelect(SelectEvent e) {
         System.out.println("Linha Selecionada: " + ((Portaria) e.getObject()).getPortariaPK().toString());
-        portaria = getById(((Portaria) e.getObject()).getPortariaPK());
-        portariaPK.setCdCondominio(portaria.getPortariaPK().getCdCondominio());
-        portariaPK.setCdPortaria(portaria.getPortariaPK().getCdPortaria());
-        setNomePortaria(portaria.getNome());
-        setSituacaoPortaria(portaria.getSituacao());
+        portaria = pr.getById(((Portaria) e.getObject()).getPortariaPK());
+        setPortariaPK(portaria.getPortariaPK());
         System.out.println("Objeto Portaria: " + portaria.toString());
     }
 }

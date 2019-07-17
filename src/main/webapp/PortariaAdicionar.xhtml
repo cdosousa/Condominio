@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <ui:composition template="Portaria.xhtml">
+            <ui:define name="adicionar">
+                <h:body>
+                    <h:form id="PortariaAdicionar">
+                        <div class="control-group">
+                            <h:outputLabel class="control-label" value="Condominio"/>
+                            <div class="controls">
+                                <p:selectOneMenu id="somCondominio" value="#{portariaController.portariaPK.cdCondominio}">
+                                    <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{portariaController.listCondominio}" var="c"
+                                                   itemLabel="#{c.nomeCondominio}" itemValue="#{c.cdCondominio}"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <h:outputLabel class="control-label" value="Código"/>
+                            <div class="controls">
+                                <h:inputText id="cdPortaria" style="width: 50px" value="#{portariaController.portariaPK.cdPortaria}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Nome"/>
+                            <div class="controls">
+                                <h:inputText id="nomePortaria" style="width: 400px" value="#{portariaController.portaria.nome}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Tipo"/>
+                            <div class="controls">
+                                <p:selectOneMenu id="somTipo" value="#{portariaController.portaria.tipo}">
+                                    <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{portariaController.enumTipo}" var="tipo"
+                                                   itemLabel="#{tipo.descricao}" itemValue="#{tipo.cod}"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <h:outputLabel class="control-label" value="Situacao"/>
+                            <div class="controls">
+                                <p:selectOneMenu id="somSituacao" value="#{portariaController.portaria.situacao}">
+                                    <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{portariaController.enumSituacao}" var="situacao"
+                                                   itemLabel="#{situacao.descricao}" itemValue="#{situacao.cod}"/>
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+                    </h:form>
+                </h:body>
+            </ui:define>
+        </ui:composition>
+    </f:view>
+</html>
