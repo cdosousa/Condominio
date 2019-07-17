@@ -14,19 +14,15 @@ com\condomino\domain\PracaPK_.class
 com\condomino\domain\Usuarios.class
 com\condomino\domain\Praca.class
 com\condomino\controle\UsuariosController.class
-com\condomino\domain\Condomino.class
 com\condomino\domain\Torre.class
 com\condomino\factory\SessaoFabrica.class
 com\condomino\domain\Usuarios_.class
 com\condomino\controle\MenusController.class
 com\condomino\controle\UnidadeContoller.class
 com\condomino\domain\PracaPK.class
-com\condomino\controle\MoradorController.class
-com\condomino\domain\CondominoPK_.class
 com\condomino\controle\converter\TipoPessoaConverter.class
 com\condomino\domain\Equipamento_.class
 com\condomino\domain\Condominio_.class
-com\condomino\domain\CondominoPK.class
 com\condomino\domain\Prestadorservico_.class
 com\condomino\domain\Portaria.class
 com\condomino\domain\PortariaPK_.class
@@ -35,7 +31,6 @@ com\condomino\domain\TorrePK.class
 com\condomino\domain\Menus_.class
 com\condomino\controle\EquipamentoContoller.class
 com\condomino\controle\ProprietarioContoller.class
-com\condomino\domain\Condomino_.class
 com\condomino\domain\Unidade_.class
 com\condomino\factory\HibernateUtility.class
 com\condomino\domain\EquipamentoPK.class

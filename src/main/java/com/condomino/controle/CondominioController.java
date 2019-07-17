@@ -9,7 +9,6 @@ import com.condomino.domain.Condominio;
 import com.condomino.repositories.CondominioRepository;
 import com.parametros.modelo.DataSistema;
 import com.parametros.modelo.HoraSistema;
-import com.parametros.modelo.SessaoUsuario;
 import com.parametros.modelo.enums.SituacaoCadastral;
 import java.io.Serializable;
 import java.sql.Date;
@@ -35,9 +34,11 @@ import org.primefaces.event.SelectEvent;
 public class CondominioController implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
     @Inject
     private CondominioRepository cr;
+    private Condominio condominio;
+    private Condominio condominioSelecionado;
     private final String menu = "MenuPrincipal";
     private final String listar = "Condominio.xhtml";
     private final String adicionar = "CondominioAdicionar.xhtml";
@@ -46,13 +47,13 @@ public class CondominioController implements Serializable {
 
     private DataSistema dat;
     private HoraSistema hs;
-    private Condominio condominio;
     private DataModel<Condominio> listarCondominio;
     private List<SituacaoCadastral> enumSituacao;
-    
+
     @PostConstruct
     public void init() {
         condominio = new Condominio();
+        condominioSelecionado = new Condominio();
         enumSituacao = Arrays.asList(SituacaoCadastral.values());
     }
 
@@ -62,6 +63,20 @@ public class CondominioController implements Serializable {
 
     public void setCondominio(Condominio condominio) {
         this.condominio = condominio;
+    }
+
+    /**
+     * @return the condominioSelecionado
+     */
+    public Condominio getCondominioSelecionado() {
+        return condominioSelecionado;
+    }
+
+    /**
+     * @param condominioSelecionado the condominioSelecionado to set
+     */
+    public void setCondominioSelecionado(Condominio condominioSelecionado) {
+        this.condominioSelecionado = condominioSelecionado;
     }
 
     public DataModel<Condominio> getListarCondominio() {
@@ -103,6 +118,8 @@ public class CondominioController implements Serializable {
     }
 
     public String adicionaRegistro() {
+        dat = new DataSistema();
+        hs = new HoraSistema();
         setActivIndex(0);
         dat.setData("");
         condominio.setDataCadastro(Date.valueOf(dat.getData()));
@@ -110,7 +127,7 @@ public class CondominioController implements Serializable {
         cr.create(condominio);
         return listar;
     }
-    
+
     public String excluirRegistro() {
         setActivIndex(0);
         Condominio c = cr.getById(condominio.getCdCondominio());
@@ -118,14 +135,14 @@ public class CondominioController implements Serializable {
         return listar;
     }
 
-    public String editarRegistro(){
+    public String editarRegistro() {
         setActivIndex(1);
         return editar;
     }
-    
-    public String salvarRegistro(){
+
+    public String salvarRegistro() {
         dat = new DataSistema();
-        hs =  new HoraSistema();
+        hs = new HoraSistema();
         setActivIndex(0);
         dat.setData("");
         condominio.setDataModificacao(Date.valueOf(dat.getData()));
@@ -134,7 +151,8 @@ public class CondominioController implements Serializable {
         return listar;
     }
 
-    public void onRowSelect(SelectEvent e){
+    public void onRowSelect(SelectEvent e) {
         System.out.println("Linha Selecionada: " + ((Condominio) e.getObject()).getCdCondominio().toString());
+        setCondominio(cr.getById(((Condominio) e.getObject()).getCdCondominio().toString()));
     }
 }

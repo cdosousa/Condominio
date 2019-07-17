@@ -48,9 +48,6 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Torre implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "torre")
-    private Collection<Condomino> condominoCollection;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "torre")
     private List<Unidade> unidadeList;
 
     private static final long serialVersionUID = 1L;
@@ -230,14 +227,5 @@ public class Torre implements Serializable {
 
     public void setUnidadeList(List<Unidade> unidadeList) {
         this.unidadeList = unidadeList;
-    }
-
-    @XmlTransient
-    public Collection<Condomino> getCondominoCollection() {
-        return condominoCollection;
-    }
-
-    public void setCondominoCollection(Collection<Condomino> condominoCollection) {
-        this.condominoCollection = condominoCollection;
     }
 }

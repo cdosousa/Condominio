@@ -20,13 +20,13 @@
                 </h:head>
                 <h:body>
                     <h:form id="forCondominio">
-                        <p:tabView class="active" activeIndex="#{condominioController.activIndex}">
+                        <p:tabView id="tabCondominio" class="active" activeIndex="#{condominioController.activIndex}">
                             <div class="box">
                                 <div class="box-header">
                                     <p:tab title="Listar">
                                         <div class="tab-pane box">
                                             <p:dataTable id="condominios" var="cond" value="#{condominioController.listarCondominio}"
-                                                         selectionMode="single" selection="#{condominioController.condominio}"
+                                                         selectionMode="single" selection="#{condominioController.condominioSelecionado}"
                                                          rowKey="#{cond.cdCondominio}" rowIndexVar="linha">
                                                 <p:ajax event="rowSelect" listener="#{condominioController.onRowSelect}"/>
                                                 <p:column headerText="#" style="width: 1px">
@@ -59,8 +59,9 @@
                                                     </a>
                                                 </p:column>
                                             </p:dataTable>
-
                                         </div>
+                                        <h:commandButton id="brIncluir" type="submit" value="Adicionar Novo" action="#{condominioController.adicionaForm()}"
+                                                         rendered="true"/>
                                     </p:tab>
                                     <p:tab title="Editar">
                                         <div class="label-dark-red" align="center">
@@ -93,11 +94,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="btn-blue">
-                                            <h:commandButton id="gravarCondomino" type="submit" value="Criar Novo" action="#{condominioController.adicionaRegistro()}" 
-                                                             onclick="#{condominioController.setUsuarioCadastro(usuariosController.usuarios.login)}"
-                                                             rendered="true" />
-                                        </div>
+                                        <h:commandButton id="addBtIncluir" type="submit" value="Incluir" action="#{condominioController.adicionaRegistro()}" 
+                                                         actionListener="#{condominioController.condominio.setUsuarioCadastro(usuariosController.usuarios.login)}"/>
                                     </p:tab>
                                 </div>
                             </div>

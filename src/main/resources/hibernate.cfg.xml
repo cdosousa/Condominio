@@ -63,7 +63,6 @@ Contributor(s):
         <property name="hbm2ddl.auto">update</property>
         
         <mapping class="com.condomino.domain.Condominio"/>
-        <mapping class="com.condomino.domain.Condomino"/>
         <mapping class="com.condomino.domain.Equipamento"/>
         <mapping class="com.condomino.domain.Menus"/>
         <mapping class="com.condomino.domain.Portaria"/>

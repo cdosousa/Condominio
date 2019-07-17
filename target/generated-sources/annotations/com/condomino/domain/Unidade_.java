@@ -1,18 +1,16 @@
 package com.condomino.domain;
 
 import com.condomino.domain.Condominio;
-import com.condomino.domain.Condomino;
 import com.condomino.domain.Praca;
 import com.condomino.domain.Proprietario;
 import com.condomino.domain.Torre;
 import com.condomino.domain.UnidadePK;
 import java.util.Date;
 import javax.annotation.Generated;
-import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-07-16T16:09:31")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-07-17T10:44:53")
 @StaticMetamodel(Unidade.class)
 public class Unidade_ { 
 
@@ -25,7 +23,6 @@ public class Unidade_ {
     public static volatile SingularAttribute<Unidade, Date> dataModificacao;
     public static volatile SingularAttribute<Unidade, Condominio> condominio;
     public static volatile SingularAttribute<Unidade, String> cdPraca;
-    public static volatile CollectionAttribute<Unidade, Condomino> condominoCollection;
     public static volatile SingularAttribute<Unidade, Proprietario> cpfCnpjProprietario;
     public static volatile SingularAttribute<Unidade, Date> horaCadastro;
     public static volatile SingularAttribute<Unidade, Torre> torre;
