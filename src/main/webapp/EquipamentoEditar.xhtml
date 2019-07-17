@@ -43,11 +43,11 @@
                             </div>
                             <h:outputLabel class="control-label" value="Nome"/>
                             <div class="controls">
-                                <h:inputText id="edtNomeEquipamento" style="width: 400px" value="#{equipamentoController.nomeEquipamento}"/>
+                                <h:inputText id="edtNomeEquipamento" style="width: 400px" value="#{equipamentoController.equipamento.nome}"/>
                             </div>
                             <h:outputLabel class="control-label" value="Situação"/>
                             <div class="controls">
-                                <p:selectOneMenu id="edtSituacao" value="#{equipamentoController.situacaEquipamento}">
+                                <p:selectOneMenu id="edtSituacao" value="#{equipamentoController.equipamento.situacao}">
                                     <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
                                     <f:selectItems value="#{equipamentoController.enumSituacao}" var="edtSituacao"
                                                    itemLabel="#{edtSituacao.descricao}" itemValue="#{edtSituacao.cod}"/>

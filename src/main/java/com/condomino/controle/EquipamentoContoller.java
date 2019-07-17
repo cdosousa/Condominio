@@ -5,11 +5,13 @@
  */
 package com.condomino.controle;
 
-import com.condomino.dao.AcessoBancoDAO;
 import com.condomino.domain.Condominio;
 import com.condomino.domain.Equipamento;
 import com.condomino.domain.EquipamentoPK;
 import com.condomino.domain.Praca;
+import com.condomino.repositories.CondominioRepository;
+import com.condomino.repositories.EquipamentoRepository;
+import com.condomino.repositories.PracaRepository;
 import com.parametros.modelo.DataSistema;
 import com.parametros.modelo.HoraSistema;
 import com.parametros.modelo.enums.SituacaoCadastral;
@@ -23,6 +25,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.inject.Inject;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -33,30 +36,34 @@ import org.primefaces.event.SelectEvent;
  */
 @ManagedBean(name = "equipamentoController")
 @SessionScoped
-public class EquipamentoContoller extends AcessoBancoDAO<Equipamento, Serializable> implements Serializable {
+public class EquipamentoContoller implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
+     * Objetos com injeção de dependência
+     */
+    @Inject
+    private CondominioRepository cr;
+    @Inject
+    private PracaRepository pr;
+    @Inject
+    private EquipamentoRepository er;
+    
+    /**
      * Variáveis estáticas para fluxo de navegação da página
      */
-    private final String anterior = "MenuPrincipal.xhtml";
-    private final String atual = "Equipamento.xhtml";
+    private final String listar = "Equipamento.xhtml";
+    private final String adicionar = "EquipamentoAdicionar.xhtml";
     private final String editar = "EquipamentoEditar.xhtml";
 
     /**
      * Variáveis para edição do registro
      */
-    private String usuarioConectado;
-    private String nomeEquipamento;
-    private Integer situacaEquipamento;
     private Integer activeIndex = 0;
     private List<Condominio> listCondominio;
     private List<Praca> listPraca;
-    private CondominioController cc;
-    private PracaController pc;
-    private String msg;
-
+    
     /**
      * Objetos de instância para edição dos registros
      */
@@ -75,53 +82,7 @@ public class EquipamentoContoller extends AcessoBancoDAO<Equipamento, Serializab
         hs = new HoraSistema();
         setEquipamentoSelecinado(new Equipamento());
         setEquipamentoSelecinadoPK(new EquipamentoPK());
-        setEquipamento(new Equipamento());
-        setEquipamentoPK(new EquipamentoPK());
-        cc = new CondominioController();
-        pc = new PracaController();
         enumSituacao = Arrays.asList(SituacaoCadastral.values());
-    }
-
-    /**
-     * @return the usuarioConectado
-     */
-    public String getUsuarioConectado() {
-        return usuarioConectado;
-    }
-
-    /**
-     * @param usuarioConectado the usuarioConectado to set
-     */
-    public void setUsuarioConectado(String usuarioConectado) {
-        this.usuarioConectado = usuarioConectado;
-    }
-
-    /**
-     * @return the nomeEquipamento
-     */
-    public String getNomeEquipamento() {
-        return nomeEquipamento;
-    }
-
-    /**
-     * @param nomeEquipamento the nomeEquipamento to set
-     */
-    public void setNomeEquipamento(String nomeEquipamento) {
-        this.nomeEquipamento = nomeEquipamento;
-    }
-
-    /**
-     * @return the situacaEquipamento
-     */
-    public Integer getSituacaEquipamento() {
-        return situacaEquipamento;
-    }
-
-    /**
-     * @param situacaEquipamento the situacaEquipamento to set
-     */
-    public void setSituacaEquipamento(Integer situacaEquipamento) {
-        this.situacaEquipamento = situacaEquipamento;
     }
 
     /**
@@ -142,7 +103,7 @@ public class EquipamentoContoller extends AcessoBancoDAO<Equipamento, Serializab
      * @return the listCondominio
      */
     public List<Condominio> getListCondominio() {
-        //listCondominio = cc..list();
+        listCondominio = cr.list();
         return listCondominio;
     }
 
@@ -153,23 +114,9 @@ public class EquipamentoContoller extends AcessoBancoDAO<Equipamento, Serializab
         if (equipamentoPK.getCdCondominio() != null && !equipamentoPK.getCdCondominio().trim().isEmpty()) {
             String hql = "FROM Praca WHERE pracaPK.cdCondominio = '" + equipamentoPK.getCdCondominio()
                     + "'";
-            //listPraca = pc.consultaHQL(hql);
+            listPraca = pr.consultaHQL(hql);
         }
         return listPraca;
-    }
-
-    /**
-     * @return the msg
-     */
-    public String getMsg() {
-        return msg;
-    }
-
-    /**
-     * @param msg the msg to set
-     */
-    public void setMsg(String msg) {
-        this.msg = msg;
     }
 
     /**
@@ -232,7 +179,7 @@ public class EquipamentoContoller extends AcessoBancoDAO<Equipamento, Serializab
      * @return the listarEquipamento
      */
     public DataModel<Equipamento> getListarEquipamento() {
-        List<Equipamento> lista = list();
+        List<Equipamento> lista = er.list();
         listarEquipamento = new ListDataModel<Equipamento>(lista);
         return listarEquipamento;
     }
@@ -258,9 +205,10 @@ public class EquipamentoContoller extends AcessoBancoDAO<Equipamento, Serializab
      * @return retorna a página atual que requisitou
      */
     public String adicionarForm() {
+        setActiveIndex(2);
         equipamento = new Equipamento();
         equipamentoPK = new EquipamentoPK();
-        return atual;
+        return adicionar;
     }
 
     /**
@@ -270,15 +218,13 @@ public class EquipamentoContoller extends AcessoBancoDAO<Equipamento, Serializab
      */
     public String adicionaRegistro() {
         setActiveIndex(0);
+        dat = new DataSistema();
         dat.setData("");
         equipamento.setEquipamentoPK(equipamentoPK);
-        equipamento.setUsuarioCadastro(getUsuarioConectado());
         equipamento.setDataCadastro(Date.valueOf(dat.getData()));
         equipamento.setHoraCadastro(Time.valueOf(hs.getHora()));
-        create(equipamento);
-        setMsg("Registro criado com sucesso!");
-        adicionarForm();
-        return atual;
+        er.create(equipamento);
+        return listar;
     }
 
     /**
@@ -288,10 +234,9 @@ public class EquipamentoContoller extends AcessoBancoDAO<Equipamento, Serializab
      */
     public String excluirRegistro() {
         setActiveIndex(0);
-        Equipamento e = getById(equipamentoPK);
-        delete(e);
-        setMsg("Registro escluído com sucesso!");
-        return atual;
+        Equipamento e = er.getById(equipamentoPK);
+        er.delete(e);
+        return listar;
     }
 
     /**
@@ -300,7 +245,6 @@ public class EquipamentoContoller extends AcessoBancoDAO<Equipamento, Serializab
      * @return retorna a página atual que requisitou
      */
     public String editarRegistro() {
-        System.out.println("com.condomino.controle.EquipamentoContoller.editarRegistro()");
         setActiveIndex(1);
         return editar;
     }
@@ -313,13 +257,10 @@ public class EquipamentoContoller extends AcessoBancoDAO<Equipamento, Serializab
     public String salvarRegistro() {
         setActiveIndex(0);
         dat.setData("");
-        equipamento.setNome(getNomeEquipamento());
-        equipamento.setSituacao(getSituacaEquipamento());
         equipamento.setDataModificacao(Date.valueOf(dat.getData()));
         equipamento.setHoraModificacao(Time.valueOf(hs.getHora()));
-        save(equipamento);
-        adicionarForm();
-        return atual;
+        er.save(equipamento);
+        return listar;
     }
 
     /**
@@ -330,12 +271,8 @@ public class EquipamentoContoller extends AcessoBancoDAO<Equipamento, Serializab
      */
     public void onRowSelect(SelectEvent e) {
         System.out.println("Linha Selecionada: " + ((Equipamento) e.getObject()).getEquipamentoPK().toString());
-        equipamento = getById(((Equipamento) e.getObject()).getEquipamentoPK());
-        equipamentoPK.setCdCondominio(equipamento.getEquipamentoPK().getCdCondominio());
-        equipamentoPK.setCdPraca(equipamento.getEquipamentoPK().getCdPraca());
-        equipamentoPK.setCdEquipamento(equipamento.getEquipamentoPK().getCdEquipamento());
-        setNomeEquipamento(equipamento.getNome());
-        setSituacaEquipamento(equipamento.getSituacao());
+        equipamento = er.getById(((Equipamento) e.getObject()).getEquipamentoPK());
+        setEquipamentoPK(equipamento.getEquipamentoPK());
         System.out.println("Objeto Equipamento: " + equipamento.toString());
     }
 

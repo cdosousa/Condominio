@@ -25,18 +25,24 @@
                                 <div class="box-header">
                                     <p:tab title="Listar">
                                         <div class="tab-pane box">
-                                            <p:dataTable id="dtabEquipamento" var="equip" value="#{equipamentoController.listarEquipamento}"
+                                            <p:dataTable id="dtabEquipamento" var="equi" value="#{equipamentoController.listarEquipamento}"
                                                          selectionMode="single" selection="#{equipamentoController.equipamentoSelecinado}"
-                                                         rowKey="#{equip.equipamentoPK}" rowIndexVar="linha">
+                                                         rowKey="#{equi.equipamentoPK}" rowIndexVar="linha">
                                                 <p:ajax event="rowSelect" listener="#{equipamentoController.onRowSelect}"/>
                                                 <p:column headerText="#" style="width: 2px">
                                                     <h:outputText value="#{linha}"/>
                                                 </p:column>
                                                 <p:column headerText="Código" style="width: 30px">
-                                                    <h:outputText value="#{equip.equipamentoPK.cdEquipamento}"/>
+                                                    <h:outputText value="#{equi.equipamentoPK.cdEquipamento}"/>
                                                 </p:column>
-                                                <p:column headerText="Nome" style="width: 400px">
-                                                    <h:outputText value="#{equip.nome}"/>
+                                                <p:column headerText="Nome" style="width: 100px">
+                                                    <h:outputText value="#{equi.nome}"/>
+                                                </p:column>
+                                                <p:column headerText="Praça" style="width: 100px">
+                                                    <h:outputText value="#{equi.praca.nome}"/>
+                                                </p:column>
+                                                <p:column headerText="Condomínio" style="width: 200px">
+                                                    <h:outputText value="#{equi.praca.condominio.nomeCondominio}"/>
                                                 </p:column>
                                                 <p:column headerText="Opções" style="width: 15px">
                                                     <a href="#{equipamentoController.editarRegistro()}">
@@ -45,6 +51,8 @@
                                                 </p:column>
                                             </p:dataTable>
                                         </div>
+                                        <h:commandButton id="brIncluir" type="submit" value="Adicionar Novo" action="${equipamentoController.adicionarForm()}"
+                                                         rendered="true"/>
                                     </p:tab>
                                     <p:tab title="Editar">
                                         <div class="label-dark-red" align="center">
@@ -59,8 +67,10 @@
                                                 </div>
                                             </div>
                                             <h:commandButton id="edtBtSalvar" type="submit" value="Salvar" action="#{equipamentoController.salvarRegistro()}"
-                                                             onclick="#{equipamentoController.equipamento.setUsuarioModificacao(usuariosController.usuarios.login)}"/>
-                                            <h:commandButton id="edtBtExcluir" type="submit" value="Excluir" action="#{equipamentoController.excluirRegistro()}"/>
+                                                             actionListener="#{equipamentoController.equipamento.setUsuarioModificacao(usuariosController.usuarios.login)}"
+                                                             rendered="true"/>
+                                            <h:commandButton id="edtBtExcluir" type="submit" value="Excluir" action="#{equipamentoController.excluirRegistro()}"
+                                                             rendered="true"/>
                                         </div>
                                     </p:tab>
                                     <p:tab title="Adicionar">
@@ -72,48 +82,14 @@
                                                 <div class="tab-pane box active">
                                                     <div class="box-content">
                                                         <div class="padded">
-                                                            <div class="control-group">
-                                                                <h:outputLabel class="control-label" value="Condomínio"/>
-                                                                <div class="controls">
-                                                                    <p:selectOneMenu id="addSomPracaCondominio" value="#{equipamentoController.equipamentoPK.cdCondominio}">
-                                                                        <p:ajax listener="#{equipamentoController.onCondominoChange()}" update="addSomPraca"/>
-                                                                        <f:selectItem itemLabel="Selecione um condominio" itemValue="" noSelectionOption="true"/>
-                                                                        <f:selectItems value="#{equipamentoController.listCondominio}" var="c"
-                                                                                       itemLabel="#{c.nomeCondominio}" itemValue="#{c.cdCondominio}"/>
-                                                                    </p:selectOneMenu>
-                                                                </div>
-                                                                <h:outputLabel class="control-label" value="Praca"/>
-                                                                <div class="controls">
-                                                                    <p:selectOneMenu id="addSomPraca" value="#{equipamentoController.equipamentoPK.cdPraca}">
-                                                                        <f:selectItem itemLabel="Selecione uma praça" itemValue="" noSelectionOption="true"/>
-                                                                        <f:selectItems value="#{equipamentoController.listPraca}" var="p"
-                                                                                       itemLabel="#{p.nome}" itemValue="#{p.pracaPK.cdPraca}"/>
-                                                                    </p:selectOneMenu>
-                                                                </div>
-                                                                <h:outputLabel class="control-label" value="Código"/>
-                                                                <div class="controls">
-                                                                    <h:inputText id="addCdEquipamento" style="width: 50px" value="#{equipamentoController.equipamentoPK.cdEquipamento}"/>
-                                                                </div>
-                                                                <h:outputLabel class="control-label" value="Nome"/>
-                                                                <div class="controls">
-                                                                    <h:inputText id="addNomeEquipamento" style="width: 400px" value="#{equipamentoController.equipamento.nome}"/>
-                                                                </div>
-                                                                <h:outputLabel class="control-label" value="Situação"/>
-                                                                <div class="controls">
-                                                                    <p:selectOneMenu id="addSituacao" value="#{equipamentoController.equipamento.situacao}">
-                                                                        <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
-                                                                        <f:selectItems value="#{equipamentoController.enumSituacao}" var="addSituacao"
-                                                                                       itemLabel="#{addSituacao.descricao}" itemValue="#{addSituacao.cod}"/>
-                                                                    </p:selectOneMenu>
-                                                                </div>
-                                                            </div>
+                                                            <ui:insert name="adicionar"/>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <h:commandButton id="addBtIncluir" type="submit" value="Incluir" action="#{equipamentoController.adicionaRegistro()}"
-                                                         actionListener="#{equipamentoController.setUsuarioConectado(usuariosController.usuarios.login)}"
+                                                         actionListener="#{equipamentoController.equipamento.setUsuarioCadastro(usuariosController.usuarios.login)}"
                                                          rendered="true"/>
                                     </p:tab>
                                 </div>
