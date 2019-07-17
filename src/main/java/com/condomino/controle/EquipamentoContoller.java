@@ -153,7 +153,7 @@ public class EquipamentoContoller extends AcessoBancoDAO<Equipamento, Serializab
         if (equipamentoPK.getCdCondominio() != null && !equipamentoPK.getCdCondominio().trim().isEmpty()) {
             String hql = "FROM Praca WHERE pracaPK.cdCondominio = '" + equipamentoPK.getCdCondominio()
                     + "'";
-            listPraca = pc.consultaHQL(hql);
+            //listPraca = pc.consultaHQL(hql);
         }
         return listPraca;
     }

@@ -5,10 +5,11 @@
  */
 package com.condomino.controle;
 
-import com.condomino.dao.AcessoBancoDAO;
 import com.condomino.domain.Condominio;
 import com.condomino.domain.Praca;
 import com.condomino.domain.PracaPK;
+import com.condomino.repositories.CondominioRepository;
+import com.condomino.repositories.PracaRepository;
 import com.parametros.modelo.DataSistema;
 import com.parametros.modelo.HoraSistema;
 import com.parametros.modelo.enums.SituacaoCadastral;
@@ -22,6 +23,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.inject.Inject;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -32,21 +34,31 @@ import org.primefaces.event.SelectEvent;
  */
 @ManagedBean(name = "pracaController")
 @SessionScoped
-public class PracaController extends AcessoBancoDAO<Praca, Serializable> implements Serializable {
+public class PracaController implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
+    /**
+     * Objetos com injeção de dependência
+     */
+    @Inject
+    private CondominioRepository cr;
+    @Inject
+    private PracaRepository pr;
+
+    /**
+     * Variáveis de instância do controller
+     */
     private final String menu = "MenuPrincipal.xhtml";
-    private final String atual = "Praca.xhtml";
+    private final String listar = "Praca.xhtml";
     private final String adicionar = "PracaAdicionar.xhtml";
     private final String editar = "PracaEditar.xhtml";
-    private String usuarioConectado;
-    private String nomePraca = "";
-    private Integer situacao = 1;
+    //private String usuarioConectado;
+    //private String nomePraca = "";
+    //private Integer situacao = 1;
     private Integer activeIndex = 0;
     private List<Condominio> listCondominio;
-    private CondominioController cc;
-    
+
     private DataSistema dat;
     private HoraSistema hs;
     private Praca pracaSelecionada;
@@ -56,18 +68,16 @@ public class PracaController extends AcessoBancoDAO<Praca, Serializable> impleme
     private DataModel<Praca> listarPraca;
     private List<SituacaoCadastral> enumSituacao;
     private String msg;
-    
+
     @PostConstruct
-    public void init(){
-        dat =  new DataSistema();
+    public void init() {
+        dat = new DataSistema();
         hs = new HoraSistema();
+        praca = new Praca();
+        pracaPK = new PracaPK();
         pracaSelecionada = new Praca();
         pracaPKSelecionada = new PracaPK();
-        pracaPK = new PracaPK();
-        praca = new Praca();
-        cc = new CondominioController();
         enumSituacao = Arrays.asList(SituacaoCadastral.values());
-        //listCondominio = cc.cr.list();
     }
 
     public Praca getPracaSelecionada() {
@@ -107,10 +117,9 @@ public class PracaController extends AcessoBancoDAO<Praca, Serializable> impleme
     public void setPracaPK(PracaPK pracaPK) {
         this.pracaPK = pracaPK;
     }
-    
-    
+
     public DataModel<Praca> getListarPraca() {
-        List<Praca> lista = list();
+        List<Praca> lista = pr.list();
         listarPraca = new ListDataModel<Praca>(lista);
         return listarPraca;
     }
@@ -140,104 +149,57 @@ public class PracaController extends AcessoBancoDAO<Praca, Serializable> impleme
     }
 
     /**
-     * @return the usuarioConectado
-     */
-    public String getUsuarioConectado() {
-        return usuarioConectado;
-    }
-
-    /**
-     * @param usuarioConectado the usuarioConectado to set
-     */
-    public void setUsuarioConectado(String usuarioConectado) {
-        this.usuarioConectado = usuarioConectado;
-    }
-
-    /**
-     * @return the nomePraca
-     */
-    public String getNomePraca() {
-        return nomePraca;
-    }
-
-    /**
-     * @param nomePraca the nomePraca to set
-     */
-    public void setNomePraca(String nomePraca) {
-        this.nomePraca = nomePraca;
-    }
-
-    /**
-     * @return the situacao
-     */
-    public Integer getSituacao() {
-        return situacao;
-    }
-
-    /**
-     * @param situacao the situacao to set
-     */
-    public void setSituacao(Integer situacao) {
-        this.situacao = situacao;
-    }
-
-    /**
      * @return the listCondominio
      */
     public List<Condominio> getListCondominio() {
+        listCondominio = cr.list();
         return listCondominio;
     }
-    
-    public String adicionaForm(){
+
+    public String adicionaForm() {
         setActiveIndex(2);
         praca = new Praca();
         pracaPK = new PracaPK();
         return adicionar;
     }
-    
-    public String adicionaRegistro(){
+
+    public String adicionaRegistro() {
         setActiveIndex(0);
         dat.setData("");
         praca.setPracaPK(pracaPK);
-        praca.setUsuarioCadastro(getUsuarioConectado());
         praca.setDataCadastro(Date.valueOf(dat.getData()));
         praca.setHoraCadastro(Time.valueOf(hs.getHora()));
-        create(praca);
+        pr.create(praca);
         setMsg("Registro salvo com sucesso!");
-        return atual;
+        return listar;
     }
-    
-    public String excluirRegistro(){
+
+    public String excluirRegistro() {
         setActiveIndex(0);
-        Praca p = getById(pracaPK);
-        delete(p);
+        Praca p = pr.getById(pracaPK);
+        pr.delete(p);
         setMsg("Registro excluído com sucesso!");
-        return atual;
+        return listar;
     }
-    
-    public String editarRegistro(){
+
+    public String editarRegistro() {
         setActiveIndex(1);
         return editar;
     }
-    
-    public String salvarRegistro(){
+
+    public String salvarRegistro() {
         setActiveIndex(0);
         dat.setData("");
-        praca.setNome(getNomePraca());
-        praca.setSituacao(getSituacao());
         praca.setDataModificacao(Date.valueOf(dat.getData()));
         praca.setHoraModificacao(Time.valueOf(hs.getHora()));
-        save(praca);
-        return atual;
+        pr.save(praca);
+        return listar;
     }
-    
-    public void onRowSelect(SelectEvent e){
+
+    public void onRowSelect(SelectEvent e) {
         System.out.println("Linha Selecionada: " + ((Praca) e.getObject()).getPracaPK().toString());
-        praca = getById(((Praca) e.getObject()).getPracaPK());
-        pracaPK.setCdCondominio(praca.getPracaPK().getCdCondominio());
-        pracaPK.setCdPraca(praca.getPracaPK().getCdPraca());
-        setNomePraca(praca.getNome());
-        setSituacao(praca.getSituacao());
+        praca = pr.getById(((Praca) e.getObject()).getPracaPK());
+        setPracaPK(praca.getPracaPK());
         System.out.println("Objeto Praca: " + praca.toString());
     }
 }

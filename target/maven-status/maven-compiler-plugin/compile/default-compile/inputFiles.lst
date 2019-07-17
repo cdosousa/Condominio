@@ -2,6 +2,7 @@ F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\Portaria.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\TorrePK.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\controle\TorreContoller.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\PortariaPK.java
+F:\Projetos\Maven\Condominio\src\main\java\com\condomino\repositories\EquipamentoRepository.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\Condominio.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\controle\CondominioController.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\controle\UsuariosController.java
@@ -9,6 +10,7 @@ F:\Projetos\Maven\Condominio\src\main\java\com\condomino\controle\converter\Tipo
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\Menus.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\controle\UnidadeContoller.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\UnidadePK.java
+F:\Projetos\Maven\Condominio\src\main\java\com\condomino\repositories\PracaRepository.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\Prestadorservico.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\EquipamentoPK.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\controle\converter\GrauParentescoConverter.java

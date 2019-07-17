@@ -171,7 +171,7 @@ public class TorreContoller extends AcessoBancoDAO<Torre, Serializable> implemen
         if (torrePK.getCdCondominio() != null && !torrePK.getCdCondominio().trim().isEmpty()) {
             String hql = "FROM Praca WHERE pracaPK.cdCondominio = '" + torrePK.getCdCondominio()
                     + "'";
-            listPraca = pc.consultaHQL(hql);
+            //listPraca = pc.consultaHQL(hql);
         }
         return listPraca;
     }
@@ -292,7 +292,7 @@ public class TorreContoller extends AcessoBancoDAO<Torre, Serializable> implemen
         dat.setData("");
         PracaPK pracaPK = new PracaPK(torrePK.getCdCondominio(), cdPraca);
         torre.setTorrePK(torrePK);
-        torre.setPraca(pc.getById(pracaPK));
+        //torre.setPraca(pc.getById(pracaPK));
         torre.setCdPraca(pracaPK.getCdPraca());
         torre.setUsuarioCadastro(getUsuarioConectado());
         torre.setDataCadastro(Date.valueOf(dat.getData()));
@@ -336,7 +336,7 @@ public class TorreContoller extends AcessoBancoDAO<Torre, Serializable> implemen
         dat.setData("");
         PracaPK pracaPK = new PracaPK(torrePK.getCdCondominio(), cdPraca);
         torre.setNome(getNomeTorre());
-        torre.setPraca(pc.getById(pracaPK));
+        //torre.setPraca(pc.getById(pracaPK));
         torre.setCdPraca(pracaPK.getCdPraca());
         torre.setSituacao(getSituacaTorre());
         torre.setDataModificacao(Date.valueOf(dat.getData()));

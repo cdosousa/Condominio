@@ -224,7 +224,7 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
         if (unidadePK.getCdCondominio() != null && !unidadePK.getCdCondominio().trim().isEmpty()) {
             String hql = "FROM Praca WHERE pracaPK.cdCondominio = '" + unidadePK.getCdCondominio()
                     + "'";
-            listPraca = pc.consultaHQL(hql);
+            //listPraca = pc.consultaHQL(hql);
         }
         return listPraca;
     }
@@ -364,7 +364,7 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
         setActiveIndex(0);
         dat.setData("");
         PracaPK pracaPK = new PracaPK(unidadePK.getCdCondominio(), getCdPraca());
-        unidade.setCdPraca(pc.getById(pracaPK).getPracaPK().getCdPraca());
+        //unidade.setCdPraca(pc.getById(pracaPK).getPracaPK().getCdPraca());
         unidade.setUnidadePK(unidadePK);
         unidade.setCpfCnpjProprietario(prc.getById(cpfCnpjProprietario));
         unidade.setUsuarioCadastro(getUsuarioConectado());
@@ -407,7 +407,7 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
         setActiveIndex(0);
         dat.setData("");
         PracaPK pracaPK = new PracaPK(unidadePK.getCdCondominio(), getCdPraca());
-        unidade.setCdPraca(pc.getById(pracaPK).getPracaPK().getCdPraca());
+        //unidade.setCdPraca(pc.getById(pracaPK).getPracaPK().getCdPraca());
         unidade.setAndar(andarUnidade);
         unidade.setCpfCnpjProprietario(prc.getById(cpfCnpjProprietario));
         unidade.setSituacao(situacaUnidade);

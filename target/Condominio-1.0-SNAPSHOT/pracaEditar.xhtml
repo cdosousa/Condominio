@@ -23,21 +23,21 @@
                         <div class="control-group">
                             <h:outputLabel class="control-label" value="Condominio"/>
                             <div class="controls">
-                                <p:selectOneMenu id="edtSomCondominio" value="#{pracaController.pracaPK.cdCondominio}">
+                                <p:selectOneMenu id="edtSomCondominio" value="#{pracaController.praca.pracaPK.cdCondominio}" disabled="true">
                                     <f:selectItems value="#{pracaController.listCondominio}" var="ec"
                                                    itemLabel="#{ec.nomeCondominio}" itemValue="#{ec.cdCondominio}"/>
                                 </p:selectOneMenu>
                                 <h:outputLabel class="control-label" value="Código"/>
                                 <div class="controls">
-                                    <h:inputText id="edtCdPrca" style="width: 50px" value="#{pracaController.pracaPK.cdPraca}"/>
+                                    <h:outputText id="edtCdPrca" style="width: 50px" value="#{pracaController.praca.pracaPK.cdPraca}"/>
                                 </div>
                                 <h:outputLabel class="control-label" value="Nome"/>
                                 <div class="controls">
-                                    <h:inputText id="edtNomePrca" style="width: 400px" value="#{pracaController.nomePraca}"/>
+                                    <h:inputText id="edtNomePrca" style="width: 400px" value="#{pracaController.praca.nome}"/>
                                 </div>
                                 <h:outputLabel class="control-label" value="Situação"/>
                                 <div class="controls">
-                                    <p:selectOneMenu id="edtSomSituacao" value="#{pracaController.situacao}">
+                                    <p:selectOneMenu id="edtSomSituacao" value="#{pracaController.praca.situacao}">
                                         <f:selectItems value="#{pracaController.enumSituacao}" var="edtSituacao"
                                                        itemLabel="#{edtSituacao.descricao}" itemValue="#{edtSituacao.cod}"/>
                                     </p:selectOneMenu>

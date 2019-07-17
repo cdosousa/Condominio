@@ -34,6 +34,7 @@ com\condomino\controle\ProprietarioContoller.class
 com\condomino\domain\Unidade_.class
 com\condomino\factory\HibernateUtility.class
 com\condomino\domain\EquipamentoPK.class
+com\condomino\repositories\EquipamentoRepository.class
 com\condomino\domain\Unidade.class
 com\condomino\domain\Veiculo_.class
 com\condomino\controle\converter\TipoPortariaConverter.class
@@ -45,6 +46,7 @@ com\condomino\domain\TorrePK_.class
 com\condomino\domain\Prestadorservico.class
 com\condomino\dao\AcessoBancoDAO.class
 com\condomino\repositories\CondominioRepository.class
+com\condomino\repositories\PracaRepository.class
 com\condomino\domain\PortariaPK.class
 com\condomino\domain\Praca_.class
 com\condomino\controle\PortariaController.class

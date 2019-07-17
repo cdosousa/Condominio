@@ -25,21 +25,21 @@
                                 <div class="box-header">
                                     <p:tab title="Listar">
                                         <div class="tab-pane box">
-                                            <p:dataTable id="dtabPraca" var="praca" value="#{pracaController.listarPraca}"
+                                            <p:dataTable id="dtabPraca" var="pr" value="#{pracaController.listarPraca}"
                                                          selectionMode="single" selection="#{pracaController.pracaSelecionada}"
-                                                         rowKey="#{praca.pracaPK}" rowIndexVar="linha">
+                                                         rowKey="#{pr.pracaPK}" rowIndexVar="linha">
                                                 <p:ajax event="rowSelect" listener="#{pracaController.onRowSelect}"/>
                                                 <p:column headerText="#" style="width: 1px">
                                                     <h:outputText value="#{linha}"/>
                                                 </p:column>
-                                                <p:column headerText="Condominio" style="width: 200px">
-                                                    <h:outputText value="#{praca.condominio.nomeCondominio}"/>
-                                                </p:column>
                                                 <p:column headerText="Código" style="width: 30px">
-                                                    <h:outputText value="#{praca.pracaPK.cdPraca}"/>
+                                                    <h:outputText value="#{pr.pracaPK.cdPraca}"/>
                                                 </p:column>
                                                 <p:column headerText="Nome" style="width: 400px">
-                                                    <h:outputText value="#{praca.nome}"/>
+                                                    <h:outputText value="#{pr.nome}"/>
+                                                </p:column>
+                                                <p:column headerText="Condominio" style="width: 200px">
+                                                    <h:outputText value="#{pr.condominio.nomeCondominio}"/>
                                                 </p:column>
                                                 <p:column headerText="Opções" style="width: 15px">
                                                     <a href="#{pracaController.editarRegistro()}">
@@ -49,7 +49,6 @@
                                             </p:dataTable>
                                         </div>
                                         <h:commandButton id="prAdicionarNovo" type="subimit" value="Adicionar Registro" action="#{pracaController.adicionaForm()}"
-                                                         actionListener="#{pracaController.setUsuarioConectado(usuariosController.usuarios.login)}"
                                                          rendered="true"/>
                                     </p:tab>
                                     <p:tab title="Editar">
@@ -65,8 +64,10 @@
                                                 </div>
                                             </div>
                                             <h:commandButton id="brSalvar" type="submit" value="Salvar" action="#{pracaController.salvarRegistro()}"
-                                                             onclick="#{pracaController.praca.setUsuarioModificacao(usuariosController.usuarios.login)}"/>
-                                            <h:commandButton id="brExcluir" type="submit" value="Excluir" action="#{pracaController.excluirRegistro()}"/>
+                                                             actionListener="#{pracaController.praca.setUsuarioModificacao(usuariosController.usuarios.login)}"
+                                                             rendered="true"/>
+                                            <h:commandButton id="brExcluir" type="submit" value="Excluir" action="#{pracaController.excluirRegistro()}"
+                                                             rendered="true"/>
                                         </div>
                                     </p:tab>
                                     <p:tab title="Adicionar">
@@ -84,7 +85,7 @@
                                                 </div>
                                             </div>
                                             <h:commandButton id="brIncluir" type="submit" value="Incluir" action="#{pracaController.adicionaRegistro()}"
-                                                             actionListener="#{pracaController.setUsuarioConectado(usuariosController.usuarios.login)}"
+                                                             actionListener="#{pracaController.praca.setUsuarioCadastro(usuariosController.usuarios.login)}"
                                                              rendered="true"/>
                                         </div>
                                     </p:tab>
