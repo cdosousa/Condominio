@@ -23,14 +23,11 @@
                         <div class="control-group">
                             <h:outputLabel class="control-label" value="Condomínio"/>
                             <div class="controls">
-                                <p:selectOneMenu id="edtSomPracaCondominio" value="#{torreController.torrePK.cdCondominio}" disabled="true">
-                                    <f:selectItems value="#{torreController.listCondominio}" var="c"
-                                                   itemLabel="#{c.nomeCondominio}" itemValue="#{c.cdCondominio}"/>
-                                </p:selectOneMenu>
+                                <h:outputText id="edtCondominio" style="width: 200" value="#{torreController.torre.condominio.nomeCondominio}"/>
                             </div>
                             <h:outputLabel class="control-label" value="Praca"/>
                             <div class="controls">
-                                <p:selectOneMenu id="edtSomPraca" value="#{torreController.cdPraca}" disabled="true">
+                                <p:selectOneMenu id="edtSomPraca" value="#{torreController.torre.cdPraca}">
                                     <f:selectItems value="#{torreController.listPraca}" var="p"
                                                    itemLabel="#{p.nome}" itemValue="#{p.pracaPK.cdPraca}"/>
                                 </p:selectOneMenu>
@@ -41,11 +38,11 @@
                             </div>
                             <h:outputLabel class="control-label" value="Nome"/>
                             <div class="controls">
-                                <h:inputText id="edtNomeTorre" style="width: 400px" value="#{torreController.nomeTorre}"/>
+                                <h:inputText id="edtNomeTorre" style="width: 400px" value="#{torreController.torre.nome}"/>
                             </div>
                             <h:outputLabel class="control-label" value="Situação"/>
                             <div class="controls">
-                                <p:selectOneMenu id="edtSituacao" value="#{torreController.situacaTorre}">
+                                <p:selectOneMenu id="edtSituacao" value="#{torreController.torre.situacao}">
                                     <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
                                     <f:selectItems value="#{torreController.enumSituacao}" var="edtSituacao"
                                                    itemLabel="#{edtSituacao.descricao}" itemValue="#{edtSituacao.cod}"/>
@@ -58,4 +55,3 @@
         </ui:composition>
     </f:view>
 </html>
-

@@ -25,24 +25,24 @@
                                 <div class="box-header">
                                     <p:tab title="Listar">
                                         <div class="tab-pane box">
-                                            <p:dataTable id="dtabTorre" var="torre" value="#{torreController.listarTorre}"
+                                            <p:dataTable id="dtabTorre" var="tor" value="#{torreController.listarTorre}"
                                                          selectionMode="single" selection="#{torreController.torreSelecinado}"
-                                                         rowKey="#{torre.torrePK}" rowIndexVar="linha">
+                                                         rowKey="#{tor.torrePK}" rowIndexVar="linha">
                                                 <p:ajax event="rowSelect" listener="#{torreController.onRowSelect}"/>
                                                 <p:column headerText="#" style="width: 2px">
                                                     <h:outputText value="#{linha}"/>
                                                 </p:column>
-                                                <p:column headerText="Condomínio" style="width: 200px">
-                                                    <h:outputText value="#{torre.condominio.nomeCondominio}"/>
+                                                <p:column headerText="Código" style="width: 30px">
+                                                    <h:outputText value="#{tor.torrePK.cdTorre}"/>
+                                                </p:column>
+                                                <p:column headerText="Nome" style="width: 100px">
+                                                    <h:outputText value="#{tor.nome}"/>
                                                 </p:column>
                                                 <p:column headerText="Praca" style="width: 150px">
-                                                    <h:outputText value="#{torre.praca.nome}"/>
+                                                    <h:outputText value="#{tor.praca.nome}"/>
                                                 </p:column>
-                                                <p:column headerText="Código" style="width: 30px">
-                                                    <h:outputText value="#{torre.torrePK.cdTorre}"/>
-                                                </p:column>
-                                                <p:column headerText="Nome" style="width: 400px">
-                                                    <h:outputText value="#{torre.nome}"/>
+                                                <p:column headerText="Condomínio" style="width: 300px">
+                                                    <h:outputText value="#{tor.condominio.nomeCondominio}"/>
                                                 </p:column>
                                                 <p:column headerText="Opções" style="width: 15px">
                                                     <a href="#{torreController.editarRegistro()}">
@@ -52,7 +52,6 @@
                                             </p:dataTable>
                                         </div>
                                         <h:commandButton id="trAdionaNovo" type="submit" value="Novo Registro" action="#{torreController.adicionarForm()}"
-                                                         actionListener="#{torreController.setUsuarioConectado(usuariosController.usuarios.login)}"
                                                          rendered="true"/>
                                     </p:tab>
                                     <p:tab title="Editar">
@@ -68,8 +67,10 @@
                                                 </div>
                                             </div>
                                             <h:commandButton id="edtBtSalvar" type="submit" value="Salvar" action="#{torreController.salvarRegistro()}"
-                                                             onclick="#{torreController.torre.setUsuarioModificacao(usuariosController.usuarios.login)}"/>
-                                            <h:commandButton id="edtBtExcluir" type="submit" value="Excluir" action="#{torreController.excluirRegistro()}"/>
+                                                             actionListener="#{torreController.torre.setUsuarioModificacao(usuariosController.usuarios.login)}"
+                                                             rendered="true"/>
+                                            <h:commandButton id="edtBtExcluir" type="submit" value="Excluir" action="#{torreController.excluirRegistro()}"
+                                                             rendered="true"/>
                                         </div>
                                     </p:tab>
                                     <p:tab title="Adicionar">
@@ -87,8 +88,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <h:commandButton id="addBtIncluir" type="submit" value="Incluir" action="#{torreController.adicionaRegistro()}"
-                                                         actionListener="#{torreController.setUsuarioConectado(usuariosController.usuarios.login)}"
+                                        <h:commandButton id="addBtIncluir" type="submit" value="Incluir Registro" action="#{torreController.adicionaRegistro()}"
+                                                         actionListener="#{torreController.torre.setUsuarioCadastro(usuariosController.usuarios.login)}"
                                                          rendered="true"/>
                                     </p:tab>
                                 </div>

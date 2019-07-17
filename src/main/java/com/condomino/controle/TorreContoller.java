@@ -11,6 +11,9 @@ import com.condomino.domain.Torre;
 import com.condomino.domain.TorrePK;
 import com.condomino.domain.Praca;
 import com.condomino.domain.PracaPK;
+import com.condomino.repositories.CondominioRepository;
+import com.condomino.repositories.PracaRepository;
+import com.condomino.repositories.TorreRepository;
 import com.parametros.modelo.DataSistema;
 import com.parametros.modelo.HoraSistema;
 import com.parametros.modelo.enums.SituacaoCadastral;
@@ -35,111 +38,51 @@ import org.primefaces.event.SelectEvent;
  */
 @ManagedBean(name = "torreController")
 @SessionScoped
-public class TorreContoller extends AcessoBancoDAO<Torre, Serializable> implements Serializable {
+public class TorreContoller implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
+     * Objetos com injeção de dependência na classe
+     */
+    @Inject
+    private TorreRepository tr;
+    @Inject
+    private CondominioRepository cr;
+    @Inject
+    private PracaRepository pr;
+    
+    /**
      * Variáveis estáticas para fluxo de navegação da página
      */
-    private final String anterior = "MenuPrincipal.xhtml";
-    private final String atual = "Torre.xhtml";
+    private final String listar = "Torre.xhtml";
     private final String adicionar = "TorreAdicionar.xhtml";
     private final String editar = "TorreEditar.xhtml";
 
     /**
      * Variáveis para edição do registro
      */
-    private String usuarioConectado;
-    private String nomeTorre;
-    private String cdPraca;
-    private Integer situacaTorre;
     private Integer activeIndex = 0;
     private List<Condominio> listCondominio;
     private List<Praca> listPraca;
-    private CondominioController cc;
-    private PracaController pc;
-    private String msg;
-
+    
     /**
      * Objetos de instância para edição dos registros
      */
     private DataSistema dat;
     private HoraSistema hs;
-    private Torre torreSelecinado;
-    private TorrePK torreSelecinadoPK;
     private Torre torre;
     private TorrePK torrePK;
+    private Torre torreSelecinado;
+    private TorrePK torreSelecinadoPK;
     private DataModel<Torre> listarTorre;
     private List<SituacaoCadastral> enumSituacao;
 
     @PostConstruct
     public void init() {
-        dat = new DataSistema();
-        hs = new HoraSistema();
         setTorreSelecinado(new Torre());
         setTorreSelecinadoPK(new TorrePK());
-        setTorre(new Torre());
-        setTorrePK(new TorrePK());
-        cc = new CondominioController();
-        pc = new PracaController();
         enumSituacao = Arrays.asList(SituacaoCadastral.values());
-    }
-
-    /**
-     * @return the usuarioConectado
-     */
-    public String getUsuarioConectado() {
-        return usuarioConectado;
-    }
-
-    /**
-     * @param usuarioConectado the usuarioConectado to set
-     */
-    public void setUsuarioConectado(String usuarioConectado) {
-        this.usuarioConectado = usuarioConectado;
-    }
-
-    /**
-     * @return the nomeTorre
-     */
-    public String getNomeTorre() {
-        return nomeTorre;
-    }
-
-    /**
-     * @param nomeTorre the nomeTorre to set
-     */
-    public void setNomeTorre(String nomeTorre) {
-        this.nomeTorre = nomeTorre;
-    }
-
-    /**
-     * @return the cdPraca
-     */
-    public String getCdPraca() {
-        return cdPraca;
-    }
-
-    /**
-     * @param cdPraca the cdPraca to set
-     */
-    public void setCdPraca(String cdPraca) {
-        this.cdPraca = cdPraca;
-    }
-
-    /**
-     * @return the situacaTorre
-     */
-    public Integer getSituacaTorre() {
-        return situacaTorre;
-    }
-
-    /**
-     * @param situacaTorre the situacaTorre to set
-     */
-    public void setSituacaTorre(Integer situacaTorre) {
-        this.situacaTorre = situacaTorre;
     }
 
     /**
@@ -160,7 +103,7 @@ public class TorreContoller extends AcessoBancoDAO<Torre, Serializable> implemen
      * @return the listCondominio
      */
     public List<Condominio> getListCondominio() {
-        //listCondominio = cc.list();
+        listCondominio = cr.list();
         return listCondominio;
     }
 
@@ -171,23 +114,10 @@ public class TorreContoller extends AcessoBancoDAO<Torre, Serializable> implemen
         if (torrePK.getCdCondominio() != null && !torrePK.getCdCondominio().trim().isEmpty()) {
             String hql = "FROM Praca WHERE pracaPK.cdCondominio = '" + torrePK.getCdCondominio()
                     + "'";
-            //listPraca = pc.consultaHQL(hql);
+            listPraca = pr.consultaHQL(hql);
+            System.out.println("Buscando Praca");
         }
         return listPraca;
-    }
-
-    /**
-     * @return the msg
-     */
-    public String getMsg() {
-        return msg;
-    }
-
-    /**
-     * @param msg the msg to set
-     */
-    public void setMsg(String msg) {
-        this.msg = msg;
     }
 
     /**
@@ -250,7 +180,7 @@ public class TorreContoller extends AcessoBancoDAO<Torre, Serializable> implemen
      * @return the listarTorre
      */
     public DataModel<Torre> getListarTorre() {
-        List<Torre> lista = list();
+        List<Torre> lista = tr.list();
         listarTorre = new ListDataModel<Torre>(lista);
         return listarTorre;
     }
@@ -289,17 +219,14 @@ public class TorreContoller extends AcessoBancoDAO<Torre, Serializable> implemen
      */
     public String adicionaRegistro() {
         setActiveIndex(0);
+        dat = new DataSistema();
+        hs = new HoraSistema();
         dat.setData("");
-        PracaPK pracaPK = new PracaPK(torrePK.getCdCondominio(), cdPraca);
         torre.setTorrePK(torrePK);
-        //torre.setPraca(pc.getById(pracaPK));
-        torre.setCdPraca(pracaPK.getCdPraca());
-        torre.setUsuarioCadastro(getUsuarioConectado());
         torre.setDataCadastro(Date.valueOf(dat.getData()));
         torre.setHoraCadastro(Time.valueOf(hs.getHora()));
-        create(torre);
-        setMsg("Registro criado com sucesso!");
-        return atual;
+        tr.create(torre);
+        return listar;
     }
 
     /**
@@ -309,10 +236,9 @@ public class TorreContoller extends AcessoBancoDAO<Torre, Serializable> implemen
      */
     public String excluirRegistro() {
         setActiveIndex(0);
-        Torre e = getById(torrePK);
-        delete(e);
-        setMsg("Registro escluído com sucesso!");
-        return atual;
+        Torre e = tr.getById(torrePK);
+        tr.delete(e);
+        return listar;
     }
 
     /**
@@ -322,7 +248,6 @@ public class TorreContoller extends AcessoBancoDAO<Torre, Serializable> implemen
      */
     public String editarRegistro() {
         setActiveIndex(1);
-        System.out.println("com.condomino.controle.TorreContoller.editarRegistro()");
         return editar;
     }
 
@@ -333,16 +258,13 @@ public class TorreContoller extends AcessoBancoDAO<Torre, Serializable> implemen
      */
     public String salvarRegistro() {
         setActiveIndex(0);
+        dat = new DataSistema();
+        hs = new HoraSistema();
         dat.setData("");
-        PracaPK pracaPK = new PracaPK(torrePK.getCdCondominio(), cdPraca);
-        torre.setNome(getNomeTorre());
-        //torre.setPraca(pc.getById(pracaPK));
-        torre.setCdPraca(pracaPK.getCdPraca());
-        torre.setSituacao(getSituacaTorre());
         torre.setDataModificacao(Date.valueOf(dat.getData()));
         torre.setHoraModificacao(Time.valueOf(hs.getHora()));
-        save(torre);
-        return atual;
+        tr.save(torre);
+        return listar;
     }
 
     /**
@@ -353,12 +275,8 @@ public class TorreContoller extends AcessoBancoDAO<Torre, Serializable> implemen
      */
     public void onRowSelect(SelectEvent e) {
         System.out.println("Linha Selecionada: " + ((Torre) e.getObject()).getTorrePK().toString());
-        torre = getById(((Torre) e.getObject()).getTorrePK());
-        torrePK.setCdCondominio(torre.getTorrePK().getCdCondominio());
-        torrePK.setCdTorre(torre.getTorrePK().getCdTorre());
-        setNomeTorre(torre.getNome());
-        setCdPraca(torre.getPraca().getPracaPK().getCdPraca());
-        setSituacaTorre(torre.getSituacao());
+        torre = tr.getById(((Torre) e.getObject()).getTorrePK());
+        setTorrePK(torre.getTorrePK());
         System.out.println("Objeto Torre: " + torre.toString());
     }
 

@@ -236,7 +236,7 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
         if (unidadePK.getCdCondominio() != null && !unidadePK.getCdCondominio().trim().isEmpty()) {
                 String hql = "FROM  Torre WHERE torrePK.cdCondominio = '" + unidadePK.getCdCondominio()
                         + "'";
-                listTorre = tc.consultaHQL(hql);
+                //listTorre = tc.consultaHQL(hql);
         }
         return listTorre;
     }

@@ -32,7 +32,7 @@
                             </div>
                             <h:outputLabel class="control-label" value="Praca"/>
                             <div class="controls">
-                                <p:selectOneMenu id="addSomPraca" value="#{torreController.cdPraca}">
+                                <p:selectOneMenu id="addSomPraca" value="#{torreController.torre.cdPraca}">
                                     <f:selectItem itemLabel="Selecione uma praça" itemValue="" noSelectionOption="true"/>
                                     <f:selectItems value="#{torreController.listPraca}" var="p"
                                                    itemLabel="#{p.nome}" itemValue="#{p.pracaPK.cdPraca}"/>
@@ -61,4 +61,3 @@
         </ui:composition>
     </f:view>
 </html>
-

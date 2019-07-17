@@ -44,8 +44,10 @@ com\condomino\domain\Portaria_.class
 com\condomino\domain\Visitante.class
 com\condomino\domain\TorrePK_.class
 com\condomino\domain\Prestadorservico.class
+com\condomino\repositories\PortariaRepository.class
 com\condomino\dao\AcessoBancoDAO.class
 com\condomino\repositories\CondominioRepository.class
+com\condomino\repositories\TorreRepository.class
 com\condomino\repositories\PracaRepository.class
 com\condomino\domain\PortariaPK.class
 com\condomino\domain\Praca_.class
