@@ -25,8 +25,9 @@
                                 <div class="box-header">
                                     <p:tab title="Listar">
                                         <div class="tab-pane box">
-                                            <p:dataTable id="proprietarios" var="prop" value="#{proprietarioController.listarProprietario}" selectionMode="single"
-                                                         selection="#{proprietarioController.proprietarioSelecinado}" rowKey="#{prop.cpfCnpj}" rowIndexVar="linha">
+                                            <p:dataTable id="proprietarios" var="prop" value="#{proprietarioController.listarProprietario}"
+                                                         selectionMode="single" selection="#{proprietarioController.proprietarioSelecinado}"
+                                                         rowKey="#{prop.cpfCnpj}" rowIndexVar="linha">
                                                 <p:ajax event="rowSelect" listener="#{proprietarioController.onRowSelect}"/>
                                                 <p:column headerText="#" style="width: 1px">
                                                     <h:outputText value="#{linha}"/>
@@ -57,7 +58,6 @@
                                             </p:dataTable>
                                         </div>
                                         <h:commandButton id="btAdionaNovo" type="submit" value="Novo Registro" action="#{proprietarioController.adicionarForm()}"
-                                                         actionListener="#{proprietarioController.setUsuarioConectado(usuariosController.usuarios.login)}"
                                                          rendered="true"/>
                                     </p:tab>
                                     <p:tab title="Editar">
@@ -72,9 +72,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <h:commandButton id="edtBtSalvar" type="submit" value="Salvar" action="#{proprietarioController.salvarRegistro()}"
-                                                             onclick="#{proprietarioController.proprietario.setUsuarioModificacao(usuariosController.usuarios.login)}"/>
-                                            <h:commandButton id="edtBtExcluir" type="submit" value="Excluir" action="#{proprietarioController.excluirRegistro()}"/>
+                                            <h:commandButton id="edtBtSalvar" type="submit" value="Salvar Registro" action="#{proprietarioController.salvarRegistro()}"
+                                                             actionListener="#{proprietarioController.proprietario.setUsuarioModificacao(usuariosController.usuarios.login)}"/>
+                                            <h:commandButton id="edtBtExcluir" type="submit" value="Excluir Registro" action="#{proprietarioController.excluirRegistro()}"
+                                                             rendered="true"/>
                                         </div>
                                     </p:tab>
                                     <p:tab title="Adicionar">
@@ -93,8 +94,8 @@
                                             </div>
                                         </div>
                                         <div class="btn-blue">
-                                            <h:commandButton id="gravarCondomino" type="submit" value="Criar Novo" action="#{proprietarioController.adicionaRegistro()}" 
-                                                             actionListener="#{proprietarioController.setUsuarioConectado(usuariosController.usuarios.login)}"
+                                            <h:commandButton id="brIncluir" type="submit" value="Criar Registro" action="#{proprietarioController.adicionaRegistro()}" 
+                                                             actionListener="#{proprietarioController.proprietario.setUsuarioCadastro(usuariosController.usuarios.login)}"
                                                              rendered="true" />
                                         </div>
                                     </p:tab>
@@ -108,4 +109,3 @@
 
     </f:view>  
 </html>
-

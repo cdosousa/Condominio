@@ -245,7 +245,7 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
      * @return the listProprietario
      */
     public List<Proprietario> getListProprietario() {
-        listProprietario = prc.list();
+        //listProprietario = prc.list();
         return listProprietario;
     }
 
@@ -366,7 +366,7 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
         PracaPK pracaPK = new PracaPK(unidadePK.getCdCondominio(), getCdPraca());
         //unidade.setCdPraca(pc.getById(pracaPK).getPracaPK().getCdPraca());
         unidade.setUnidadePK(unidadePK);
-        unidade.setCpfCnpjProprietario(prc.getById(cpfCnpjProprietario));
+        //unidade.setCpfCnpjProprietario(prc.getById(cpfCnpjProprietario));
         unidade.setUsuarioCadastro(getUsuarioConectado());
         unidade.setDataCadastro(Date.valueOf(dat.getData()));
         unidade.setHoraCadastro(Time.valueOf(hs.getHora()));
@@ -409,7 +409,7 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
         PracaPK pracaPK = new PracaPK(unidadePK.getCdCondominio(), getCdPraca());
         //unidade.setCdPraca(pc.getById(pracaPK).getPracaPK().getCdPraca());
         unidade.setAndar(andarUnidade);
-        unidade.setCpfCnpjProprietario(prc.getById(cpfCnpjProprietario));
+        //unidade.setCpfCnpjProprietario(prc.getById(cpfCnpjProprietario));
         unidade.setSituacao(situacaUnidade);
         unidade.setDataModificacao(Date.valueOf(dat.getData()));
         unidade.setHoraModificacao(Time.valueOf(hs.getHora()));

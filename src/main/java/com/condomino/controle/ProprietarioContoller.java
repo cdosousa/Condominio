@@ -7,6 +7,7 @@ package com.condomino.controle;
 
 import com.condomino.dao.AcessoBancoDAO;
 import com.condomino.domain.Proprietario;
+import com.condomino.repositories.ProprietarioRepository;
 import com.parametros.modelo.DataSistema;
 import com.parametros.modelo.HoraSistema;
 import com.parametros.modelo.enums.SituacaoCadastral;
@@ -21,6 +22,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.inject.Inject;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -31,238 +33,43 @@ import org.primefaces.event.SelectEvent;
  */
 @ManagedBean(name = "proprietarioController")
 @SessionScoped
-public class ProprietarioContoller extends AcessoBancoDAO<Proprietario, Serializable> implements Serializable {
+public class ProprietarioContoller implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
+     * Objetos com injeção de dependência na classe
+     */
+    @Inject
+    private ProprietarioRepository pr;
+    /**
      * Variáveis estáticas para fluxo de navegação da página
      */
-    private final String anterior = "MenuPrincipal.xhtml";
-    private final String atual = "Proprietario.xhtml";
+    private final String listar = "Proprietario.xhtml";
     private final String adicionar = "ProprietarioAdicionar.xhtml";
     private final String editar = "ProprietarioEditar.xhtml";
 
     /**
      * Variáveis para edição do registro
      */
-    private String usuarioConectado;
-    private String nomeProprietario;
-    private Integer tipoPessoaProprietario;
-    private String enderecoProprietario;
-    private String numeroEndProprietario;
-    private String complementoProprietario;
-    private String bairroProprietario;
-    private String cidadeProprietario;
-    private String ufProprietario;
-    private String cepProprietario;
-    private String telefoneProprietario;
-    private String celularProprietario;
-    private Integer situacaProprietario;
     private Integer activeIndex = 0;
-    private String msg;
-
+    
     /**
      * Objetos de instância para edição dos registros
      */
     private DataSistema dat;
     private HoraSistema hs;
-    private Proprietario proprietarioSelecinado;
     private Proprietario proprietario;
+    private Proprietario proprietarioSelecinado;
     private DataModel<Proprietario> listarProprietario;
     private List<SituacaoCadastral> enumSituacao;
     private List<TipoPessoa> enumTipoPessoa;
 
     @PostConstruct
     public void init() {
-        dat = new DataSistema();
-        hs = new HoraSistema();
         setProprietarioSelecinado(new Proprietario());
-        setProprietario(new Proprietario());
         enumSituacao = Arrays.asList(SituacaoCadastral.values());
         enumTipoPessoa = Arrays.asList(TipoPessoa.values());
-    }
-
-    /**
-     * @return the usuarioConectado
-     */
-    public String getUsuarioConectado() {
-        return usuarioConectado;
-    }
-
-    /**
-     * @param usuarioConectado the usuarioConectado to set
-     */
-    public void setUsuarioConectado(String usuarioConectado) {
-        this.usuarioConectado = usuarioConectado;
-    }
-
-    /**
-     * @return the nomeProprietario
-     */
-    public String getNomeProprietario() {
-        return nomeProprietario;
-    }
-
-    /**
-     * @param nomeProprietario the nomeProprietario to set
-     */
-    public void setNomeProprietario(String nomeProprietario) {
-        this.nomeProprietario = nomeProprietario;
-    }
-
-    /**
-     * @return the tipoPessoaProprietario
-     */
-    public Integer getTipoPessoaProprietario() {
-        return tipoPessoaProprietario;
-    }
-
-    /**
-     * @param tipoPessoaProprietario the tipoPessoaProprietario to set
-     */
-    public void setTipoPessoaProprietario(Integer tipoPessoaProprietario) {
-        this.tipoPessoaProprietario = tipoPessoaProprietario;
-    }
-
-    /**
-     * @return the enderecoProprietario
-     */
-    public String getEnderecoProprietario() {
-        return enderecoProprietario;
-    }
-
-    /**
-     * @param enderecoProprietario the enderecoProprietario to set
-     */
-    public void setEnderecoProprietario(String enderecoProprietario) {
-        this.enderecoProprietario = enderecoProprietario;
-    }
-
-    /**
-     * @return the numeroEndProprietario
-     */
-    public String getNumeroEndProprietario() {
-        return numeroEndProprietario;
-    }
-
-    /**
-     * @param numeroEndProprietario the numeroEndProprietario to set
-     */
-    public void setNumeroEndProprietario(String numeroEndProprietario) {
-        this.numeroEndProprietario = numeroEndProprietario;
-    }
-
-    /**
-     * @return the complementoProprietario
-     */
-    public String getComplementoProprietario() {
-        return complementoProprietario;
-    }
-
-    /**
-     * @param complementoProprietario the complementoProprietario to set
-     */
-    public void setComplementoProprietario(String complementoProprietario) {
-        this.complementoProprietario = complementoProprietario;
-    }
-
-    /**
-     * @return the bairroProprietario
-     */
-    public String getBairroProprietario() {
-        return bairroProprietario;
-    }
-
-    /**
-     * @param bairroProprietario the bairroProprietario to set
-     */
-    public void setBairroProprietario(String bairroProprietario) {
-        this.bairroProprietario = bairroProprietario;
-    }
-
-    /**
-     * @return the cidadeProprietario
-     */
-    public String getCidadeProprietario() {
-        return cidadeProprietario;
-    }
-
-    /**
-     * @param cidadeProprietario the cidadeProprietario to set
-     */
-    public void setCidadeProprietario(String cidadeProprietario) {
-        this.cidadeProprietario = cidadeProprietario;
-    }
-
-    /**
-     * @return the ufProprietario
-     */
-    public String getUfProprietario() {
-        return ufProprietario;
-    }
-
-    /**
-     * @param ufProprietario the ufProprietario to set
-     */
-    public void setUfProprietario(String ufProprietario) {
-        this.ufProprietario = ufProprietario;
-    }
-
-    /**
-     * @return the cepProprietario
-     */
-    public String getCepProprietario() {
-        return cepProprietario;
-    }
-
-    /**
-     * @param cepProprietario the cepProprietario to set
-     */
-    public void setCepProprietario(String cepProprietario) {
-        this.cepProprietario = cepProprietario;
-    }
-
-    /**
-     * @return the telefoneProprietario
-     */
-    public String getTelefoneProprietario() {
-        return telefoneProprietario;
-    }
-
-    /**
-     * @param telefoneProprietario the telefoneProprietario to set
-     */
-    public void setTelefoneProprietario(String telefoneProprietario) {
-        this.telefoneProprietario = telefoneProprietario;
-    }
-
-    /**
-     * @return the celularProprietario
-     */
-    public String getCelularProprietario() {
-        return celularProprietario;
-    }
-
-    /**
-     * @param celularProprietario the celularProprietario to set
-     */
-    public void setCelularProprietario(String celularProprietario) {
-        this.celularProprietario = celularProprietario;
-    }
-
-    /**
-     * @return the situacaProprietario
-     */
-    public Integer getSituacaProprietario() {
-        return situacaProprietario;
-    }
-
-    /**
-     * @param situacaProprietario the situacaProprietario to set
-     */
-    public void setSituacaProprietario(Integer situacaProprietario) {
-        this.situacaProprietario = situacaProprietario;
     }
 
     /**
@@ -277,20 +84,6 @@ public class ProprietarioContoller extends AcessoBancoDAO<Proprietario, Serializ
      */
     public void setActiveIndex(Integer activeIndex) {
         this.activeIndex = activeIndex;
-    }
-
-    /**
-     * @return the msg
-     */
-    public String getMsg() {
-        return msg;
-    }
-
-    /**
-     * @param msg the msg to set
-     */
-    public void setMsg(String msg) {
-        this.msg = msg;
     }
 
     /**
@@ -325,7 +118,7 @@ public class ProprietarioContoller extends AcessoBancoDAO<Proprietario, Serializ
      * @return the listarProprietario
      */
     public DataModel<Proprietario> getListarProprietario() {
-        List<Proprietario> lista = list();
+        List<Proprietario> lista = pr.list();
         listarProprietario = new ListDataModel<Proprietario>(lista);
         return listarProprietario;
     }
@@ -350,6 +143,24 @@ public class ProprietarioContoller extends AcessoBancoDAO<Proprietario, Serializ
     public List<TipoPessoa> getEnumTipoPessoa() {
         return enumTipoPessoa;
     }
+    
+    /**
+     * Retorna o tipo de pessoa jurídica do cadastro
+     * @param cod
+     * @return String contendo a descrição do tipo de pessoa jurídica
+     */
+    public String getTipoPessoa(Integer cod){
+        return TipoPessoa.toEnum(cod).getDescricao();
+    }
+    
+    /**
+     * Retorna a situação cadastral do proprietário
+     * @param cod
+     * @return String contendo a descrição da situação do proprietário
+     */
+    public String getSituacao(Integer cod){
+        return SituacaoCadastral.toEnum(cod).getDescricao();
+    }
 
     /**
      * Método que limpa os campos do formulário para inclusão de um novo
@@ -370,13 +181,13 @@ public class ProprietarioContoller extends AcessoBancoDAO<Proprietario, Serializ
      */
     public String adicionaRegistro() {
         setActiveIndex(0);
+        dat = new DataSistema();
+        hs = new HoraSistema();
         dat.setData("");
-        proprietario.setUsuarioCadastro(getUsuarioConectado());
         proprietario.setDataCadastro(Date.valueOf(dat.getData()));
         proprietario.setHoraCadastro(Time.valueOf(hs.getHora()));
-        create(proprietario);
-        setMsg("Registro criado com sucesso!");
-        return atual;
+        pr.create(proprietario);
+        return listar;
     }
 
     /**
@@ -386,10 +197,9 @@ public class ProprietarioContoller extends AcessoBancoDAO<Proprietario, Serializ
      */
     public String excluirRegistro() {
         setActiveIndex(0);
-        Proprietario e = getById(proprietario.getCpfCnpj());
-        delete(e);
-        setMsg("Registro escluído com sucesso!");
-        return atual;
+        Proprietario e = pr.getById(proprietario.getCpfCnpj());
+        pr.delete(e);
+        return listar;
     }
 
     /**
@@ -409,23 +219,13 @@ public class ProprietarioContoller extends AcessoBancoDAO<Proprietario, Serializ
      */
     public String salvarRegistro() {
         setActiveIndex(0);
+        dat = new DataSistema();
+        hs = new HoraSistema();
         dat.setData("");
-        proprietario.setNomeRazaoSocial(getNomeProprietario());
-        proprietario.setTipoPessoa(tipoPessoaProprietario);
-        proprietario.setLogradouro(enderecoProprietario);
-        proprietario.setNumero(numeroEndProprietario);
-        proprietario.setComplemento(complementoProprietario);
-        proprietario.setBairro(bairroProprietario);
-        proprietario.setMunicipio(cidadeProprietario);
-        proprietario.setUf(ufProprietario);
-        proprietario.setCep(cepProprietario);
-        proprietario.setTelefone(telefoneProprietario);
-        proprietario.setCelular(celularProprietario);
-        proprietario.setSituacao(getSituacaProprietario());
         proprietario.setDataModificacao(Date.valueOf(dat.getData()));
         proprietario.setHoraModificacao(Time.valueOf(hs.getHora()));
-        save(proprietario);
-        return atual;
+        pr.save(proprietario);
+        return listar;
     }
 
     /**
@@ -436,18 +236,7 @@ public class ProprietarioContoller extends AcessoBancoDAO<Proprietario, Serializ
      */
     public void onRowSelect(SelectEvent e) {
         System.out.println("Linha Selecionada: " + ((Proprietario) e.getObject()).getCpfCnpj().toString());
-        proprietario = getById(((Proprietario) e.getObject()).getCpfCnpj());
-        setNomeProprietario(proprietario.getNomeRazaoSocial());
-        setTipoPessoaProprietario(proprietario.getTipoPessoa());
-        setEnderecoProprietario(proprietario.getLogradouro());
-        setNumeroEndProprietario(proprietario.getNumero());
-        setBairroProprietario(proprietario.getBairro());
-        setCidadeProprietario(proprietario.getMunicipio());
-        setUfProprietario(proprietario.getUf());
-        setCepProprietario(proprietario.getCep());
-        setTelefoneProprietario(proprietario.getTelefone());
-        setCelularProprietario(proprietario.getCelular());
-        setSituacaProprietario(proprietario.getSituacao());
+        proprietario = pr.getById(((Proprietario) e.getObject()).getCpfCnpj());
         System.out.println("Objeto Proprietario: " + proprietario.toString());
     }
 }

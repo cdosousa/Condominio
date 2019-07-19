@@ -17,11 +17,11 @@
                             </div>
                             <h:outputLabel class="control-label" value="Nome/Razão Social"/>
                             <div class="controls">
-                                <h:inputText id="edtNomeRazaoSocial" style="width: 400px" value="#{proprietarioController.nomeProprietario}"/>
+                                <h:inputText id="edtNomeRazaoSocial" style="width: 400px" value="#{proprietarioController.proprietario.nomeRazaoSocial}"/>
                             </div>
                             <h:outputLabel class="control-label" value="Tipo Pessoa"/>
                             <div class="controls">
-                                <p:selectOneMenu id="edtSomTipoPessoa" style="width: 120px" value="#{proprietarioController.tipoPessoaProprietario}">
+                                <p:selectOneMenu id="edtSomTipoPessoa" style="width: 120px" value="#{proprietarioController.proprietario.tipoPessoa}">
                                     <f:selectItem itemLabel="Escolha uma das opções" itemValue="" noSelectionOption="true"/>
                                     <f:selectItems value="#{proprietarioController.enumTipoPessoa}" var="addTp"
                                                    itemLabel="#{addTp.descricao}" itemValue="#{addTp.cod}"/>
@@ -29,38 +29,38 @@
                             </div>
                             <h:outputLabel class="control-label" value="Logradouro"/>
                             <div class="controls control-label">
-                                <h:inputText id="edtLogradouro" style="width: 400px" value="#{proprietarioController.enderecoProprietario}"/>
+                                <h:inputText id="edtLogradouro" style="width: 400px" value="#{proprietarioController.proprietario.logradouro}"/>
                             </div>
                             <h:outputLabel class="control-label" value="Numero"/>
                             <div class="controls control-label">
-                                <h:inputText id="edtNumero" style="width: 90px" value="#{proprietarioController.numeroEndProprietario}"/>
+                                <h:inputText id="edtNumero" style="width: 90px" value="#{proprietarioController.proprietario.numero}"/>
                             </div>
                             <h:outputLabel class="control-label" value="Complemento"/>
                             <div class="controls control-label">
-                                <h:inputText id="edtComplemento" style="width: 300px" value="#{proprietarioController.complementoProprietario}"/>
+                                <h:inputText id="edtComplemento" style="width: 300px" value="#{proprietarioController.proprietario.complemento}"/>
                             </div>
                             <h:outputLabel class="control-label" value="Bairro"/>
                             <div class="controls control-label">
-                                <h:inputText id="edtBairro" style="width: 200px" value="#{proprietarioController.bairroProprietario}"/>
+                                <h:inputText id="edtBairro" style="width: 200px" value="#{proprietarioController.proprietario.bairro}"/>
                             </div>
                             <h:outputLabel class="control-label" value="Cidade"/>
                             <div class="controls control-label">
-                                <h:inputText id="edtCidade" style="width: 200px" value="#{proprietarioController.cidadeProprietario}"/>
+                                <h:inputText id="edtCidade" style="width: 200px" value="#{proprietarioController.proprietario.municipio}"/>
                             </div>
                             <h:outputLabel class="control-label" value="UF"/>
                             <div class="controls control-label">
-                                <h:inputText id="edtUf" style="width: 40px" value="#{proprietarioController.ufProprietario}"/>
+                                <h:inputText id="edtUf" style="width: 40px" value="#{proprietarioController.proprietario.uf}"/>
                             </div>
                             <h:outputLabel class="control-label" value="Telefone"/>
                             <div class="controls control-label">
-                                <h:inputText id="edtTelefone" style="width: 90px" value="#{proprietarioController.telefoneProprietario}"/>
+                                <h:inputText id="edtTelefone" style="width: 90px" value="#{proprietarioController.proprietario.telefone}"/>
                             </div>
                             <h:outputLabel class="control-label" value="Celular"/>
                             <div class="controls control-label">
-                                <h:inputText id="edtCelular" style="width: 90px" value="#{proprietarioController.celularProprietario}"/>
+                                <h:inputText id="edtCelular" style="width: 90px" value="#{proprietarioController.proprietario.celular}"/>
                             </div>
                             <h:outputLabel class="control-label" value="Situacao"/>
-                            <p:selectOneMenu id="edtSomSituacao" style="width: 120px" value="#{proprietarioController.situacaProprietario}">
+                            <p:selectOneMenu id="edtSomSituacao" style="width: 120px" value="#{proprietarioController.proprietario.situacao}">
                                 <f:selectItems value="#{proprietarioController.enumSituacao}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao.cod}"/>
                             </p:selectOneMenu>
                         </div>

@@ -7,6 +7,7 @@ com\condomino\domain\Menus.class
 com\condomino\domain\UnidadePK.class
 com\condomino\dao\AcessoBancoInterfaceDAO.class
 com\condomino\domain\EquipamentoPK_.class
+com\condomino\repositories\ProprietarioRepository.class
 com\condomino\domain\Condominio.class
 com\condomino\controle\PracaController.class
 com\condomino\domain\Equipamento.class
