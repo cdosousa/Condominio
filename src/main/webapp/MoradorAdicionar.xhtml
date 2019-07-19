@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <ui:composition template="Morador.xhtml">
+            <ui:define name="adicionar">
+                <h:body>
+                    <h:form id="formMoradorAdicionar">
+                        <div class="control-group">
+                            <h:outputLabel class="control-label" value="Condomínio"/>
+                            <div class="controls">
+                                <p:selectOneMenu id="addSomCondominio" value="#{moradorController.moradorPK.cdCondominio}" required="true">
+                                    <p:ajax listener="#{moradorController.onCondominioChange()}" update="addSomTorre"/>
+                                    <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{moradorController.listCondominio}" var="c"
+                                                   itemLabel="#{c.nomeCondominio}" itemValue="#{c.cdCondominio}"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <h:outputLabel class="control-label" value="Torre"/>
+                            <div class="controls">
+                                <p:selectOneMenu id="addSomTorre" value="#{moradorController.morador.cdTorre}" required="true">
+                                    <p:ajax listener="#{moradorController.onTorreChange()}" update="addSomUnidade"/>
+                                    <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{moradorController.listTorre}" var="t"
+                                                   itemLabel="#{t.nome}" itemValue="#{t.torrePK.cdTorre}"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <h:outputLabel class="control-label" value="Unidade"/>
+                            <div class="controls">
+                                <p:selectOneMenu id="addSomUnidade" value="#{moradorController.morador.cdUnidade}" rendered="true">
+                                    <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{moradorController.listUnidade}" var="l"
+                                                   itemLabel="#{l.unidadePK.cdUnidade}" itemValue="#{l.unidadePK.cdUnidade}"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <h:outputLabel class="control-label" value="Código"/>
+                            <div class="controls">
+                                <h:inputText id="addCdCondomino" style="width: 100px" value="#{moradorController.moradorPK.cdMorador}" required="true"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="CPF"/>
+                            <div class="controls">
+                                <h:inputText id="addCpf" style="width: 200px" value="#{moradorController.morador.cpf}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="RG"/>
+                            <div class="controls">
+                                <h:inputText id="addRG" style="width: 200px" value="#{moradorController.morador.rg}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Emissao R.G"/>
+                            <div class="controls">
+                                <h:inputText id="addEmissaRG" style="width: 100px" value="#{moradorController.morador.dataEmissaoRg}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:inputText>
+                            </div>
+                            <h:outputLabel class="control-label" value="Orgão Emissor"/>
+                            <div class="controls">
+                                <h:inputText id="addOrgaoEmissor" style="width: 60px" value="#{moradorController.morador.orgaoEmissorRg}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Nome Morador"/>
+                            <div class="controls">
+                                <h:inputText id="addNomeMorador" style="width: 400px" value="#{moradorController.morador.nome}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Sexo"/>
+                            <div class="controls">
+                                <p:selectOneMenu id="addSomSexo" value="#{moradorController.morador.sexo}">
+                                    <f:selectItem itemLabel="Escolha um opção" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{moradorController.enumSexo}" var="s"
+                                                   itemLabel="#{s.descricao}" itemValue="#{s.cod}"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <h:outputLabel class="control-label" value="Telefone"/>
+                            <div class="controls">
+                                <h:inputText id="addTelefone" style="width: 50px" value="#{moradorController.morador.telefone}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Celular"/>
+                            <div class="controls">
+                                <h:inputText id="addCelular" style="width: 50px" value="#{moradorController.morador.celular}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Grau Parentesco"/>
+                            <div class="controls">
+                                <p:selectOneMenu id="addSomGrauParentesco" value="#{moradorController.morador.tipoParentesco}">
+                                    <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{moradorController.enumGrauParentesco}" var="gp"
+                                                   itemLabel="#{gp.descricao}" itemValue="#{gp.cod}"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <h:outputLabel class="control-label" value="Situação"/>
+                            <div class="controls">
+                                <p:selectOneMenu id="addSomSituacao" value="#{moradorController.morador.situacao}">
+                                    <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{moradorController.enumSituacao}" var="sit"
+                                                   itemLabel="#{sit.descricao}" itemValue="#{sit.cod}"/>
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+                    </h:form>
+                </h:body>
+            </ui:define>
+        </ui:composition>
+    </f:view>
+</html>

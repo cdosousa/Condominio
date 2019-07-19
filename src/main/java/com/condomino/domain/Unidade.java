@@ -7,6 +7,8 @@ package com.condomino.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -15,11 +17,13 @@ import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -43,6 +47,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Unidade.findByHoraModificacao", query = "SELECT u FROM Unidade u WHERE u.horaModificacao = :horaModificacao")
     , @NamedQuery(name = "Unidade.findBySituacao", query = "SELECT u FROM Unidade u WHERE u.situacao = :situacao")})
 public class Unidade implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "unidade")
+    private List<Morador> moradorList;
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -269,5 +276,14 @@ public class Unidade implements Serializable {
     @Override
     public String toString() {
         return "com.condomino.domain.Unidade[ unidadePK=" + unidadePK + " ]";
+    }
+
+    @XmlTransient
+    public List<Morador> getMoradorList() {
+        return moradorList;
+    }
+
+    public void setMoradorList(List<Morador> moradorList) {
+        this.moradorList = moradorList;
     }
 }
