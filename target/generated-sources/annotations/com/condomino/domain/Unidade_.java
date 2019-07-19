@@ -10,7 +10,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-07-19T10:06:18")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-07-19T11:17:48")
 @StaticMetamodel(Unidade.class)
 public class Unidade_ { 
 
@@ -23,7 +23,8 @@ public class Unidade_ {
     public static volatile SingularAttribute<Unidade, Date> dataModificacao;
     public static volatile SingularAttribute<Unidade, Condominio> condominio;
     public static volatile SingularAttribute<Unidade, String> cdPraca;
-    public static volatile SingularAttribute<Unidade, Proprietario> cpfCnpjProprietario;
+    public static volatile SingularAttribute<Unidade, Proprietario> proprietario;
+    public static volatile SingularAttribute<Unidade, String> cpfCnpjProprietario;
     public static volatile SingularAttribute<Unidade, Date> horaCadastro;
     public static volatile SingularAttribute<Unidade, Torre> torre;
     public static volatile SingularAttribute<Unidade, String> usuarioCadastro;

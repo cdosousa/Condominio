@@ -32,23 +32,23 @@
                                                 <p:column headerText="#" style="width: 1px">
                                                     <h:outputText value="#{linha}"/>
                                                 </p:column>
-                                                <p:column headerText="Condominio" style="width: 150px">
-                                                    <h:outputText value="#{unid.condominio.nomeCondominio}"/>
+                                                <p:column headerText="Unidade" style="width: 25px">
+                                                    <h:outputText value="#{unid.unidadePK.cdUnidade}"/>
                                                 </p:column>
-                                                <p:column headerText="Praca" style="width: 100px">
-                                                    <h:outputText value="#{unid.praca.nome}"/>
+                                                <p:column headerText="Andar" style="width: 15px">
+                                                    <h:outputText value="#{unid.andar}"/>
+                                                </p:column>
+                                                <p:column headerText="Proprietario" style="width: 250px">
+                                                    <h:outputText value="#{unid.proprietario.nomeRazaoSocial}"/>
                                                 </p:column>
                                                 <p:column headerText="Torre" style="width: 50px">
                                                     <h:outputText value="#{unid.torre.nome}"/>
                                                 </p:column>
-                                                <p:column headerText="Unidade" style="width: 30px">
-                                                    <h:outputText value="#{unid.unidadePK.cdUnidade}"/>
+                                                <p:column headerText="Praca" style="width: 100px">
+                                                    <h:outputText value="#{unid.praca.nome}"/>
                                                 </p:column>
-                                                <p:column headerText="Andar" style="width: 20px">
-                                                    <h:outputText value="#{unid.andar}"/>
-                                                </p:column>
-                                                <p:column headerText="Proprietario" style="width: 300px">
-                                                    <h:outputText value="#{unid.cpfCnpjProprietario.nomeRazaoSocial}"/>
+                                                <p:column headerText="Condominio" style="width: 250px">
+                                                    <h:outputText value="#{unid.condominio.nomeCondominio}"/>
                                                 </p:column>
                                                 <p:column headerText="Opções" style="width: 15px">
                                                     <a href="#{unidadeController.editarRegistro()}">
@@ -58,7 +58,6 @@
                                             </p:dataTable>
                                         </div>
                                         <h:commandButton id="btAdionaNovo" type="submit" value="Novo Registro" action="#{unidadeController.adicionarForm()}"
-                                                         actionListener="#{unidadeController.setUsuarioConectado(usuariosController.usuarios.login)}"
                                                          rendered="true"/>
                                     </p:tab>
                                     <p:tab title="Editar">
@@ -73,9 +72,11 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <h:commandButton id="edtBtSalvar" type="submit" value="Salvar" action="#{unidadeController.salvarRegistro()}"
-                                                             onclick="#{unidadeController.unidade.setUsuarioModificacao(usuariosController.usuarios.login)}"/>
-                                            <h:commandButton id="edtBtExcluir" type="submit" value="Excluir" action="#{unidadeController.excluirRegistro()}"/>
+                                            <h:commandButton id="edtBtSalvar" type="submit" value="Salvar Registro" action="#{unidadeController.salvarRegistro()}"
+                                                             actionListener="#{unidadeController.unidade.setUsuarioModificacao(usuariosController.usuarios.login)}"
+                                                             rendered="true"/>
+                                            <h:commandButton id="edtBtExcluir" type="submit" value="Excluir Registro" action="#{unidadeController.excluirRegistro()}"
+                                                             rendered="true"/>
                                         </div>
                                     </p:tab>
                                     <p:tab title="Adicionar">
@@ -93,9 +94,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <h:commandButton id="addBtIncluir" type="submit" value="Incluir" action="#{unidadeController.adicionaRegistro()}"
-                                                         actionListener="#{unidadeController.setUsuarioConectado(usuariosController.usuarios.login)}"
-                                                         rendered="true"/>
+                                        <h:commandButton id="addBtIncluir" type="submit" value="Incluir Registro" action="#{unidadeController.adicionaRegistro()}"
+                                                         actionListener="#{unidadeController.unidade.setUsuarioCadastro(usuariosController.usuarios.login)}"/>
                                     </p:tab>
                                 </div>
                             </div>

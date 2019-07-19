@@ -6,10 +6,7 @@
 package com.condomino.domain;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -18,13 +15,11 @@ import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -58,6 +53,9 @@ public class Unidade implements Serializable {
     @Size(max = 2)
     @Column(name = "andar", length = 2)
     private String andar;
+    @Size(min=11, max = 14)
+    @Column(name = "cpf_cnpj_proprietario", length = 14)
+    private String cpfCnpjProprietario;
     @Size(max = 10)
     @Column(name = "usuario_cadastro", length = 10)
     private String usuarioCadastro;
@@ -79,9 +77,9 @@ public class Unidade implements Serializable {
     @Column(name = "situacao")
     private Integer situacao;
 
-    @JoinColumn(name = "cpf_cnpj_proprietario", referencedColumnName = "cpf_cnpj")
+    @JoinColumn(name = "cpf_cnpj_proprietario", referencedColumnName = "cpf_cnpj", nullable = false, insertable = false, updatable = false)
     @ManyToOne
-    private Proprietario cpfCnpjProprietario;
+    private Proprietario proprietario;
 
     @JoinColumns({
         @JoinColumn(name = "cd_condominio", referencedColumnName = "cd_condominio", nullable = false, insertable = false, updatable = false)
@@ -132,6 +130,20 @@ public class Unidade implements Serializable {
 
     public void setAndar(String andar) {
         this.andar = andar;
+    }
+
+    /**
+     * @return the cpfCnpjProprietario
+     */
+    public String getCpfCnpjProprietario() {
+        return cpfCnpjProprietario;
+    }
+
+    /**
+     * @param cpfCnpjProprietario the cpfCnpjProprietario to set
+     */
+    public void setCpfCnpjProprietario(String cpfCnpjProprietario) {
+        this.cpfCnpjProprietario = cpfCnpjProprietario;
     }
 
     public String getUsuarioCadastro() {
@@ -190,12 +202,12 @@ public class Unidade implements Serializable {
         this.situacao = situacao;
     }
 
-    public Proprietario getCpfCnpjProprietario() {
-        return cpfCnpjProprietario;
+    public Proprietario getProprietario() {
+        return proprietario;
     }
 
-    public void setCpfCnpjProprietario(Proprietario cpfCnpjProprietario) {
-        this.cpfCnpjProprietario = cpfCnpjProprietario;
+    public void setProprietario(Proprietario proprietario) {
+        this.proprietario = proprietario;
     }
 
     public Torre getTorre() {

@@ -5,12 +5,10 @@
  */
 package com.condomino.controle;
 
-import com.condomino.dao.AcessoBancoDAO;
 import com.condomino.domain.Condominio;
 import com.condomino.domain.Torre;
 import com.condomino.domain.TorrePK;
 import com.condomino.domain.Praca;
-import com.condomino.domain.PracaPK;
 import com.condomino.repositories.CondominioRepository;
 import com.condomino.repositories.PracaRepository;
 import com.condomino.repositories.TorreRepository;

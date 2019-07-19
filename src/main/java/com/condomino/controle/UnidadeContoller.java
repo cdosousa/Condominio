@@ -5,14 +5,17 @@
  */
 package com.condomino.controle;
 
-import com.condomino.dao.AcessoBancoDAO;
 import com.condomino.domain.Condominio;
 import com.condomino.domain.Unidade;
 import com.condomino.domain.UnidadePK;
 import com.condomino.domain.Praca;
-import com.condomino.domain.PracaPK;
 import com.condomino.domain.Proprietario;
 import com.condomino.domain.Torre;
+import com.condomino.repositories.CondominioRepository;
+import com.condomino.repositories.PracaRepository;
+import com.condomino.repositories.ProprietarioRepository;
+import com.condomino.repositories.TorreRepository;
+import com.condomino.repositories.UnidadeRepository;
 import com.parametros.modelo.DataSistema;
 import com.parametros.modelo.HoraSistema;
 import com.parametros.modelo.enums.SituacaoCadastral;
@@ -37,162 +40,57 @@ import org.primefaces.event.SelectEvent;
  */
 @ManagedBean(name = "unidadeController")
 @SessionScoped
-public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> implements Serializable {
+public class UnidadeContoller implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
+     * Objetos com injeção de dependência da classe
+     */
+    @Inject
+    UnidadeRepository ur;
+    @Inject
+    private CondominioRepository cr;
+    @Inject
+    private PracaRepository pr;
+    @Inject
+    private TorreRepository tr;
+    @Inject
+    private ProprietarioRepository prr;
+
+    /**
      * Variáveis estáticas para fluxo de navegação da página
      */
-    private final String anterior = "MenuPrincipal.xhtml";
-    private final String atual = "Unidade.xhtml";
+    private final String listar = "Unidade.xhtml";
     private final String adicionar = "UnidadeAdicionar.xhtml";
     private final String editar = "UnidadeEditar.xhtml";
 
     /**
      * Variáveis para edição do registro
      */
-    private String usuarioConectado;
-    private String cdPraca;
-    private Praca praca;
-    private String andarUnidade;
-    private String cpfCnpjProprietario;
-    private Proprietario proprietarioUnidade;
-    private Integer situacaUnidade;
     private Integer activeIndex = 0;
     private List<Condominio> listCondominio;
     private List<Praca> listPraca;
     private List<Torre> listTorre;
     private List<Proprietario> listProprietario;
-    private CondominioController cc;
-    private PracaController pc;
-    private TorreContoller tc;
-    private ProprietarioContoller prc;
-    private String msg;
 
     /**
      * Objetos de instância para edição dos registros
      */
     private DataSistema dat;
     private HoraSistema hs;
-    private Unidade unidadeSelecinado;
-    private UnidadePK unidadeSelecinadoPK;
     private Unidade unidade;
     private UnidadePK unidadePK;
+    private Unidade unidadeSelecinado;
+    private UnidadePK unidadeSelecinadoPK;
     private DataModel<Unidade> listarUnidade;
     private List<SituacaoCadastral> enumSituacao;
 
     @PostConstruct
     public void init() {
-        dat = new DataSistema();
-        hs = new HoraSistema();
         setUnidadeSelecinado(new Unidade());
         setUnidadeSelecinadoPK(new UnidadePK());
-        setUnidade(new Unidade());
-        setUnidadePK(new UnidadePK());
-        cc = new CondominioController();
-        pc = new PracaController();
-        tc = new TorreContoller();
-        prc = new ProprietarioContoller();
         enumSituacao = Arrays.asList(SituacaoCadastral.values());
-    }
-
-    /**
-     * @return the usuarioConectado
-     */
-    public String getUsuarioConectado() {
-        return usuarioConectado;
-    }
-
-    /**
-     * @param usuarioConectado the usuarioConectado to set
-     */
-    public void setUsuarioConectado(String usuarioConectado) {
-        this.usuarioConectado = usuarioConectado;
-    }
-
-    /**
-     * @return the cdPraca
-     */
-    public String getCdPraca() {
-        return cdPraca;
-    }
-
-    /**
-     * @param cdPraca the cdPraca to set
-     */
-    public void setCdPraca(String cdPraca) {
-        this.cdPraca = cdPraca;
-    }
-
-    /**
-     * @return the praca
-     */
-    public Praca getPraca() {
-        return praca;
-    }
-
-    /**
-     * @param praca the praca to set
-     */
-    public void setPraca(Praca praca) {
-        this.praca = praca;
-    }
-
-    /**
-     * @return the andarUnidade
-     */
-    public String getAndarUnidade() {
-        return andarUnidade;
-    }
-
-    /**
-     * @param andarUnidade the andarUnidade to set
-     */
-    public void setAndarUnidade(String andarUnidade) {
-        this.andarUnidade = andarUnidade;
-    }
-
-    /**
-     * @return the cpfCnpjProprietario
-     */
-    public String getCpfCnpjProprietario() {
-        return cpfCnpjProprietario;
-    }
-
-    /**
-     * @param cpfCnpjProprietario the cpfCnpjProprietario to set
-     */
-    public void setCpfCnpjProprietario(String cpfCnpjProprietario) {
-        this.cpfCnpjProprietario = cpfCnpjProprietario;
-    }
-
-    /**
-     * @return the proprietarioUnidade
-     */
-    public Proprietario getProprietarioUnidade() {
-        return proprietarioUnidade;
-    }
-
-    /**
-     * @param proprietarioUnidade the proprietarioUnidade to set
-     */
-    public void setProprietarioUnidade(Proprietario proprietarioUnidade) {
-        this.proprietarioUnidade = proprietarioUnidade;
-    }
-
-    /**
-     * @return the situacaUnidade
-     */
-    public Integer getSituacaUnidade() {
-        return situacaUnidade;
-    }
-
-    /**
-     * @param situacaUnidade the situacaUnidade to set
-     */
-    public void setSituacaUnidade(Integer situacaUnidade) {
-        this.situacaUnidade = situacaUnidade;
     }
 
     /**
@@ -213,7 +111,7 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
      * @return the listCondominio
      */
     public List<Condominio> getListCondominio() {
-        //listCondominio = cc.list();
+        listCondominio = cr.list();
         return listCondominio;
     }
 
@@ -224,7 +122,7 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
         if (unidadePK.getCdCondominio() != null && !unidadePK.getCdCondominio().trim().isEmpty()) {
             String hql = "FROM Praca WHERE pracaPK.cdCondominio = '" + unidadePK.getCdCondominio()
                     + "'";
-            //listPraca = pc.consultaHQL(hql);
+            listPraca = pr.consultaHQL(hql);
         }
         return listPraca;
     }
@@ -234,9 +132,9 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
      */
     public List<Torre> getListTorre() {
         if (unidadePK.getCdCondominio() != null && !unidadePK.getCdCondominio().trim().isEmpty()) {
-                String hql = "FROM  Torre WHERE torrePK.cdCondominio = '" + unidadePK.getCdCondominio()
-                        + "'";
-                //listTorre = tc.consultaHQL(hql);
+            String hql = "FROM  Torre WHERE torrePK.cdCondominio = '" + unidadePK.getCdCondominio()
+                    + "'";
+            listTorre = tr.consultaHQL(hql);
         }
         return listTorre;
     }
@@ -245,22 +143,8 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
      * @return the listProprietario
      */
     public List<Proprietario> getListProprietario() {
-        //listProprietario = prc.list();
+        listProprietario = prr.list();
         return listProprietario;
-    }
-
-    /**
-     * @return the msg
-     */
-    public String getMsg() {
-        return msg;
-    }
-
-    /**
-     * @param msg the msg to set
-     */
-    public void setMsg(String msg) {
-        this.msg = msg;
     }
 
     /**
@@ -323,7 +207,7 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
      * @return the listarUnidade
      */
     public DataModel<Unidade> getListarUnidade() {
-        List<Unidade> lista = list();
+        List<Unidade> lista = ur.list();
         listarUnidade = new ListDataModel<Unidade>(lista);
         return listarUnidade;
     }
@@ -362,17 +246,14 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
      */
     public String adicionaRegistro() {
         setActiveIndex(0);
+        dat = new DataSistema();
+        hs = new HoraSistema();
         dat.setData("");
-        PracaPK pracaPK = new PracaPK(unidadePK.getCdCondominio(), getCdPraca());
-        //unidade.setCdPraca(pc.getById(pracaPK).getPracaPK().getCdPraca());
         unidade.setUnidadePK(unidadePK);
-        //unidade.setCpfCnpjProprietario(prc.getById(cpfCnpjProprietario));
-        unidade.setUsuarioCadastro(getUsuarioConectado());
         unidade.setDataCadastro(Date.valueOf(dat.getData()));
         unidade.setHoraCadastro(Time.valueOf(hs.getHora()));
-        create(unidade);
-        setMsg("Registro criado com sucesso!");
-        return atual;
+        ur.create(unidade);
+        return listar;
     }
 
     /**
@@ -382,10 +263,9 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
      */
     public String excluirRegistro() {
         setActiveIndex(0);
-        Unidade e = getById(unidadePK);
-        delete(e);
-        setMsg("Registro escluído com sucesso!");
-        return atual;
+        Unidade e = ur.getById(unidadePK);
+        ur.delete(e);
+        return listar;
     }
 
     /**
@@ -405,16 +285,13 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
      */
     public String salvarRegistro() {
         setActiveIndex(0);
+        dat = new DataSistema();
+        hs = new HoraSistema();
         dat.setData("");
-        PracaPK pracaPK = new PracaPK(unidadePK.getCdCondominio(), getCdPraca());
-        //unidade.setCdPraca(pc.getById(pracaPK).getPracaPK().getCdPraca());
-        unidade.setAndar(andarUnidade);
-        //unidade.setCpfCnpjProprietario(prc.getById(cpfCnpjProprietario));
-        unidade.setSituacao(situacaUnidade);
         unidade.setDataModificacao(Date.valueOf(dat.getData()));
         unidade.setHoraModificacao(Time.valueOf(hs.getHora()));
-        save(unidade);
-        return atual;
+        ur.save(unidade);
+        return listar;
     }
 
     /**
@@ -425,13 +302,9 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
      */
     public void onRowSelect(SelectEvent e) {
         System.out.println("Linha Selecionada: " + ((Unidade) e.getObject()).getUnidadePK().toString());
-        unidade = getById(((Unidade) e.getObject()).getUnidadePK());
+        unidade = ur.getById(((Unidade) e.getObject()).getUnidadePK());
         unidadePK.setCdCondominio(unidade.getUnidadePK().getCdCondominio());
         unidadePK.setCdUnidade(unidade.getUnidadePK().getCdUnidade());
-        setCdPraca(unidade.getCdPraca());
-        setAndarUnidade(unidade.getAndar());
-        setProprietarioUnidade(unidade.getCpfCnpjProprietario());
-        setSituacaUnidade(unidade.getSituacao());
         System.out.println("Objeto Unidade: " + unidade.toString());
     }
 
@@ -443,10 +316,10 @@ public class UnidadeContoller extends AcessoBancoDAO<Unidade, Serializable> impl
         System.out.println("Condominio trocado: " + unidadePK.getCdCondominio());
         getListPraca();
     }
-    
+
     /**
-     * Evento que obter o valor trocado da praca e buscar a praca de acordo
-     * com o registro
+     * Evento que obter o valor trocado da praca e buscar a praca de acordo com
+     * o registro
      */
     public void onPracaChange() {
         System.out.println("Condominio trocado: " + unidadePK.getCdCondominio());

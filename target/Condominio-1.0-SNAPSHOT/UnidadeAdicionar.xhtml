@@ -9,7 +9,7 @@
         <ui:composition template="Unidade.xhtml">
             <ui:define name="adicionar">
                 <h:head>
-                    <title>Adicionar Unidade</title>
+                    <title>Adicionar Torre</title>
                     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
                     <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0"/>
@@ -27,13 +27,13 @@
                                     <p:selectOneMenu id="addSomPracaCondominio" value="#{unidadeController.unidadePK.cdCondominio}">
                                         <p:ajax listener="#{unidadeController.onCondominoChange()}" update="addSomPraca"/>
                                         <f:selectItem itemLabel="Selecione um condominio" itemValue="" noSelectionOption="true"/>
-                                        <f:selectItems value="#{unidadeController.listCondominio}" var="c"
-                                                       itemLabel="#{c.nomeCondominio}" itemValue="#{c.cdCondominio}"/>
+                                        <f:selectItems value="#{unidadeController.listCondominio}" var="ci"
+                                                       itemLabel="#{ci.nomeCondominio}" itemValue="#{ci.cdCondominio}"/>
                                     </p:selectOneMenu>
                                 </div>
                                 <h:outputLabel class="control-label" value="Praca"/>
                                 <div class="controls">
-                                    <p:selectOneMenu id="addSomPraca" value="#{unidadeController.cdPraca}">
+                                    <p:selectOneMenu id="addSomPraca" value="#{unidadeController.unidade.cdPraca}">
                                         <p:ajax listener="#{unidadeController.onPracaChange()}" update="addSomTorre"/>
                                         <f:selectItem itemLabel="Selecione uma praça" itemValue="" noSelectionOption="true"/>
                                         <f:selectItems value="#{unidadeController.listPraca}" var="p"
@@ -58,7 +58,7 @@
                                 </div>
                                 <h:outputLabel class="control-label" value="Proprietario"/>
                                 <div class="controls">
-                                    <p:selectOneMenu id="addSomProprietario" value="#{unidadeController.cpfCnpjProprietario}">
+                                    <p:selectOneMenu id="addSomProprietario" value="#{unidadeController.unidade.cpfCnpjProprietario}">
                                         <f:selectItem itemLabel="Selecione o proprietário da Unidade" itemValue="" noSelectionOption="true"/>
                                         <f:selectItems value="#{unidadeController.listProprietario}" var="addProp"
                                                        itemLabel="#{addProp.nomeRazaoSocial}" itemValue="#{addProp.cpfCnpj}"/>

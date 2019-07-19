@@ -53,7 +53,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Proprietario.findBySituacao", query = "SELECT p FROM Proprietario p WHERE p.situacao = :situacao")})
 public class Proprietario implements Serializable {
 
-    @OneToMany(mappedBy = "cpfCnpjProprietario")
+    @OneToMany(mappedBy = "proprietario")
     private List<Unidade> unidadeList;
 
     private static final long serialVersionUID = 1L;

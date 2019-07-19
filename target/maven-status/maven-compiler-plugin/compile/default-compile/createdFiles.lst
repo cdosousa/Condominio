@@ -23,6 +23,7 @@ com\condomino\controle\UnidadeContoller.class
 com\condomino\domain\PracaPK.class
 com\condomino\controle\converter\TipoPessoaConverter.class
 com\condomino\domain\Equipamento_.class
+com\condomino\repositories\UnidadeRepository.class
 com\condomino\domain\Condominio_.class
 com\condomino\domain\Prestadorservico_.class
 com\condomino\domain\Portaria.class
