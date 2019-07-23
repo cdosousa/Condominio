@@ -6,19 +6,21 @@ import com.condomino.domain.Praca;
 import com.condomino.domain.Proprietario;
 import com.condomino.domain.Torre;
 import com.condomino.domain.UnidadePK;
+import com.condomino.domain.Veiculo;
 import java.util.Date;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-07-19T15:06:57")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-07-23T14:26:46")
 @StaticMetamodel(Unidade.class)
 public class Unidade_ { 
 
     public static volatile SingularAttribute<Unidade, String> andar;
     public static volatile SingularAttribute<Unidade, Integer> situacao;
     public static volatile SingularAttribute<Unidade, Praca> praca;
+    public static volatile ListAttribute<Unidade, Veiculo> veiculoList;
     public static volatile SingularAttribute<Unidade, Date> horaModificacao;
     public static volatile SingularAttribute<Unidade, UnidadePK> unidadePK;
     public static volatile SingularAttribute<Unidade, String> usuarioModificacao;

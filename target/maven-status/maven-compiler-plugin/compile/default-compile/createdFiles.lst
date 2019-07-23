@@ -39,6 +39,7 @@ com\condomino\domain\TorrePK.class
 com\condomino\domain\Menus_.class
 com\condomino\controle\EquipamentoContoller.class
 com\condomino\controle\ProprietarioContoller.class
+com\condomino\controle\VeiculoContoller.class
 com\condomino\domain\Unidade_.class
 com\condomino\factory\HibernateUtility.class
 com\condomino\domain\EquipamentoPK.class
@@ -62,3 +63,4 @@ com\condomino\domain\Praca_.class
 com\condomino\controle\PortariaController.class
 com\condomino\domain\Proprietario_.class
 com\condomino\domain\UnidadePK_.class
+com\condomino\repositories\VeiculoRepository.class

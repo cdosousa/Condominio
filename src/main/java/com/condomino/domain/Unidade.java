@@ -50,6 +50,8 @@ public class Unidade implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "unidade")
     private List<Morador> moradorList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "unidade")
+    private List<Veiculo> veiculoList;
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -285,5 +287,14 @@ public class Unidade implements Serializable {
 
     public void setMoradorList(List<Morador> moradorList) {
         this.moradorList = moradorList;
+    }
+    
+    @XmlTransient
+    public List<Veiculo> getVeiculoList() {
+        return veiculoList;
+    }
+
+    public void setVeiculoList(List<Veiculo> veiculoList) {
+        this.veiculoList = veiculoList;
     }
 }

@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <ui:composition template="MenuPrincipal.xhtml">
+            <ui:define name="conteudo">
+                <h:head>
+                    <title>Veículo</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+                    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+                    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+                    <link rel="stylesheet" type="text/css" href="styles/belasartes.css"/>
+                    <script src="js/bayanno.js" type="text/javascript"/>
+                </h:head>
+                <h:body>
+                    <h:form id="formVeiculos">
+                        <p:tabView id="tabVeiculo" class="active" activeIndex="#{veiculoController.activeIndex}">
+                            <div class="box">
+                                <div class="box-header">
+                                    <p:tab title="Listar">
+                                        <p:dataTable id="dtaVeiculo" var="v" value="#{veiculoController.listarVeiculo}"
+                                                     selectionMode="single" selection="#{veiculoController.veiculoSelecinado}"
+                                                     rowKey="#{v.placa}" rowIndexVar="linha">
+                                            <p:ajax event="rowSelect" listener="#{veiculoController.onRowSelect}"/>
+                                            <p:column headerText="#" style="width: 1px">
+                                                <h:outputText value="#{linha}"/>
+                                            </p:column>
+                                            <p:column headerText="Placa" style="width: 30px">
+                                                <h:outputText value="#{v.placa}"/>
+                                            </p:column>
+                                            <p:column headerText="Marca" style="width: 60px">
+                                                <h:outputText value="#{v.marca}"/>
+                                            </p:column>
+                                            <p:column headerText="Modelo" style="width: 60px">
+                                                <h:outputText value="#{v.modelo}"/>
+                                            </p:column>
+                                            <p:column headerText="Cor" style="width: 60px">
+                                                <h:outputText value="#{v.cor}"/>
+                                            </p:column>
+                                            <p:column headerText="Morador" style="width: 100px">
+                                                <h:outputText value="#{v.morador.nome}"/>
+                                            </p:column>
+                                            <p:column headerText="Unidade" style="width: 30px">
+                                                <h:outputText value="#{v.morador.cdUnidade}"/>
+                                            </p:column>
+                                            <p:column headerText="Torre" style="width: 50px">
+                                                <h:outputText value="#{v.unidade.torre.nome}"/>
+                                            </p:column>
+                                            <p:column headerText="Praca" style="width: 80px">
+                                                <h:outputText value="#{v.unidade.praca.nome}"/>
+                                            </p:column>
+                                            <p:column headerText="Condomínio" style="width: 150px">
+                                                <h:outputText value="#{v.morador.unidade.condominio.nomeCondominio}"/>
+                                            </p:column>
+                                            <p:column headerText="Opções" style="width: 15px">
+                                                <a href="#{veiculoController.editarRegistro()}">
+                                                    <i class="icon-edit icon-2x"></i>
+                                                </a>
+                                            </p:column>
+                                        </p:dataTable>
+                                        <h:commandButton id="btAdionaNovo" type="submit" value="Adicionar Novo" action="#{veiculoController.adicionarForm()}"
+                                                         rendered="true"/>
+                                    </p:tab>
+                                    <p:tab title="Editar">
+                                        <div class="label-dark-red" align="center">
+                                            <span><h3>Editando registro selecionado</h3></span>
+                                        </div>
+                                        <div class="tab-content">
+                                            <div class="tab-pane box active" style="padding: 5px">
+                                                <div class="box-content">
+                                                    <div class="padded">
+                                                        <ui:insert name="editar"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <h:commandButton id="brSalvar" type="submit" value="Salvar Registro" action="#{veiculoController.salvarRegistro()}"
+                                                             actionListener="#{veiculoController.veiculo.setUsuarioModificacao(usuariosController.usuarios.login)}"
+                                                             rendered="true"/>
+                                            <h:commandButton id="brExcluir" type="submit" value="Excluir Registro" action="#{veiculoController.excluirRegistro()}"
+                                                             rendered="true"/>
+                                        </div>
+                                    </p:tab>
+                                    <p:tab title="Adicionar">
+                                        <div class="label-cyan" align="center">
+                                            <span><h3>Adicionando novo registro</h3></span>
+                                        </div>
+                                        <div class="box-content padded">
+                                            <div class="tab-content">
+                                                <div class="tab-pane box active" style="padding: 5px">
+                                                    <div class="box-content">
+                                                        <div class="padded">
+                                                            <ui:insert name="adicionar"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <h:commandButton id="brIncluir" type="submit" value="Incluir Registro" action="#{veiculoController.adicionaRegistro()}"
+                                                             actionListener="#{veiculoController.veiculo.setUsuarioCadastro(usuariosController.usuarios.login)}"
+                                                             rendered="true"/>
+                                        </div>
+                                    </p:tab>
+                                </div>
+                            </div>
+                        </p:tabView>
+                    </h:form>
+                </h:body>
+            </ui:define>
+        </ui:composition>
+    </f:view>
+</html>

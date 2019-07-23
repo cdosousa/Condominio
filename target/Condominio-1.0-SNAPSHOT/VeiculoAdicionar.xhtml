@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <ui:composition template="Veiculo.xhtml">
+            <ui:define name="adicionar">
+                <h:body>
+                    <h:form id="formVeiculosAdicionar">
+                        <div class="control-group">
+                            <h:outputLabel class="control-label" value="Placa"/>
+                            <div class="controls">
+                                <h:inputText id="placa" style="width: 90px" value="#{veiculoController.veiculo.placa}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Marca"/>
+                            <div class="controls">
+                                <h:inputText id="marca" style="width: 120px" value="#{veiculoController.veiculo.marca}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Modelo"/>
+                            <div class="controls">
+                                <h:inputText id="modelo" style="width: 120px" value="#{veiculoController.veiculo.modelo}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Cor"/>
+                            <div class="controls">
+                                <h:inputText id="cor" style="width: 120px" value="#{veiculoController.veiculo.cor}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Condomínio"/>
+                            <div class="controls">
+                                <p:selectOneMenu id="somCondominio" value="#{veiculoController.veiculo.cdCondominio}">
+                                    <p:ajax listener="#{veiculoController.onCondominoChange()}" update="somTorre"/>
+                                    <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{veiculoController.listCondominio}" var="lc"
+                                                   itemLabel="#{lc.nomeCondominio}" itemValue="#{lc.cdCondominio}"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <h:outputLabel class="control-label" value="Torre"/>
+                            <div class="controls">
+                                <p:selectOneMenu id="somTorre" value="#{veiculoController.veiculo.cdTorre}">
+                                    <p:ajax listener="#{veiculoController.onTorreChange()}" update="somUnidade"/>
+                                    <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{veiculoController.listTorre}" var="l"
+                                                   itemLabel="#{l.nome}" itemValue="#{l.torrePK.cdTorre}"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <h:outputLabel class="control-label" value="Unidade"/>
+                            <div class="controls">
+                                <p:selectOneMenu id="somUnidade" value="#{veiculoController.veiculo.cdUnidade}">
+                                    <p:ajax listener="#{veiculoController.onTorreChange()}" update="somMorador"/>
+                                    <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{veiculoController.listUnidade}" var="lu"
+                                                   itemLabel="#{lu.unidadePK.cdUnidade}" itemValue="#{lu.unidadePK.cdUnidade}"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <h:outputLabel class="control-label" value="Morador"/>
+                            <div class="controls">
+                                <p:selectOneMenu id="somMorador" value="#{veiculoController.veiculo.cdMorador}">
+                                    <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{veiculoController.listMorador}" var="lm"
+                                                   itemLabel="#{lm.nome}" itemValue="#{lm.moradorPK.cdMorador}"/>
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+                    </h:form>
+                </h:body>
+            </ui:define>
+        </ui:composition>
+    </f:view>
+</html>

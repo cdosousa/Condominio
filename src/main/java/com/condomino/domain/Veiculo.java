@@ -11,6 +11,9 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -22,7 +25,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author cristiano
+ * @author Cristiano de Oliveira Sousa
+ * @Local OICI Serviços e Desenvolvimento Ltda-EPP
+ * @Data 19/07/2019
  */
 @Entity
 @Table(name = "gcveiculo")
@@ -32,8 +37,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Veiculo.findByPlaca", query = "SELECT v FROM Veiculo v WHERE v.placa = :placa")
     , @NamedQuery(name = "Veiculo.findByMarca", query = "SELECT v FROM Veiculo v WHERE v.marca = :marca")
     , @NamedQuery(name = "Veiculo.findByModelo", query = "SELECT v FROM Veiculo v WHERE v.modelo = :modelo")
-    , @NamedQuery(name = "Veiculo.findByCdUnidade", query = "SELECT v FROM Veiculo v WHERE v.cdUnidade = :cdUnidade")
-    , @NamedQuery(name = "Veiculo.findByCpfCondomino", query = "SELECT v FROM Veiculo v WHERE v.cpfCondomino = :cpfCondomino")
     , @NamedQuery(name = "Veiculo.findByUsuarioCadastro", query = "SELECT v FROM Veiculo v WHERE v.usuarioCadastro = :usuarioCadastro")
     , @NamedQuery(name = "Veiculo.findByDataCadastro", query = "SELECT v FROM Veiculo v WHERE v.dataCadastro = :dataCadastro")
     , @NamedQuery(name = "Veiculo.findByHoraCadastro", query = "SELECT v FROM Veiculo v WHERE v.horaCadastro = :horaCadastro")
@@ -44,6 +47,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Veiculo implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Size(min = 1, max = 8)
+    @Column(name = "cd_condominio", nullable = false, length = 8)
+    private String cdCondominio;
+    @Size(min = 1, max = 20)
+    @Column(name = "cd_torre", length = 20)
+    private String cdTorre;
+    @Size(min = 2, max = 4)
+    @Column(name = "cd_unidade", length = 4)
+    private String cdUnidade;
+    @Size(min = 1, max = 6)
+    @Column(name = "cd_morador", nullable = false, length = 6)
+    private String cdMorador;
     @Id
     @Basic(optional = false)
     @NotNull
@@ -56,12 +71,9 @@ public class Veiculo implements Serializable {
     @Size(max = 20)
     @Column(name = "modelo", length = 20)
     private String modelo;
-    @Size(max = 4)
-    @Column(name = "cd_unidade", length = 4)
-    private String cdUnidade;
-    @Size(max = 11)
-    @Column(name = "cpf_condomino", length = 11)
-    private String cpfCondomino;
+    @Size(max = 20)
+    @Column(name = "cor", length = 20)
+    private String cor;
     @Size(max = 10)
     @Column(name = "usuario_cadastro", length = 10)
     private String usuarioCadastro;
@@ -82,12 +94,80 @@ public class Veiculo implements Serializable {
     private Date horaModificacao;
     @Column(name = "situacao")
     private Integer situacao;
+    @JoinColumns({
+        @JoinColumn(name = "cd_condominio", referencedColumnName = "cd_condominio", nullable = false, insertable = false, updatable = false)
+        , @JoinColumn(name = "cd_morador", referencedColumnName = "cd_morador", nullable = false, insertable = false, updatable = false)})
+    @ManyToOne
+    private Morador morador;
+    
+    @JoinColumns({
+        @JoinColumn(name = "cd_condominio", referencedColumnName = "cd_condominio", nullable = false, insertable = false, updatable = false)
+        , @JoinColumn(name = "cd_torre", referencedColumnName = "cd_torre", nullable = false, insertable = false, updatable = false)
+        , @JoinColumn(name = "cd_unidade", referencedColumnName = "cd_unidade", nullable = false, insertable = false, updatable = false)})
+    @ManyToOne
+    private Unidade unidade;
 
     public Veiculo() {
     }
 
     public Veiculo(String placa) {
         this.placa = placa;
+    }
+
+    /**
+     * @return the cdCondominio
+     */
+    public String getCdCondominio() {
+        return cdCondominio;
+    }
+
+    /**
+     * @param cdCondominio the cdCondominio to set
+     */
+    public void setCdCondominio(String cdCondominio) {
+        this.cdCondominio = cdCondominio;
+    }
+
+    /**
+     * @return the cdTorre
+     */
+    public String getCdTorre() {
+        return cdTorre;
+    }
+
+    /**
+     * @param cdTorre the cdTorre to set
+     */
+    public void setCdTorre(String cdTorre) {
+        this.cdTorre = cdTorre;
+    }
+
+    /**
+     * @return the cdUnidade
+     */
+    public String getCdUnidade() {
+        return cdUnidade;
+    }
+
+    /**
+     * @param cdUnidade the cdUnidade to set
+     */
+    public void setCdUnidade(String cdUnidade) {
+        this.cdUnidade = cdUnidade;
+    }
+
+    /**
+     * @return the cdMorador
+     */
+    public String getCdMorador() {
+        return cdMorador;
+    }
+
+    /**
+     * @param cdMorador the cdMorador to set
+     */
+    public void setCdMorador(String cdMorador) {
+        this.cdMorador = cdMorador;
     }
 
     public String getPlaca() {
@@ -114,20 +194,18 @@ public class Veiculo implements Serializable {
         this.modelo = modelo;
     }
 
-    public String getCdUnidade() {
-        return cdUnidade;
+    /**
+     * @return the cor
+     */
+    public String getCor() {
+        return cor;
     }
 
-    public void setCdUnidade(String cdUnidade) {
-        this.cdUnidade = cdUnidade;
-    }
-
-    public String getCpfCondomino() {
-        return cpfCondomino;
-    }
-
-    public void setCpfCondomino(String cpfCondomino) {
-        this.cpfCondomino = cpfCondomino;
+    /**
+     * @param cor the cor to set
+     */
+    public void setCor(String cor) {
+        this.cor = cor;
     }
 
     public String getUsuarioCadastro() {
@@ -186,6 +264,28 @@ public class Veiculo implements Serializable {
         this.situacao = situacao;
     }
 
+    public Morador getMorador() {
+        return morador;
+    }
+
+    public void setMorador(Morador morador) {
+        this.morador = morador;
+    }
+
+    /**
+     * @return the unidade
+     */
+    public Unidade getUnidade() {
+        return unidade;
+    }
+
+    /**
+     * @param unidade the unidade to set
+     */
+    public void setUnidade(Unidade unidade) {
+        this.unidade = unidade;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -210,5 +310,5 @@ public class Veiculo implements Serializable {
     public String toString() {
         return "com.condomino.domain.Veiculo[ placa=" + placa + " ]";
     }
-    
+
 }
