@@ -5,7 +5,6 @@
  */
 package com.condomino.controle;
 
-import com.condomino.dao.AcessoBancoDAO;
 import com.condomino.domain.Proprietario;
 import com.condomino.repositories.ProprietarioRepository;
 import com.parametros.modelo.DataSistema;

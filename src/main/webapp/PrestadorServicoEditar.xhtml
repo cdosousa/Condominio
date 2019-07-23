@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <ui:composition template="PrestadorServico.xhtml">
+            <ui:define name="editar">
+                <h:head>
+                    <title>PrestadorServicEditar</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+                    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+                    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+                    <link rel="stylesheet" type="text/css" href="styles/belasartes.css"/>
+                    <script src="js/bayanno.js" type="text/javascript"/>
+                </h:head>
+                <h:body>
+                    <h:form id="formPrestadorServicoAdicionar">
+                        <div class="control-group">
+                            <h:outputLabel class="control-label" value="C.P.F / C.N.P.J"/>
+                            <div class="controls">
+                                <h:outputText id="cdCpfCnpj" style="width: 200px" value="#{prestadorServicoController.prestadorServico.cpfCnpj}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Nome/Razão Social"/>
+                            <div class="controls">
+                                <h:inputText id="nomeRazaoSocial" style="width: 400px" value="#{prestadorServicoController.prestadorServico.nome}" required="true"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Tipo Pessoa"/>
+                            <div class="controls">
+                                <p:selectOneMenu id="somTipoPessoa" style="width: 120px" value="#{prestadorServicoController.prestadorServico.tipoPessoa}" required="true">
+                                    <f:selectItem itemLabel="Escolha uma das opções" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{prestadorServicoController.enumTipoPessoa}" var="addTp"
+                                                   itemLabel="#{addTp.descricao}" itemValue="#{addTp.cod}"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <h:outputLabel class="control-label" value="Logradouro"/>
+                            <div class="controls control-label">
+                                <h:inputText id="logradouro" style="width: 400px" value="#{prestadorServicoController.prestadorServico.logradouro}" required="true"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Numero"/>
+                            <div class="controls control-label">
+                                <h:inputText id="numero" style="width: 90px" value="#{prestadorServicoController.prestadorServico.numero}" required="true"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Complemento"/>
+                            <div class="controls control-label">
+                                <h:inputText id="complemento" style="width: 300px" value="#{prestadorServicoController.prestadorServico.complemento}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Bairro"/>
+                            <div class="controls control-label">
+                                <h:inputText id="bairro" style="width: 200px" value="#{prestadorServicoController.prestadorServico.bairro}" required="true"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Cidade"/>
+                            <div class="controls control-label">
+                                <h:inputText id="cidade" style="width: 200px" value="#{prestadorServicoController.prestadorServico.municipio}" required="true"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="UF"/>
+                            <div class="controls control-label">
+                                <h:inputText id="uf" style="width: 40px" value="#{prestadorServicoController.prestadorServico.uf}" required="true"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="C.E.P"/>
+                            <div class="controls control-label">
+                                <h:inputText id="cep" style="width: 90px" value="#{prestadorServicoController.prestadorServico.cep}" required="true"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Contato"/>
+                            <div class="controls control-label">
+                                <h:inputText id="contato" style="width: 150px" value="#{prestadorServicoController.prestadorServico.contato}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Telefone"/>
+                            <div class="controls control-label">
+                                <h:inputText id="telefone" style="width: 90px" value="#{prestadorServicoController.prestadorServico.telefone}" required="true"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="FAX"/>
+                            <div class="controls control-label">
+                                <h:inputText id="fax" style="width: 90px" value="#{prestadorServicoController.prestadorServico.fax}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Situacao"/>
+                            <p:selectOneMenu id="somSituacao" style="width: 120px" value="#{prestadorServicoController.prestadorServico.situacao}" required="true">
+                                <f:selectItems value="#{prestadorServicoController.enumSituacao}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao.cod}"/>
+                            </p:selectOneMenu>
+                        </div>
+                    </h:form>
+                </h:body>
+            </ui:define>
+        </ui:composition>
+    </f:view>
+</html>

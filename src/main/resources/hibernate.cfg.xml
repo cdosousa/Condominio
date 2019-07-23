@@ -68,7 +68,7 @@ Contributor(s):
         <mapping class="com.condomino.domain.Morador"/>
         <mapping class="com.condomino.domain.Portaria"/>
         <mapping class="com.condomino.domain.Praca"/>
-        <mapping class="com.condomino.domain.Prestadorservico"/>
+        <mapping class="com.condomino.domain.PrestadorServico"/>
         <mapping class="com.condomino.domain.Proprietario"/>
         <mapping class="com.condomino.domain.Torre"/>
         <mapping class="com.condomino.domain.Unidade"/>

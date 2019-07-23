@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <ui:composition template="MenuPrincipal.xhtml">
+            <ui:define name="conteudo">
+                <h:head>
+                    <title>PrestadorServico</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+                    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+                    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+                    <link rel="stylesheet" type="text/css" href="styles/belasartes.css"/>
+                    <script src="js/bayanno.js" type="text/javascript"/>
+                </h:head>
+                <h:body>
+                    <h:form id="formPrestadorServico">
+                        <p:tabView class="active" activeIndex="#{prestadorServicoController.activIndex}">
+                            <div class="box">
+                                <div class="box-header">
+                                    <p:tab title="Listar">
+                                        <div class="tab-pane box">
+                                            <p:dataTable id="prestadorServicos" var="prop" value="#{prestadorServicoController.listarPrestadorServico}"
+                                                         selectionMode="single" selection="#{prestadorServicoController.prestadorServicoSelecionado}"
+                                                         rowKey="#{prop.cpfCnpj}" rowIndexVar="linha">
+                                                <p:ajax event="rowSelect" listener="#{prestadorServicoController.onRowSelect}"/>
+                                                <p:column headerText="#" style="width: 1px">
+                                                    <h:outputText value="#{linha}"/>
+                                                </p:column>
+                                                <p:column headerText="CPF/CNPJ" style="width: 150px">
+                                                    <h:outputText value="#{prop.cpfCnpj}"/>
+                                                </p:column>
+                                                <p:column headerText="Nome" style="width: 300px">
+                                                    <h:outputText value="#{prop.nome}"/>
+                                                </p:column>
+                                                <p:column headerText="Tipo" style="width: 100px">
+                                                    <h:outputText value="#{prestadorServicoController.getTipoPessoa(prop.tipoPessoa)}"/>
+                                                </p:column>
+                                                <p:column headerText="Município">
+                                                    <h:outputText value="#{prop.municipio}" style="width: 100px"/>
+                                                </p:column>
+                                                <p:column headerText="U.F" style="width: 20px">
+                                                    <h:outputText value="#{prop.uf}"/>
+                                                </p:column>
+                                                <p:column headerText="Telefone" style="width: 90px">
+                                                    <h:outputText value="#{prop.telefone}"/>
+                                                </p:column>
+                                                <p:column headerText="Situação" style="width: 100px">
+                                                    <h:outputText value="#{prestadorServicoController.getSituacao(prop.situacao)}"/>
+                                                </p:column>
+                                                <p:column headerText="Opções" style="width: 60px">
+                                                    <a href="#{prestadorServicoController.editarRegistro()}">
+                                                        <i class="icon-edit icon-2x"></i>
+                                                    </a>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </div>
+                                        <h:commandButton id="btAdionaNovo" type="submit" value="Novo Registro" action="#{prestadorServicoController.adicionaForm()}"
+                                                         rendered="true"/>
+                                    </p:tab>
+                                    <p:tab title="Editar">
+                                        <div class="label-dark-red" align="center">
+                                            <span><h3>Editando registro selecionado</h3></span>
+                                        </div>
+                                        <div class="tab-content">
+                                            <div class="tab-pane box active" style="padding: 5px">
+                                                <div class="box-content">
+                                                    <div class="padded">
+                                                        <ui:insert name="editar"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <h:commandButton id="edtBtSalvar" type="submit" value="Salvar Registro" action="#{prestadorServicoController.salvarRegistro()}"
+                                                             actionListener="#{prestadorServicoController.prestadorServico.setUsuarioModificacao(usuariosController.usuarios.login)}"/>
+                                            <h:commandButton id="edtBtExcluir" type="submit" value="Excluir Registro" action="#{prestadorServicoController.excluirRegistro()}"
+                                                             rendered="true"/>
+                                        </div>
+                                    </p:tab>
+                                    <p:tab title="Adicionar">
+                                        <div class="label-cyan" align="center">
+                                            <span><h3>Adicionando novo registro</h3></span>
+                                        </div>
+                                        <div class="box-content padded">
+                                            <div class="tab-content">
+                                                <div class="tab-pane box active" id="editar" style="padding: 5px">
+                                                    <div class="box-content">
+                                                        <div class="padded">
+                                                            <ui:insert name="adicionar"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="btn-blue">
+                                            <h:commandButton id="brIncluir" type="submit" value="Criar Registro" action="#{prestadorServicoController.adicionaRegistro()}" 
+                                                             actionListener="#{prestadorServicoController.prestadorServico.setUsuarioCadastro(usuariosController.usuarios.login)}"
+                                                             rendered="true" />
+                                        </div>
+                                    </p:tab>
+                                </div>
+                            </div>
+                        </p:tabView>
+                    </h:form>
+                </h:body>        
+            </ui:define>
+        </ui:composition>
+
+    </f:view>  
+</html>
