@@ -10,25 +10,29 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author cristiano
+ * @author Cristiano de Oliveira Sousa
+ * @Local OICI Serviços e Desenvolvimento Ltda-EPP
+ * @Data 24/07/2019
  */
 @Entity
 @Table(name = "gcvisitante")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Visitante.findAll", query = "SELECT v FROM Visitante v")
+    , @NamedQuery(name = "Visitante.findByCdVisitante", query = "SELECT v FROM Visitante v WHERE v.cdVisitante = :cdVisitante")
     , @NamedQuery(name = "Visitante.findByCpf", query = "SELECT v FROM Visitante v WHERE v.cpf = :cpf")
     , @NamedQuery(name = "Visitante.findByRg", query = "SELECT v FROM Visitante v WHERE v.rg = :rg")
     , @NamedQuery(name = "Visitante.findByDataEmissaoRg", query = "SELECT v FROM Visitante v WHERE v.dataEmissaoRg = :dataEmissaoRg")
@@ -37,7 +41,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Visitante.findBySexo", query = "SELECT v FROM Visitante v WHERE v.sexo = :sexo")
     , @NamedQuery(name = "Visitante.findByTelefone", query = "SELECT v FROM Visitante v WHERE v.telefone = :telefone")
     , @NamedQuery(name = "Visitante.findByCelular", query = "SELECT v FROM Visitante v WHERE v.celular = :celular")
-    , @NamedQuery(name = "Visitante.findByCnpjEmpresa", query = "SELECT v FROM Visitante v WHERE v.cnpjEmpresa = :cnpjEmpresa")
     , @NamedQuery(name = "Visitante.findByUsuarioCadastro", query = "SELECT v FROM Visitante v WHERE v.usuarioCadastro = :usuarioCadastro")
     , @NamedQuery(name = "Visitante.findByDataCadastro", query = "SELECT v FROM Visitante v WHERE v.dataCadastro = :dataCadastro")
     , @NamedQuery(name = "Visitante.findByHoraCadastro", query = "SELECT v FROM Visitante v WHERE v.horaCadastro = :horaCadastro")
@@ -49,10 +52,12 @@ public class Visitante implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 11)
-    @Column(name = "cpf", nullable = false, length = 11)
+    @Column(name = "cd_visitante", nullable = false)
+    private Integer cdVisitante;
+    @Size(max = 11)
+    @Column(name = "cpf", length = 11)
     private String cpf;
     @Size(max = 15)
     @Column(name = "rg", length = 15)
@@ -74,9 +79,6 @@ public class Visitante implements Serializable {
     @Size(max = 20)
     @Column(name = "celular", length = 20)
     private String celular;
-    @Size(max = 14)
-    @Column(name = "cnpj_empresa", length = 14)
-    private String cnpjEmpresa;
     @Size(max = 10)
     @Column(name = "usuario_cadastro", length = 10)
     private String usuarioCadastro;
@@ -101,8 +103,16 @@ public class Visitante implements Serializable {
     public Visitante() {
     }
 
-    public Visitante(String cpf) {
-        this.cpf = cpf;
+    public Visitante(Integer cdVisitante) {
+        this.cdVisitante = cdVisitante;
+    }
+
+    public Integer getCdVisitante() {
+        return cdVisitante;
+    }
+
+    public void setCdVisitante(Integer cdVisitante) {
+        this.cdVisitante = cdVisitante;
     }
 
     public String getCpf() {
@@ -169,14 +179,6 @@ public class Visitante implements Serializable {
         this.celular = celular;
     }
 
-    public String getCnpjEmpresa() {
-        return cnpjEmpresa;
-    }
-
-    public void setCnpjEmpresa(String cnpjEmpresa) {
-        this.cnpjEmpresa = cnpjEmpresa;
-    }
-
     public String getUsuarioCadastro() {
         return usuarioCadastro;
     }
@@ -236,7 +238,7 @@ public class Visitante implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (cpf != null ? cpf.hashCode() : 0);
+        hash += (cdVisitante != null ? cdVisitante.hashCode() : 0);
         return hash;
     }
 
@@ -247,7 +249,7 @@ public class Visitante implements Serializable {
             return false;
         }
         Visitante other = (Visitante) object;
-        if ((this.cpf == null && other.cpf != null) || (this.cpf != null && !this.cpf.equals(other.cpf))) {
+        if ((this.cdVisitante == null && other.cdVisitante != null) || (this.cdVisitante != null && !this.cdVisitante.equals(other.cdVisitante))) {
             return false;
         }
         return true;
@@ -255,7 +257,7 @@ public class Visitante implements Serializable {
 
     @Override
     public String toString() {
-        return "com.condomino.domain.Visitante[ cpf=" + cpf + " ]";
+        return "com.condomino.domain.Visitante[ cdVisitante=" + cdVisitante + " ]";
     }
     
 }

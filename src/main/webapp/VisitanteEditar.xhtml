@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <ui:composition template="Visitante.xhtml">
+            <ui:define name="editar">
+                <h:body>
+                    <h:form id="formVisitanteAdicionar">
+                        <div class="control-group">
+                            <h:outputLabel class="control-label" value="Código"/>
+                            <div class="controls">
+                                <h:outputText id="codigo" style="width: 30px" value="#{visitanteController.visitante.cdVisitante}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Nome"/>
+                            <div class="controls">
+                                <h:inputText id="nomeRazaoSocial" style="width: 400px" value="#{visitanteController.visitante.nome}" required="true"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="C.P.F"/>
+                            <div class="controls">
+                                <h:inputText id="cdCpfCnpj" style="width: 200px" value="#{visitanteController.visitante.cpf}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="R.G"/>
+                            <div class="controls control-label">
+                                <h:inputText id="logradouro" style="width: 120px" value="#{visitanteController.visitante.rg}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Data Emissão"/>
+                            <div class="controls control-label">
+                                <h:inputText id="numero" style="width: 90px" value="#{visitanteController.visitante.dataEmissaoRg}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/> 
+                                </h:inputText>
+                            </div>
+                            <h:outputLabel class="control-label" value="Orgão Emissor"/>
+                            <div class="controls control-label">
+                                <h:inputText id="complemento" style="width: 120px" value="#{visitanteController.visitante.orgaoEmissorRg}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Sexo"/>
+                            <div class="controls control-label">
+                                <p:selectOneMenu id="somSexo" style="width: 100px" value="#{visitanteController.visitante.sexo}">
+                                    <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{visitanteController.enumSexo}" var="s"
+                                                   itemLabel="#{s.descricao}" itemValue="#{s.cod}"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <h:outputLabel class="control-label" value="Telefone"/>
+                            <div class="controls control-label">
+                                <h:inputText id="telefone" style="width: 90px" value="#{visitanteController.visitante.telefone}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Celular"/>
+                            <div class="controls control-label">
+                                <h:inputText id="celular" style="width: 90px" value="#{visitanteController.visitante.celular}"/>
+                            </div>
+                            <h:outputLabel class="control-label" value="Situacao"/>
+                            <p:selectOneMenu id="somSituacao" style="width: 120px" value="#{visitanteController.visitante.situacao}" required="true">
+                                <f:selectItems value="#{visitanteController.enumSituacao}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao.cod}"/>
+                            </p:selectOneMenu>
+                        </div>
+                    </h:form>
+                </h:body>
+            </ui:define>
+        </ui:composition>
+    </f:view>
+</html>

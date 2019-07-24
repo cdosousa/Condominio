@@ -23,11 +23,13 @@ com\condomino\domain\Usuarios_.class
 com\condomino\controle\MenusController.class
 com\condomino\controle\UnidadeContoller.class
 com\condomino\domain\Morador.class
+com\condomino\repositories\VisitanteRepository.class
 com\condomino\domain\PracaPK.class
 com\condomino\controle\MoradorController.class
 com\condomino\controle\converter\TipoPessoaConverter.class
 com\condomino\domain\Equipamento_.class
 com\condomino\domain\PrestadorServico_.class
+com\condomino\controle\VisitanteController.class
 com\condomino\repositories\MoradorRepository.class
 com\condomino\repositories\UnidadeRepository.class
 com\condomino\domain\Condominio_.class
@@ -62,6 +64,7 @@ com\condomino\repositories\PrestadorServicoRepository.class
 com\condomino\repositories\PracaRepository.class
 com\condomino\domain\PortariaPK.class
 com\condomino\domain\Praca_.class
+com\condomino\controle\converter\SimNaoConverter.class
 com\condomino\controle\PortariaController.class
 com\condomino\domain\Proprietario_.class
 com\condomino\domain\UnidadePK_.class

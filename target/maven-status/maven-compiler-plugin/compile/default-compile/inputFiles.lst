@@ -1,7 +1,9 @@
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\Portaria.java
+F:\Projetos\Maven\Condominio\src\main\java\com\condomino\controle\VisitanteController.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\PortariaPK.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\repositories\EquipamentoRepository.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\Condominio.java
+F:\Projetos\Maven\Condominio\src\main\java\com\condomino\controle\converter\SimNaoConverter.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\controle\UsuariosController.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\controle\UnidadeContoller.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\UnidadePK.java
@@ -16,6 +18,7 @@ F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\Torre.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\repositories\UnidadeRepository.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\repositories\MoradorRepository.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\repositories\VeiculoRepository.java
+F:\Projetos\Maven\Condominio\src\main\java\com\condomino\repositories\VisitanteRepository.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\controle\PortariaController.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\dao\AcessoBancoDAO.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\Proprietario.java

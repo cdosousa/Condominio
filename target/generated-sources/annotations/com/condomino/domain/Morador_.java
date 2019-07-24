@@ -9,7 +9,7 @@ import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-07-23T15:38:29")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-07-24T10:57:02")
 @StaticMetamodel(Morador.class)
 public class Morador_ { 
 
