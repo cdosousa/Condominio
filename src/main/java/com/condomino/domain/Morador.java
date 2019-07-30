@@ -56,6 +56,8 @@ public class Morador implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "morador")
     private List<Veiculo> veiculoList;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "morador")
+    private List<Visita> visitaList;
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -333,6 +335,21 @@ public class Morador implements Serializable {
 
     public void setVeiculoList(List<Veiculo> veiculoList) {
         this.veiculoList = veiculoList;
+    }
+
+    /**
+     * @return the visitaList
+     */
+    @XmlTransient
+    public List<Visita> getVisitaList() {
+        return visitaList;
+    }
+
+    /**
+     * @param visitaList the visitaList to set
+     */
+    public void setVisitaList(List<Visita> visitaList) {
+        this.visitaList = visitaList;
     }
     
 }

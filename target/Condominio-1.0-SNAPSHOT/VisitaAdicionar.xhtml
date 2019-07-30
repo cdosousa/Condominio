@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <ui:composition template="Visita.xhtml">
+            <ui:define name="adicionar">
+                <h:body>
+                    <h:form id="formVisitaAdicionar">
+                        <div class="control-group">
+                            <h:outputLabel class="control-label" value="Tipo visita"/>
+                            <div class="controls">
+                                <p:selectOneMenu id="somTipoVisita" value="#{visitaController.visita.tipoVisita}">
+                                    <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{visitaController.enumTipoVista}" var="tp"
+                                                   itemLabel="#{tp.descricao}" itemValue="#{tp.cod}"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <h:outputLabel class="control-label" value="Condomínio"/>
+                            <div class="controls">
+                                <p:selectOneMenu id="somCondominio" value="#{visitaController.visitaPK.cdCondominio}">
+                                    <p:ajax listener="${visitaController.onCondominioChange()}" update="somTorre"/>
+                                    <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{visitaController.listCondominio}" var="lc"
+                                                   itemLabel="#{lc.nomeCondominio}" itemValue="#{lc.cdCondominio}"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <h:outputLabel class="control-label" value="Torre"/>
+                            <div class="controls">
+                                <p:selectOneMenu id="somTorre" value="#{visitaController.visita.cdTorre}">
+                                    <p:ajax listener="#{visitaController.onTorreChange()}" update="somUnidade"/>
+                                    <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{visitaController.listTorre}" var="ltr"
+                                                   itemLabel="#{ltr.nome}" itemValue="#{ltr.torrePK.cdTorre}"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <h:outputLabel class="control-label" value="Unidade"/>
+                            <div class="controls">
+                                <p:selectOneMenu id="somUnidade" value="#{visitaController.visita.cdUnidade}">
+                                    <p:ajax listener="#{visitaController.onUnidadeChange()}" update="somMorador"/>
+                                    <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{visitaController.listUnidade}" var="uc"
+                                                   itemLabel="#{uc.unidadePK.cdUnidade}" itemValue="#{uc.unidadePK.cdUnidade}"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <h:outputLabel class="control-label" value="Morador"/>
+                            <div class="controls">
+                                <p:selectOneMenu id="somMorador" value="#{visitaController.visita.cdMorador}">
+                                    <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{visitaController.listMorador}" var="lm"
+                                                   itemLabel="#{lm.nome}" itemValue="#{lm.moradorPK.cdMorador}"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <h:outputLabel class="control-label" value="Situação"/>
+                            <div class="controls">
+                                <p:selectOneMenu id="somSituacao" value="#{visitaController.visita.situacao}">
+                                    <f:selectItem itemLabel="Escolha uma opção" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{visitaController.enumSituacao}" var="es"
+                                                   itemLabel="#{es.descricao}" itemValue="#{es.cod}"/>
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+                    </h:form>
+                </h:body>
+            </ui:define>
+        </ui:composition>
+    </f:view>
+</html>

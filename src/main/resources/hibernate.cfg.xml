@@ -75,6 +75,7 @@ Contributor(s):
         <mapping class="com.condomino.domain.Usuarios"/>
         <mapping class="com.condomino.domain.Veiculo"/>
         <mapping class="com.condomino.domain.Visitante"/>
+        <mapping class="com.condomino.domain.Visita"/>
         <mapping class="com.parametros.modelo.SessaoUsuario"/>
         <mapping class="com.parametros.modelo.ParametrosGerais"/>
         <mapping class="com.parametros.modelo.DataSistema"/>

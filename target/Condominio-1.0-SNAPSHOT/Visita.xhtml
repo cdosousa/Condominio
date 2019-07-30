@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <ui:composition template="MenuPrincipal.xhtml">
+            <ui:define name="conteudo">
+                <h:head>
+                    <title>Visita</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+                    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+                    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+                    <link rel="stylesheet" type="text/css" href="styles/belasartes.css"/>
+                    <script src="js/bayanno.js" type="text/javascript"/>
+                </h:head>
+                <h:body>
+                    <h:form id="formPrestadorServico">
+                        <p:tabView class="active" activeIndex="#{visitaController.activeIndex}">
+                            <div class="box">
+                                <div class="box-header">
+                                    <p:tab title="Listar">
+                                        <div class="tab-pane box">
+                                            <p:dataTable id="visitas" var="v" value="#{visitaController.listarVisita}"
+                                                         selectionMode="single" selection="#{visitaController.visitaSelecinado}"
+                                                         rowKey="#{v.visitaPK}" rowIndexVar="linha">
+                                                <p:ajax event="rowSelect" listener="#{visitaController.onRowSelect}"/>
+                                                <p:column headerText="#" style="width: 1px">
+                                                    <h:outputText value="#{linha}"/>
+                                                </p:column>
+                                                <p:column headerText="Código" style="width: 30px">
+                                                    <h:outputText value="#{v.visitaPK.cdVisita}"/>
+                                                </p:column>
+                                                <p:column headerText="Morador Responsável" style="width: 150px">
+                                                    <h:outputText value="#{v.morador.nome}"/>
+                                                </p:column>
+                                                <p:column headerText="Entrada" style="width: 90px">
+                                                    <h:outputText value="#{v.dataEntrada}"/>
+                                                </p:column>
+                                                <p:column headerText="Saída" style="width: 90px">
+                                                    <h:outputText value="#{v.dataSaida}"/>
+                                                </p:column>
+                                                <p:column headerText="Situação" style="width: 100px">
+                                                    <h:outputText value="#{visitaController.getSituacao(v.situacao)}"/>
+                                                </p:column>
+                                                <p:column headerText="Opções" style="width: 60px">
+                                                    <a href="#{visitaController.editarRegistro()}">
+                                                        <i class="icon-edit icon-2x"></i>
+                                                    </a>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </div>
+                                        <h:commandButton id="btAdionaNovo" type="submit" value="Novo Registro" action="#{visitaController.adicionarForm()}"
+                                                         rendered="true"/>
+                                    </p:tab>
+                                    <p:tab title="Editar">
+                                        <div class="label-dark-red" align="center">
+                                            <span><h3>Editando registro selecionado</h3></span>
+                                        </div>
+                                        <div class="tab-content">
+                                            <div class="tab-pane box active" style="padding: 5px">
+                                                <div class="box-content">
+                                                    <div class="padded">
+                                                        <ui:insert name="editar"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h:commandButton id="edtBtSalvar" type="submit" value="Salvar Registro" action="#{visitaController.salvarRegistro()}"
+                                                             actionListener="#{visitaController.visita.setUsuarioModificacao(usuariosController.usuarios.login)}"/>
+                                            <h:commandButton id="edtBtExcluir" type="submit" value="Excluir Registro" action="#{visitaController.excluirRegistro()}"
+                                                             rendered="true"/>
+                                    </p:tab>
+                                    <p:tab title="Adicionar">
+                                        <div class="label-cyan" align="center">
+                                            <span><h3>Adicionando novo registro</h3></span>
+                                        </div>
+                                        <div class="box-content padded">
+                                            <div class="tab-content">
+                                                <div class="tab-pane box active" id="editar" style="padding: 5px">
+                                                    <div class="box-content">
+                                                        <div class="padded">
+                                                            <ui:insert name="adicionar"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="btn-blue">
+                                            <h:commandButton id="brIncluir" type="submit" value="Criar Registro" action="#{visitaController.adicionaRegistro()}" 
+                                                             actionListener="#{visitaController.visita.setUsuarioCadastro(usuariosController.usuarios.login)}"
+                                                             rendered="true" />
+                                        </div>
+                                    </p:tab>
+                                </div>
+                            </div>
+                        </p:tabView>
+                    </h:form>
+                </h:body>        
+            </ui:define>
+        </ui:composition>
+
+    </f:view>  
+</html>

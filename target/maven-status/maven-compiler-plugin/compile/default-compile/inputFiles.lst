@@ -22,6 +22,7 @@ F:\Projetos\Maven\Condominio\src\main\java\com\condomino\repositories\VisitanteR
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\controle\PortariaController.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\dao\AcessoBancoDAO.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\Proprietario.java
+F:\Projetos\Maven\Condominio\src\main\java\com\condomino\repositories\VisitaRepository.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\controle\EquipamentoContoller.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\TorrePK.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\controle\TorreContoller.java
@@ -29,6 +30,7 @@ F:\Projetos\Maven\Condominio\src\main\java\com\condomino\controle\CondominioCont
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\controle\converter\TipoPessoaConverter.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\Menus.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\controle\PrestadorServicoController.java
+F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\VisitaPK.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\PrestadorServico.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\EquipamentoPK.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\repositories\TorreRepository.java
@@ -39,6 +41,8 @@ F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\MoradorPK.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\repositories\CondominioRepository.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\controle\converter\SituacaoConverter.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\controle\PracaController.java
+F:\Projetos\Maven\Condominio\src\main\java\com\condomino\controle\converter\TipoVisitaConverter.java
+F:\Projetos\Maven\Condominio\src\main\java\com\condomino\controle\VisitaController.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\Equipamento.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\PracaPK.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\dao\AcessoBancoInterfaceDAO.java
@@ -49,4 +53,5 @@ F:\Projetos\Maven\Condominio\src\main\java\com\condomino\factory\SessaoFabrica.j
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\Usuarios.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\controle\VeiculoContoller.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\Visitante.java
+F:\Projetos\Maven\Condominio\src\main\java\com\condomino\domain\Visita.java
 F:\Projetos\Maven\Condominio\src\main\java\com\condomino\factory\HibernateUtility.java

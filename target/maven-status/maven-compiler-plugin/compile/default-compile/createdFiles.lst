@@ -1,15 +1,19 @@
+com\condomino\domain\Visita_.class
 com\condomino\domain\Veiculo.class
 com\condomino\domain\Visitante_.class
 com\condomino\controle\TorreContoller.class
 com\condomino\controle\CondominioController.class
 com\condomino\controle\converter\GrauParentescoConverter.class
 com\condomino\domain\Menus.class
+com\condomino\controle\VisitaController.class
 com\condomino\domain\UnidadePK.class
+com\condomino\repositories\VisitaRepository.class
 com\condomino\dao\AcessoBancoInterfaceDAO.class
 com\condomino\domain\EquipamentoPK_.class
 com\condomino\repositories\ProprietarioRepository.class
 com\condomino\domain\Condominio.class
 com\condomino\controle\PracaController.class
+com\condomino\domain\VisitaPK_.class
 com\condomino\domain\Equipamento.class
 com\condomino\domain\PracaPK_.class
 com\condomino\domain\Usuarios.class
@@ -17,6 +21,7 @@ com\condomino\domain\Praca.class
 com\condomino\controle\UsuariosController.class
 com\condomino\domain\Torre.class
 com\condomino\domain\MoradorPK.class
+com\condomino\controle\converter\TipoVisitaConverter.class
 com\condomino\domain\Morador_.class
 com\condomino\factory\SessaoFabrica.class
 com\condomino\domain\Usuarios_.class
@@ -38,6 +43,7 @@ com\condomino\domain\MoradorPK_.class
 com\condomino\domain\Portaria.class
 com\condomino\domain\PortariaPK_.class
 com\condomino\domain\Torre_.class
+com\condomino\domain\Visita.class
 com\condomino\domain\TorrePK.class
 com\condomino\domain\Menus_.class
 com\condomino\controle\EquipamentoContoller.class
@@ -65,6 +71,7 @@ com\condomino\repositories\PracaRepository.class
 com\condomino\domain\PortariaPK.class
 com\condomino\domain\Praca_.class
 com\condomino\controle\converter\SimNaoConverter.class
+com\condomino\domain\VisitaPK.class
 com\condomino\controle\PortariaController.class
 com\condomino\domain\Proprietario_.class
 com\condomino\domain\UnidadePK_.class

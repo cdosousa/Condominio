@@ -3,13 +3,14 @@ package com.condomino.domain;
 import com.condomino.domain.MoradorPK;
 import com.condomino.domain.Unidade;
 import com.condomino.domain.Veiculo;
+import com.condomino.domain.Visita;
 import java.util.Date;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-07-24T10:57:02")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-07-30T11:26:30")
 @StaticMetamodel(Morador.class)
 public class Morador_ { 
 
@@ -29,6 +30,7 @@ public class Morador_ {
     public static volatile SingularAttribute<Morador, MoradorPK> moradorPK;
     public static volatile SingularAttribute<Morador, String> cpf;
     public static volatile SingularAttribute<Morador, String> celular;
+    public static volatile ListAttribute<Morador, Visita> visitaList;
     public static volatile SingularAttribute<Morador, Integer> tipoParentesco;
     public static volatile SingularAttribute<Morador, Integer> sexo;
     public static volatile SingularAttribute<Morador, Date> horaCadastro;
